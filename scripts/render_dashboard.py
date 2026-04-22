@@ -75,7 +75,7 @@ def resolve_decision(r: dict) -> tuple[str, str]:
 
 
 # ============================== 数据构造 ==============================
-def build_chart_payload(kline: list[dict], lookback: int = 60) -> dict:
+def build_chart_payload(kline: list[dict], lookback: int = 30) -> dict:
     """从日线构造前端图表所需数据。"""
     recent = kline[-lookback:] if len(kline) > lookback else kline
     dates = [k["date"] for k in recent]
