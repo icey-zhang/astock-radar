@@ -1,28 +1,48 @@
-# A 股每日分析 Routine
+# A 股每日分析 Routine (v3 · 方案 A)
 
-一个"抄底 + 20% 止盈"策略的 A 股每日复盘工具。同一套目录既可作为 **Claude Skill** 在对话里调用,也可以作为独立 Python 项目放到 cron / GitHub Actions 里定时跑。
-
-受参考项目 [ZhuLinsen/daily_stock_analysis](https://github.com/ZhuLinsen/daily_stock_analysis) 启发,但聚焦 A 股单一市场 + 抄底策略,大幅精简了配置。
+A 股三策略(止盈 / 抄底 / 波段)自动化分析工具。架构:**GitHub Actions 跑数据管道 + 算三策略 → Claude Code Routine 做 AI 消息面分析**,全部运行在云端。
 
 ## 🚀 快速开始
 
-第一次使用 → 先读 **[`docs/SETUP.md`](docs/SETUP.md)**
+第一次使用 → 先读 **[`docs/SETUP_A.md`](docs/SETUP_A.md)**(GitHub Actions + Routine 完整配置,约 20 分钟)
 
-推荐架构:
-- **Claude Code Routine**(云端,每交易日 15:30)跑数据管道 + commit 报告骨架到 GitHub
-- **Claude.ai Project**(你手动触发)读 signals.json → web_search 补消息面 → 综合分析 → 输出完整报告 artifact
+## 架构一图
 
-两端的可粘贴配置文本:
+```
+       GitHub Actions(15:30 UTC+8)
+       读 positions.json + 拉 akshare 数据
+       算三策略(含止盈)+ 产出骨架 MD
+              ↓ commit
+       GitHub private repo
+              ↓ clone
+       Claude Code Routine(16:00 UTC+8)
+       Web_search 消息面 + 填 AI 分析
+              ↓ commit
+       GitHub private repo(最终报告)
+```
+
+**持仓数据在 private repo 里**(仅你可见)。如果这不可接受,请回头看 `docs/SETUP_A.md` 末尾的说明。
+
+## 三个策略
+
+| 策略 | 适用 | 触发 | 输出 |
+|---|---|---|---|
+| **止盈** | 持仓 | 浮盈≥18% + 5日累计涨≥3% + 90日高位 | 建议卖价 = max(成本×1.20, 90日高×0.98) |
+| **抄底** | 未持仓 | 5日新低 + 累计跌≥3% + (强信号需跌破90日低) | 激进档 = 现价;稳健档 = 90日低×1.01 |
+| **波段** | 独立 | MACD金叉/KDJ低位金叉/量比>1.5/突破10日高 命中≥2 | 买入现价 / 目标+6% / 止损-3% |
+
+策略参数在 `config/stocks.yml` 的 `strategy` 下可调。
+
+## 可复制文件
+
 - [`docs/routine_prompt.md`](docs/routine_prompt.md) — 粘到 Claude Code Routine 的 Prompt 框
-- [`docs/project_instructions.md`](docs/project_instructions.md) — 粘到 Claude.ai Project 的 Custom Instructions
-
-备用定时方案:[`/.github/workflows/daily.yml`](.github/workflows/daily.yml)(GitHub Actions) 或 Mac 本地 cron。
+- [`docs/SETUP_A.md`](docs/SETUP_A.md) — 完整配置手册
 
 ---
 
 ## ⚠️ 免责声明
 
-本工具只做**数据采集 + 信号识别 + AI 辅助分析**,所有输出**不构成投资建议**。"抄底"本身是高风险策略,信号命中不保证盈利,浮盈 20% 止盈也只是一种常见纪律,不是铁律。股市有风险,决策请独立判断并自负盈亏。
+本工具做**数据采集 + 信号识别 + AI 辅助分析**,所有输出**不构成投资建议**。"抄底""止盈""波段"本质都是高风险操作,信号命中不保证盈利。股市有风险,决策请独立判断并自负盈亏。
 
 ---
 

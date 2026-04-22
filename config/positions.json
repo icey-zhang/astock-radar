@@ -1,12 +1,4 @@
 {
-  "_comment": "持仓记录 - 手动维护。cost_price 是含手续费的成本均价,shares 为持股数。entry_date 用于日后统计。",
-  "positions": [
-    {
-      "code": "600519",
-      "cost_price": 1680.00,
-      "shares": 100,
-      "entry_date": "2025-11-20",
-      "note": "示例持仓,请替换或删除"
-    }
-  ]
+  "_comment": "持仓记录。cost_price 是含手续费的成本均价,shares 为持股数,entry_date 用于日后统计。初次配置请删除示例,添加你的真实持仓。没有持仓时保持 positions 为空数组即可。",
+  "positions": []
 }

@@ -1,4 +1,13 @@
+# A 股每日分析 - Python 依赖
+#
+# 注意版本下限:
+#   - akshare 必须 >= 1.14,老版本依赖已不维护的 `jsonpath` 包,在新 setuptools(Debian 系)下
+#     会触发 `AttributeError: install_layout` 构建错误。
+#     新版 akshare 切到 jsonpath-ng,纯 Python,无构建问题。
+#   - pip 需要相对新一点(>= 23),老 pip 对 PEP 517 构建的兼容性差
+
 akshare>=1.14.0
 pandas>=2.0.0
 numpy>=1.24.0
 PyYAML>=6.0
+# lxml / requests / beautifulsoup4 等是 akshare 的传递依赖,pip 会自动拉

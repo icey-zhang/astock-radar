@@ -5,41 +5,54 @@
 # 关注的股票列表(A 股 6 位代码)
 # 替换为你自己想跟踪的标的
 watchlist:
-  - code: "002885"
-    name: "京泉华"
-
+  - code: "600519"
+    name: "贵州茅台"
+  - code: "300750"
+    name: "宁德时代"
+  - code: "002594"
+    name: "比亚迪"
+  - code: "601318"
+    name: "中国平安"
+  - code: "601012"
+    name: "隆基绿能"
+  - code: "000858"
+    name: "五粮液"
+  - code: "600036"
+    name: "招商银行"
 
 # ---------------------------------------------------------------
-# 策略参数
+# 策略参数 v3.0:三策略架构
 # ---------------------------------------------------------------
 strategy:
 
-  # 抄底信号判定(命中数 >= min_signals 才算有效抄底候选)
-  dip_buy:
-    rsi_period: 14
-    rsi_threshold: 30           # RSI < 30 超卖
-    bbands_period: 20
-    bbands_std: 2
-    bbands_tolerance: 1.02      # 收盘价 <= 下轨 * 1.02 即算跌破
-    kdj_j_threshold: 0          # J < 0 极度超卖
-    low_volume_ratio: 0.7       # 当日量 / 20日均量 < 0.7 算地量
-    low_position_window: 60     # 近 60 日区间
-    low_position_pct: 0.10      # 位于底部 10% 算低位
-    min_signals: 3              # 最少命中信号数(调高更保守,调低更激进)
+  # ========== 策略 1:止盈(仅对持仓) ==========
+  take_profit:
+    tp_min_pnl_pct: 18.0          # 浮盈阈值(%),≥18% 即考虑触发(接近 20% 预警)
+    tp_target_pct: 20.0           # 成本目标倍数(%),用于计算 cost_target 价位
+    tp_trend_cum_pct: 3.0         # 近 5 天累计涨幅阈值(%),≥3% 判定为涨势
+    tp_90d_position_pct: 60.0     # 90 天区间位置阈值(%),≥60% 算高位
+    tp_90d_high_mult: 0.98        # 90 天高位乘数,用于计算 price_90d_high 卖价
 
-  # 止盈/止损(仅对有持仓的股票生效)
-  exit:
-    take_profit_pct: 0.20       # >= +20% 触发止盈 (核心策略)
-    aggressive_tp_pct: 0.15     # >= +15% 且 RSI > 70 触发部分止盈
-    stop_loss_pct: 0.08         # <= -8% 触发止损
-    rsi_overbought: 70          # 超买阈值
+  # ========== 策略 2:抄底(仅对未持仓) ==========
+  dip_buy:
+    dip_trend_cum_pct: 3.0        # 近 5 天累计跌幅阈值(%),≥3% 算有效
+    dip_90d_low_tol: 1.02         # 接近 90 天低位的容差,跌破 低×1.02 算强信号
+    dip_conservative_entry_mult: 1.01  # 稳健档买入价 = 90天最低 × 1.01
+    dip_stop_loss_pct: 5.0        # 抄底失败的止损距离(%),用于提示退出价位
+
+  # ========== 策略 3:激进波段(两者都适用) ==========
+  swing:
+    swing_min_signals: 2          # 命中数 ≥2 才触发
+    swing_vol_mult: 1.5           # 量比 ≥1.5 判定放量
+    swing_target_pct: 6.0         # 波段目标涨幅(%),用于计算目标卖价
+    swing_stop_pct: 3.0           # 波段止损距离(%),用于计算止损价
 
 # ---------------------------------------------------------------
 # 运行/报告配置
 # ---------------------------------------------------------------
 runtime:
   # 分层数据模型(v2.0):
-  close_history_days: 60       # 长周期:只拉收盘价,用于 MA60/RSI/MACD/60日低位
+  close_history_days: 250       # 长周期:只拉收盘价,用于 MA60/RSI/MACD/60日低位
   kline_detail_days: 30         # 短周期:完整 OHLCV,用于 KDJ/布林带/量比/K线图
   money_flow_days: 5            # 主力资金流天数
   data_dir: "data"

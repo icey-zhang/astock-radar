@@ -1,20 +1,27 @@
 """
-技术指标 + 抄底/止盈信号评估。
-读取 fetch_data.py 生成的 JSON,输出 signals.json。
+A 股每日信号分析 · 三策略架构(v3.0)
 
-关键策略:
-    抄底(dip_buy)  -> 6 个信号,命中数 >= min_signals 判定为抄底候选
-    止盈(take_profit) -> 浮盈 >= 20% 触发(核心目标)
-    止损(stop_loss)  -> 浮亏 >= 8% 触发
+读取 fetch_data.py 生成的 JSON(含 close_history 250 天 + kline_30d 30 天完整),
+输出 signals.json,每只股票包含三档独立信号:
+
+  - strategy_take_profit   持有股票:5 天涨势 + 浮盈 + 90 天高位 → 建议卖出价
+  - strategy_dip_buy       未持有:5 天新低 + 90 天低位 → 建议买入价(激进/稳健两档)
+  - strategy_swing         波段关注:短期上涨预兆(MACD 金叉/量放大/突破)→ 进出价位
+
+三个策略完全独立评估,不互斥。消息面综合交给 Claude.ai 做,本脚本只输出数值信号。
+
+⚠ 重要:strategy_swing 的信号预测能力有限(历史命中 ~50%),
+  输出措辞为"波段关注候选",不是"建议快进"。
 """
 from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import sys
 from datetime import datetime
-from typing import Any
+from typing import Any, Optional
 
 import numpy as np
 import pandas as pd
@@ -23,7 +30,6 @@ import yaml
 
 # ============================== 技术指标 ==============================
 def rsi(close: pd.Series, period: int = 14) -> pd.Series:
-    """Wilder's RSI."""
     delta = close.diff()
     gain = delta.clip(lower=0)
     loss = -delta.clip(upper=0)
@@ -33,10 +39,13 @@ def rsi(close: pd.Series, period: int = 14) -> pd.Series:
     return 100 - (100 / (1 + rs))
 
 
-def bollinger(close: pd.Series, period: int = 20, std: float = 2.0):
-    mid = close.rolling(period).mean()
-    s = close.rolling(period).std()
-    return mid - std * s, mid, mid + std * s  # lower, mid, upper
+def macd(close: pd.Series, fast=12, slow=26, signal=9):
+    ema_fast = close.ewm(span=fast, adjust=False).mean()
+    ema_slow = close.ewm(span=slow, adjust=False).mean()
+    dif = ema_fast - ema_slow
+    dea = dif.ewm(span=signal, adjust=False).mean()
+    hist = (dif - dea) * 2
+    return dif, dea, hist
 
 
 def kdj(high: pd.Series, low: pd.Series, close: pd.Series, n: int = 9):
@@ -50,182 +59,378 @@ def kdj(high: pd.Series, low: pd.Series, close: pd.Series, n: int = 9):
     return k, d, j
 
 
-def macd(close: pd.Series, fast: int = 12, slow: int = 26, signal: int = 9):
-    ema_fast = close.ewm(span=fast, adjust=False).mean()
-    ema_slow = close.ewm(span=slow, adjust=False).mean()
-    dif = ema_fast - ema_slow
-    dea = dif.ewm(span=signal, adjust=False).mean()
-    hist = (dif - dea) * 2
-    return dif, dea, hist
-
-
 def ma(close: pd.Series, period: int) -> pd.Series:
     return close.rolling(period).mean()
 
 
-# ============================== 信号判定 ==============================
-def evaluate_dip_signals(close_series: pd.Series, detail_df: pd.DataFrame,
-                         sp: dict) -> dict[str, Any]:
-    """
-    抄底信号评估。
-    参数:
-        close_series: 长序列(250 天)的收盘价,用于 RSI / MACD / MA60 / 60日低位
-        detail_df:    短序列(30 天)的完整 OHLCV,用于 KDJ / 布林带 / 量比 / 地量
-    """
-    close = close_series
-    last_close = float(close.iloc[-1])
+def _safe(v, digits: int = 2, default=None):
+    if v is None:
+        return default
+    try:
+        f = float(v)
+        if math.isnan(f) or math.isinf(f):
+            return default
+        return round(f, digits)
+    except (ValueError, TypeError):
+        return default
 
-    # --- 长周期指标(基于 250 天收盘价) ---
-    rsi_v = rsi(close, sp.get("rsi_period", 14))
-    last_rsi = rsi_v.iloc[-1]
 
-    dif, dea, hist = macd(close)
+# ============================== 上下文计算 ==============================
+def compute_context(close_series: pd.Series, detail_df: pd.DataFrame) -> dict:
+    """算出三个策略共用的上下文:5 天趋势、90 天区间、现价。"""
+    last_close = float(close_series.iloc[-1])
 
-    ma20_long = ma(close, 20).iloc[-1]  # 有 20 天就能算
-    ma60 = ma(close, 60).iloc[-1]
+    # --- 5 天趋势 ---
+    last_5 = close_series.iloc[-5:] if len(close_series) >= 5 else close_series
+    if len(last_5) >= 2:
+        cum_pct_5d = (last_5.iloc[-1] / last_5.iloc[0] - 1) * 100
+    else:
+        cum_pct_5d = 0.0
+    # 5 天内涨了几天
+    diffs = last_5.diff().dropna()
+    days_up_5d = int((diffs > 0).sum())
+    days_down_5d = int((diffs < 0).sum())
 
-    # 近 N 日低位(长周期,通常 60 天)
-    window = sp["low_position_window"]
-    recent = close.iloc[-window:] if len(close) >= window else close
-    rng_min, rng_max = float(recent.min()), float(recent.max())
-    low_band = rng_min + (rng_max - rng_min) * sp["low_position_pct"]
+    # --- 5 天极值 ---
+    close_5d_min = float(last_5.min())
+    close_5d_max = float(last_5.max())
+    is_5d_low = last_close <= close_5d_min * 1.001   # 容差 0.1%
+    is_5d_high = last_close >= close_5d_max * 0.999
 
-    # --- 短周期指标(基于 30 天完整 K 线) ---
-    detail_close = pd.to_numeric(detail_df["close"], errors="coerce")
-    detail_high = pd.to_numeric(detail_df["high"], errors="coerce")
-    detail_low = pd.to_numeric(detail_df["low"], errors="coerce")
-    detail_vol = pd.to_numeric(detail_df["volume"], errors="coerce")
-
-    bb_lo, bb_mid, bb_hi = bollinger(detail_close, sp["bbands_period"], sp["bbands_std"])
-    last_bb_lo = bb_lo.iloc[-1] if len(bb_lo) > 0 else np.nan
-
-    k, d, j = kdj(detail_high, detail_low, detail_close)
-    last_k = k.iloc[-1] if len(k) > 0 else np.nan
-    last_d = d.iloc[-1] if len(d) > 0 else np.nan
-    last_j = j.iloc[-1] if len(j) > 0 else np.nan
-
-    # 量比(用 detail 里能取到多少就多少,最多 20 天)
-    vol_window = min(20, len(detail_vol))
-    vol_ratio = (detail_vol.iloc[-1] / detail_vol.iloc[-vol_window:].mean()
-                 if vol_window >= 5 else 1.0)
-
-    # --- 构建 details ---
-    details = {
-        "close": round(last_close, 3),
-        "rsi_14": round(float(last_rsi), 2) if not np.isnan(last_rsi) else None,
-        "bb_lower": round(float(last_bb_lo), 3) if not np.isnan(last_bb_lo) else None,
-        "bb_mid": round(float(bb_mid.iloc[-1]), 3)
-                  if len(bb_mid) > 0 and not np.isnan(bb_mid.iloc[-1]) else None,
-        "kdj_k": round(float(last_k), 2) if not np.isnan(last_k) else None,
-        "kdj_d": round(float(last_d), 2) if not np.isnan(last_d) else None,
-        "kdj_j": round(float(last_j), 2) if not np.isnan(last_j) else None,
-        "macd_dif": round(float(dif.iloc[-1]), 3),
-        "macd_dea": round(float(dea.iloc[-1]), 3),
-        "macd_hist": round(float(hist.iloc[-1]), 3),
-        "volume_ratio_20d": round(float(vol_ratio), 2),
-        "ma20": round(float(ma20_long), 3) if not np.isnan(ma20_long) else None,
-        "ma60": round(float(ma60), 3) if not np.isnan(ma60) else None,
-        f"low_{window}d_min": round(rng_min, 3),
-        f"low_{window}d_band": round(low_band, 3),
-    }
-
-    # --- 信号判定 ---
-    signals: list[str] = []
-
-    # 1) RSI 超卖
-    if not np.isnan(last_rsi) and last_rsi < sp["rsi_threshold"]:
-        signals.append(f"RSI={last_rsi:.1f} < {sp['rsi_threshold']} (超卖)")
-
-    # 2) 跌破布林带下轨
-    if not np.isnan(last_bb_lo) and last_close <= last_bb_lo * sp["bbands_tolerance"]:
-        signals.append(f"收盘 {last_close:.2f} ≤ 布林带下轨 {last_bb_lo:.2f} × {sp['bbands_tolerance']}")
-
-    # 3) KDJ J 极度超卖
-    if not np.isnan(last_j) and last_j < sp["kdj_j_threshold"]:
-        signals.append(f"KDJ J={last_j:.1f} < {sp['kdj_j_threshold']} (极度超卖)")
-
-    # 4) 地量
-    if vol_ratio < sp["low_volume_ratio"]:
-        signals.append(f"地量:当日量/20日均量 = {vol_ratio:.2f} < {sp['low_volume_ratio']}")
-
-    # 5) 低位区间
-    if last_close <= low_band:
-        signals.append(
-            f"位于近 {window} 日底部 {int(sp['low_position_pct']*100)}% 区间 "
-            f"(当前 {last_close:.2f} / 低点 {rng_min:.2f})"
-        )
-
-    # 6) MACD 简化底背离(用长周期收盘)
-    if len(close) >= window:
-        recent_slice = close.iloc[-window:]
-        recent_dif = dif.iloc[-window:]
-        if last_close <= recent_slice.min() * 1.01 and recent_dif.iloc[-1] > recent_dif.min():
-            signals.append("MACD 简化底背离:价近新低,DIF 未同步")
-
-    score = round(100 * len(signals) / 6)
-    triggered = len(signals) >= sp.get("min_signals", 3)
+    # --- 90 天区间 ---
+    last_90 = close_series.iloc[-90:] if len(close_series) >= 90 else close_series
+    high_90 = float(last_90.max())
+    low_90 = float(last_90.min())
+    rng_90 = high_90 - low_90
+    position_90 = ((last_close - low_90) / rng_90) if rng_90 > 0 else 0.5
 
     return {
-        "signals": signals,
-        "hit_count": len(signals),
-        "total": 6,
-        "score": score,
-        "triggered": triggered,
-        "details": details,
+        "last_close": last_close,
+        "trend_5d": {
+            "days_up": days_up_5d,
+            "days_down": days_down_5d,
+            "cum_pct": _safe(cum_pct_5d),
+            "min": _safe(close_5d_min, 3),
+            "max": _safe(close_5d_max, 3),
+            "is_5d_low": is_5d_low,
+            "is_5d_high": is_5d_high,
+        },
+        "range_90d": {
+            "high": _safe(high_90, 3),
+            "low": _safe(low_90, 3),
+            "position_pct": _safe(position_90 * 100),  # 0-100 表示当前价位在区间哪里
+        },
     }
 
 
-def evaluate_exit_signals(close_series: pd.Series, position: dict,
-                          sp: dict) -> dict[str, Any]:
-    """止盈/止损评估(只需要收盘价序列)。"""
-    close = close_series
-    last_close = float(close.iloc[-1])
+# ============================== 策略 1:止盈(持仓) ==============================
+def evaluate_take_profit(context: dict, position: dict, sp: dict) -> dict:
+    """
+    止盈策略(仅对持仓生效)。
+
+    触发条件(三者同时满足):
+        A. 浮盈 >= tp_min_pnl_pct (默认 18%,接近 20% 即考虑)
+        B. 近 5 天累计涨幅 >= tp_trend_cum_pct (默认 3%)
+        C. 当前价处于 90 天区间相对高位 (默认 position_pct >= 60%)
+
+    建议卖出价 = max(成本 × 1.20, 90天高 × 0.98)
+    """
+    last_close = context["last_close"]
     cost = float(position["cost_price"])
-    pct = (last_close - cost) / cost if cost > 0 else 0.0
+    shares = position.get("shares", 0)
+    pnl_pct = (last_close - cost) / cost * 100 if cost > 0 else 0.0
 
-    rsi_v = rsi(close, 14)
-    last_rsi = float(rsi_v.iloc[-1]) if not np.isnan(rsi_v.iloc[-1]) else None
+    cum_5d = context["trend_5d"]["cum_pct"] or 0.0
+    high_90 = context["range_90d"]["high"]
+    position_90 = context["range_90d"]["position_pct"] or 0.0
 
-    # 顶背离(简版):价格创近 20 日新高,DIF 未同步
-    dif, dea, hist = macd(close)
-    top_divergence = False
-    if len(close) >= 20:
-        recent_hi = close.iloc[-20:].max()
-        recent_dif_hi = dif.iloc[-20:].max()
-        if last_close >= recent_hi * 0.99 and dif.iloc[-1] < recent_dif_hi * 0.95:
-            top_divergence = True
+    # 三个独立条件
+    cond_a = pnl_pct >= sp.get("tp_min_pnl_pct", 18.0)
+    cond_b = cum_5d >= sp.get("tp_trend_cum_pct", 3.0)
+    cond_c = position_90 >= sp.get("tp_90d_position_pct", 60.0)
 
-    signals: list[str] = []
-    action = "HOLD"
+    hit_reasons = []
+    if cond_a:
+        hit_reasons.append(f"浮盈 {pnl_pct:+.2f}% ≥ {sp.get('tp_min_pnl_pct', 18.0)}%")
+    if cond_b:
+        hit_reasons.append(f"近 5 天累计涨 {cum_5d:+.2f}%")
+    if cond_c:
+        hit_reasons.append(f"位于 90 天区间 {position_90:.0f}% 高位")
 
-    if pct >= sp["take_profit_pct"]:
-        signals.append(f"浮盈 {pct*100:+.2f}% ≥ {int(sp['take_profit_pct']*100)}% 止盈目标")
-        action = "TAKE_PROFIT"
-    elif (pct >= sp["aggressive_tp_pct"]
-          and last_rsi is not None and last_rsi > sp["rsi_overbought"]):
-        signals.append(
-            f"浮盈 {pct*100:+.2f}% ≥ {int(sp['aggressive_tp_pct']*100)}% 且 RSI={last_rsi:.1f} 超买"
-        )
-        action = "TAKE_PROFIT_PARTIAL"
-    elif pct <= -sp["stop_loss_pct"]:
-        signals.append(f"浮亏 {pct*100:+.2f}% ≤ -{int(sp['stop_loss_pct']*100)}% 止损触发")
-        action = "STOP_LOSS"
+    all_hit = cond_a and cond_b and cond_c
+    core_hit = cond_a  # 浮盈是必要条件
 
-    if top_divergence and action == "HOLD" and pct > 0.05:
-        signals.append("MACD 简化顶背离预警 (参考)")
-        action = "TAKE_PROFIT_PARTIAL"
+    # 建议卖出价
+    tp_target_pct = sp.get("tp_target_pct", 20.0) / 100
+    price_cost_target = cost * (1 + tp_target_pct)         # 成本 × 1.20
+    price_90d_high = high_90 * sp.get("tp_90d_high_mult", 0.98) if high_90 else None
+
+    if price_90d_high:
+        suggested_exit = max(price_cost_target, price_90d_high)
+        exit_basis = "90d_high" if price_90d_high > price_cost_target else "cost_target"
+    else:
+        suggested_exit = price_cost_target
+        exit_basis = "cost_target"
+
+    # 置信度:全部 3 个信号命中 = 高;核心条件 + 1 个辅助 = 中;只核心 = 低
+    if all_hit:
+        confidence = "高"
+    elif core_hit and (cond_b or cond_c):
+        confidence = "中"
+    elif core_hit:
+        confidence = "低"
+    else:
+        confidence = "未触发"
+
+    # 推荐动作
+    if all_hit:
+        action = "SELL_STRONG"          # 三条都满足,建议全部止盈
+        action_cn = "全部止盈"
+    elif core_hit and cond_c:
+        action = "SELL_PARTIAL"          # 浮盈 + 高位,但涨势不确认
+        action_cn = "部分止盈"
+    elif core_hit:
+        action = "WATCH_TO_SELL"         # 只是浮盈到位,观察
+        action_cn = "观察止盈时机"
+    else:
+        action = "HOLD"
+        action_cn = "持有"
+
+    # 浮亏预警(不影响动作,纯视觉提示)
+    # 分三档:<-3% 轻度,<-8% 中度,<-15% 深度
+    if pnl_pct <= -15.0:
+        loss_warning = {"level": "deep", "level_cn": "深度浮亏", "pnl_pct": _safe(pnl_pct)}
+    elif pnl_pct <= -8.0:
+        loss_warning = {"level": "moderate", "level_cn": "中度浮亏", "pnl_pct": _safe(pnl_pct)}
+    elif pnl_pct <= -3.0:
+        loss_warning = {"level": "light", "level_cn": "轻度浮亏", "pnl_pct": _safe(pnl_pct)}
+    else:
+        loss_warning = None
 
     return {
-        "cost_price": cost,
-        "current_price": last_close,
-        "shares": position.get("shares", 0),
-        "entry_date": position.get("entry_date", ""),
-        "pnl_pct": round(pct * 100, 2),
-        "pnl_amount": round((last_close - cost) * position.get("shares", 0), 2),
-        "rsi_14": round(last_rsi, 2) if last_rsi is not None else None,
-        "top_divergence": top_divergence,
-        "signals": signals,
+        "triggered": all_hit,
         "action": action,
+        "action_cn": action_cn,
+        "confidence": confidence,
+        "loss_warning": loss_warning,   # None 或 {level, level_cn, pnl_pct}
+        "position": {
+            "cost_price": cost,
+            "current_price": last_close,
+            "shares": shares,
+            "pnl_pct": _safe(pnl_pct),
+            "pnl_amount": _safe((last_close - cost) * shares, 2),
+        },
+        "conditions": {
+            "pnl_over_threshold": cond_a,
+            "trend_5d_up": cond_b,
+            "at_90d_high": cond_c,
+            "all_hit": all_hit,
+        },
+        "reasons": hit_reasons,
+        "suggested_exit_price": _safe(suggested_exit, 2),
+        "exit_basis": exit_basis,  # 卖价依据:cost_target 还是 90d_high
+        "price_reference": {
+            "cost_target_price": _safe(price_cost_target, 2),
+            "price_90d_high_mult": _safe(price_90d_high, 2) if price_90d_high else None,
+            "range_90d_high": high_90,
+        },
+    }
+
+
+# ============================== 策略 2:抄底(未持仓) ==============================
+def evaluate_dip_buy(context: dict, sp: dict) -> dict:
+    """
+    抄底策略(仅对未持仓生效)。
+
+    触发条件(双级):
+        A. 近 5 天创新低 且 累计跌幅 >= dip_trend_cum_pct (默认 3%)
+        B. (加强)跌破 90 天低位 × dip_90d_low_tol(默认 1.02)
+
+    仅 A → 初级抄底候选,给激进买入价
+    A + B → 强抄底候选,给稳健买入价(等再探底)
+    """
+    last_close = context["last_close"]
+    cum_5d = context["trend_5d"]["cum_pct"] or 0.0
+    is_5d_low = context["trend_5d"]["is_5d_low"]
+    low_90 = context["range_90d"]["low"]
+
+    # 条件 A:5 天最低 + 累计跌 >= 3%
+    cond_a = is_5d_low and cum_5d <= -sp.get("dip_trend_cum_pct", 3.0)
+
+    # 条件 B:接近或跌破 90 天低位
+    low_90_tol = sp.get("dip_90d_low_tol", 1.02)
+    cond_b = low_90 is not None and last_close <= low_90 * low_90_tol
+
+    hit_reasons = []
+    if cond_a:
+        hit_reasons.append(
+            f"近 5 天最低 + 累计跌 {cum_5d:+.2f}% ≤ -{sp.get('dip_trend_cum_pct', 3.0)}%")
+    if cond_b:
+        hit_reasons.append(
+            f"接近/跌破 90 天低位 {low_90:.2f} × {low_90_tol}")
+
+    # 建议买入价 —— 两档
+    # 激进档:现价(信号已触发就买)
+    entry_aggressive = last_close
+    # 稳健档:90 天最低 × 1.01(等再探底一次确认)
+    entry_conservative = low_90 * sp.get("dip_conservative_entry_mult", 1.01) \
+                         if low_90 else None
+
+    # 等级判定
+    if cond_a and cond_b:
+        tier = "STRONG"
+        tier_cn = "强抄底候选"
+        confidence = "高"
+    elif cond_a:
+        tier = "LIGHT"
+        tier_cn = "初级抄底候选"
+        confidence = "中"
+    else:
+        tier = "NONE"
+        tier_cn = "观望"
+        confidence = "未触发"
+
+    # 止损参考(抄底失败需要明确退出点)
+    stop_loss_price = entry_aggressive * (1 - sp.get("dip_stop_loss_pct", 5.0) / 100)
+
+    return {
+        "triggered": cond_a,   # 仅 A 即触发,B 决定档位
+        "tier": tier,
+        "tier_cn": tier_cn,
+        "confidence": confidence,
+        "conditions": {
+            "new_low_5d_with_drop": cond_a,
+            "below_90d_low": cond_b,
+        },
+        "reasons": hit_reasons,
+        "suggested_entry_price_aggressive": _safe(entry_aggressive, 2),
+        "suggested_entry_price_conservative": _safe(entry_conservative, 2) \
+                                              if entry_conservative else None,
+        "suggested_stop_loss": _safe(stop_loss_price, 2),
+        "price_reference": {
+            "range_90d_low": low_90,
+            "cum_pct_5d": _safe(cum_5d),
+        },
+    }
+
+
+# ============================== 策略 3:激进波段(独立) ==============================
+def evaluate_swing(close_series: pd.Series, detail_df: pd.DataFrame,
+                   context: dict, sp: dict) -> dict:
+    """
+    短期上涨预兆波段策略(独立信号,持仓/未持仓都可能触发)。
+
+    候选信号:
+        1. MACD 金叉(DIF 上穿 DEA,最近 3 日内)
+        2. KDJ 金叉(K 上穿 D,且 K<50 说明从低位启动)
+        3. 量能放大(当日量/20日均量 > 1.5)
+        4. 突破 10 日高点
+
+    命中 >= swing_min_signals(默认 2)才输出,否则不触发。
+    """
+    last_close = context["last_close"]
+    signals: list[str] = []
+    signal_details = {}
+
+    # --- 1. MACD 金叉 ---
+    dif, dea, hist = macd(close_series)
+    macd_cross = False
+    if len(dif) >= 4:
+        # 最近 3 天有过 DIF 上穿 DEA(即 DIF - DEA 从负变正)
+        recent_diff = (dif - dea).iloc[-4:]
+        for i in range(1, len(recent_diff)):
+            if recent_diff.iloc[i - 1] < 0 and recent_diff.iloc[i] > 0:
+                macd_cross = True
+                break
+    signal_details["macd_cross"] = macd_cross
+    signal_details["macd_hist"] = _safe(hist.iloc[-1], 3)
+    if macd_cross:
+        signals.append(f"MACD 金叉(近 3 日)")
+
+    # --- 2. KDJ 金叉 (低位) ---
+    if len(detail_df) >= 10:
+        h = pd.to_numeric(detail_df["high"], errors="coerce")
+        l = pd.to_numeric(detail_df["low"], errors="coerce")
+        c = pd.to_numeric(detail_df["close"], errors="coerce")
+        k, d, j = kdj(h, l, c)
+        kdj_cross = False
+        if len(k) >= 3:
+            recent_kd = (k - d).iloc[-3:]
+            for i in range(1, len(recent_kd)):
+                if recent_kd.iloc[i - 1] < 0 and recent_kd.iloc[i] > 0:
+                    # 且 K < 50 表示从相对低位金叉
+                    if k.iloc[i] < 50:
+                        kdj_cross = True
+                        break
+        signal_details["kdj_cross"] = kdj_cross
+        signal_details["kdj_k"] = _safe(k.iloc[-1])
+        signal_details["kdj_d"] = _safe(d.iloc[-1])
+        if kdj_cross:
+            signals.append(f"KDJ 低位金叉(K={_safe(k.iloc[-1])})")
+
+    # --- 3. 量能放大 ---
+    vol_ratio = None
+    if len(detail_df) >= 5:
+        vol = pd.to_numeric(detail_df["volume"], errors="coerce")
+        window = min(20, len(vol))
+        if window >= 5:
+            vol_ratio = float(vol.iloc[-1] / vol.iloc[-window:].mean())
+    signal_details["volume_ratio"] = _safe(vol_ratio) if vol_ratio else None
+    volume_surge = vol_ratio is not None and vol_ratio > sp.get("swing_vol_mult", 1.5)
+    if volume_surge:
+        signals.append(f"量能放大:量比 {vol_ratio:.2f}")
+
+    # --- 4. 突破 10 日高点 ---
+    breakout_10d = False
+    if len(close_series) >= 11:
+        prev_10d_high = float(close_series.iloc[-11:-1].max())  # 不含今日
+        if last_close > prev_10d_high:
+            breakout_10d = True
+            signal_details["prev_10d_high"] = _safe(prev_10d_high, 3)
+    if breakout_10d:
+        signals.append(f"突破 10 日高点")
+
+    # --- 汇总判定 ---
+    min_signals = sp.get("swing_min_signals", 2)
+    triggered = len(signals) >= min_signals
+
+    if not triggered:
+        return {
+            "triggered": False,
+            "hit_count": len(signals),
+            "total": 4,
+            "signals": signals,
+            "signal_details": signal_details,
+            "confidence": "未触发",
+            "note": "波段信号预测能力有限,仅用于候选筛选",
+        }
+
+    # 建议进出价位
+    swing_target_pct = sp.get("swing_target_pct", 6.0) / 100  # +5-8%
+    swing_stop_pct = sp.get("swing_stop_pct", 3.0) / 100      # -3%
+    target_price = last_close * (1 + swing_target_pct)
+    stop_price = last_close * (1 - swing_stop_pct)
+
+    # 置信度
+    if len(signals) >= 4:
+        confidence = "较高"  # 仍用"较高"而非"高",提醒不确定性
+    elif len(signals) == 3:
+        confidence = "中"
+    else:
+        confidence = "低"
+
+    return {
+        "triggered": True,
+        "hit_count": len(signals),
+        "total": 4,
+        "signals": signals,
+        "signal_details": signal_details,
+        "confidence": confidence,
+        "suggested_entry": _safe(last_close, 2),
+        "suggested_target": _safe(target_price, 2),
+        "suggested_stop": _safe(stop_price, 2),
+        "expected_move_pct": _safe(swing_target_pct * 100),
+        "note": "波段信号仅作候选参考,历史命中率有限,务必设止损",
     }
 
 
@@ -241,17 +446,25 @@ def main():
 
     with open(args.config, "r", encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
-    sp_dip = cfg["strategy"]["dip_buy"]
-    sp_exit = cfg["strategy"]["exit"]
+    sp = cfg["strategy"]
 
-    # 持仓
+    # 持仓(可选。方案 A 在 GitHub Actions 里跑时不提供持仓 → 只输出抄底/波段信号)
     positions: dict[str, dict] = {}
-    if os.path.exists(args.positions):
-        with open(args.positions, "r", encoding="utf-8") as f:
-            pos_data = json.load(f)
-        for p in pos_data.get("positions", []):
-            if p.get("cost_price", 0) > 0:
-                positions[str(p["code"]).zfill(6)] = p
+    if args.positions and os.path.exists(args.positions) and os.path.isfile(args.positions):
+        try:
+            with open(args.positions, "r", encoding="utf-8") as f:
+                pos_data = json.load(f)
+            for p in pos_data.get("positions", []):
+                if p.get("cost_price", 0) > 0:
+                    positions[str(p["code"]).zfill(6)] = p
+            if positions:
+                print(f"[info] 加载 {len(positions)} 只持仓")
+            else:
+                print(f"[info] positions 文件存在但为空")
+        except (json.JSONDecodeError, ValueError) as e:
+            print(f"[warn] positions 文件解析失败 ({e}),按无持仓处理", file=sys.stderr)
+    else:
+        print(f"[info] 无 positions 文件,只输出抄底/波段信号(不含止盈分析)")
 
     data_dir = os.path.join(args.data_dir, args.date)
     if not os.path.isdir(data_dir):
@@ -269,11 +482,9 @@ def main():
         with open(jpath, "r", encoding="utf-8") as f:
             raw = json.load(f)
 
-        # 兼容新旧两种格式
         close_history = raw.get("close_history", [])
         kline_30d = raw.get("kline_30d", [])
-
-        # 向后兼容:老版 kline 字段
+        # 向后兼容老格式
         if not close_history and not kline_30d:
             old_kline = raw.get("kline", [])
             if old_kline:
@@ -281,56 +492,82 @@ def main():
                 kline_30d = old_kline[-30:]
 
         if not close_history or len(close_history) < 20:
-            print(f"[skip] insufficient close_history for {code} "
-                  f"({len(close_history)} days)")
+            print(f"[skip] insufficient close_history for {code}")
             continue
         if not kline_30d or len(kline_30d) < 10:
-            print(f"[skip] insufficient kline_30d for {code} ({len(kline_30d)} days)")
+            print(f"[skip] insufficient kline_30d for {code}")
             continue
 
-        # 长序列收盘价(用于 RSI / MACD / MA60 / 60日低位)
+        # 数据序列
         close_series = pd.Series(
             pd.to_numeric([k["close"] for k in close_history], errors="coerce")
         ).dropna().reset_index(drop=True)
-
-        # 短期完整 K 线(用于 KDJ / 布林带 / 量比)
         detail_df = pd.DataFrame(kline_30d)
         for col in ["open", "close", "high", "low", "volume"]:
             if col in detail_df.columns:
                 detail_df[col] = pd.to_numeric(detail_df[col], errors="coerce")
         detail_df = detail_df.dropna(subset=["close"]).reset_index(drop=True)
 
+        # 共用上下文
+        ctx = compute_context(close_series, detail_df)
+
         item: dict[str, Any] = {
             "code": code,
             "name": s.get("name", raw.get("name", "")),
             "quote": raw.get("quote", {}),
+            "context": ctx,
             "money_flow_5d": raw.get("money_flow", []),
-            "dip_analysis": evaluate_dip_signals(close_series, detail_df, sp_dip),
         }
-        if code in positions:
-            item["position"] = positions[code]
-            item["exit_analysis"] = evaluate_exit_signals(close_series, positions[code], sp_exit)
+
+        # 三策略独立评估
+        pos = positions.get(code)
+        if pos is not None:
+            # 持仓 → 止盈分析
+            item["strategy_take_profit"] = evaluate_take_profit(ctx, pos, sp["take_profit"])
+            item["position"] = pos
+        else:
+            # 未持仓 → 抄底分析
+            item["strategy_dip_buy"] = evaluate_dip_buy(ctx, sp["dip_buy"])
+
+        # 波段 → 无论持仓都评估
+        item["strategy_swing"] = evaluate_swing(close_series, detail_df, ctx, sp["swing"])
+
         results.append(item)
 
     out_path = args.output or os.path.join(data_dir, "signals.json")
     with open(out_path, "w", encoding="utf-8") as f:
-        json.dump({"date": args.date, "results": results}, f, ensure_ascii=False, indent=2)
+        json.dump({"date": args.date, "results": results}, f,
+                  ensure_ascii=False, indent=2)
     print(f"[done] signals -> {out_path}\n")
 
-    # ---- 终端摘要 ----
-    print(f"{'代码':<8}{'名称':<10}{'抄底':<10}{'盈亏':<12}{'动作'}")
-    print("-" * 60)
+    # --- 终端摘要 ---
+    print(f"{'代码':<8}{'名称':<10}{'5d趋势':<12}{'90d位置':<10}"
+          f"{'止盈':<12}{'抄底':<12}{'波段'}")
+    print("-" * 85)
     for r in results:
-        d = r["dip_analysis"]
-        flag = f"🟢{d['hit_count']}/6" if d["triggered"] else f"⚪{d['hit_count']}/6"
-        if "exit_analysis" in r:
-            ex = r["exit_analysis"]
-            pnl = f"{ex['pnl_pct']:+.2f}%"
-            action = ex["action"]
+        c = r["context"]
+        trend_str = f"{c['trend_5d']['cum_pct']:+.2f}%"
+        pos_90 = c['range_90d']['position_pct']
+        pos_str = f"{pos_90:.0f}%" if pos_90 is not None else "-"
+
+        if "strategy_take_profit" in r:
+            tp = r["strategy_take_profit"]
+            tp_str = f"{tp['action_cn']}({tp['confidence']})"
         else:
-            pnl = "-"
-            action = "抄底候选" if d["triggered"] else "观望"
-        print(f"{r['code']:<8}{r['name']:<10}{flag:<10}{pnl:<12}{action}")
+            tp_str = "-"
+
+        if "strategy_dip_buy" in r:
+            db = r["strategy_dip_buy"]
+            db_str = f"{db['tier_cn']}" if db["triggered"] else "-"
+        else:
+            db_str = "-"
+
+        sw = r["strategy_swing"]
+        sw_str = f"✓{sw['hit_count']}/4({sw['confidence']})" if sw["triggered"] \
+                 else f"{sw['hit_count']}/4"
+
+        print(f"{r['code']:<8}{r['name']:<10}{trend_str:<12}{pos_str:<10}"
+              f"{tp_str:<12}{db_str:<12}{sw_str}")
 
 
 if __name__ == "__main__":

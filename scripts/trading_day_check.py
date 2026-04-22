@@ -22,13 +22,19 @@ def is_trading_day(date_str: str | None = None) -> bool:
         print("ERROR: 需要 akshare。pip install akshare", file=sys.stderr)
         sys.exit(2)
 
+    # 优先用 akshare 交易日历
     try:
         cal = ak.tool_trade_date_hist_sina()
-        cal["trade_date"] = cal["trade_date"].astype(str)
-        return date_str in set(cal["trade_date"])
+        if cal is not None and len(cal) > 0:
+            cal["trade_date"] = cal["trade_date"].astype(str)
+            dates = set(cal["trade_date"])
+            return date_str in dates
+        raise ValueError("交易日历返回空")
     except Exception as e:
-        # 网络异常或接口变更 -> 退回为"非周末"的弱判断
-        print(f"WARN: akshare 交易日历接口失败 ({e}),退回周末规则", file=sys.stderr)
+        # 交易日历接口失败 -> 退回"非周末"的弱判断
+        # 注意:遇到春节、国庆等会误判,但比 crash 好
+        print(f"WARN: akshare 交易日历接口失败 ({type(e).__name__}: {str(e)[:80]}),"
+              f"退回周末规则(可能误判法定节假日)", file=sys.stderr)
         dt = datetime.strptime(date_str, "%Y-%m-%d")
         return dt.weekday() < 5
 
