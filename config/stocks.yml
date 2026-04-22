@@ -49,8 +49,12 @@ strategy:
 # 运行/报告配置
 # ---------------------------------------------------------------
 runtime:
-  kline_days: 250               # 拉取日线天数
+  # 分层数据模型(v2.0):
+  close_history_days: 250       # 长周期:只拉收盘价,用于 MA60/RSI/MACD/60日低位
+  kline_detail_days: 30         # 短周期:完整 OHLCV,用于 KDJ/布林带/量比/K线图
   money_flow_days: 5            # 主力资金流天数
   data_dir: "data"
   report_dir: "reports"
   language: "zh"
+  # 兼容老字段(已废弃,analyze_signals 会自动识别两种格式)
+  kline_days: 250
