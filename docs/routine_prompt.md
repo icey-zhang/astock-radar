@@ -74,11 +74,16 @@ Your job is to take the skeleton and fill in the AI analysis blocks with real ne
    - One portfolio-level risk note (e.g., concentration in certain sectors)
    - Keep it under 150 words.
 
-7. **Commit and push**
+7. **Sync AI analysis to HTML dashboard, then commit and push**
    ```bash
+   # 先把 MD 里的 AI 分析同步到 HTML dashboard,让 HTML 也能看到消息面内容
+   python scripts/sync_ai_to_html.py \
+     --md "reports/${TODAY}.md" \
+     --html "reports/${TODAY}_dashboard.html"
+
    git config user.email "claude-analyst@local"
    git config user.name "Claude Analyst"
-   git add "reports/${TODAY}.md"
+   git add "reports/${TODAY}.md" "reports/${TODAY}_dashboard.html"
    if git diff --staged --quiet; then
      echo "No changes — analysis already complete or no triggers today"
    else

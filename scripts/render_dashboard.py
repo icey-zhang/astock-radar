@@ -410,6 +410,10 @@ HTML_TEMPLATE = r"""<!DOCTYPE html>
 <script>
 const DATA = __DATA_JSON__;
 
+// AI 分析区块内容由 sync_ai_to_html.py 填入(初始空对象)
+// 格式:{"600519": "<p>...</p>", "002594": "<p>...</p>"}
+window.AI_ANALYSIS = /* AI_ANALYSIS_START */{}/* AI_ANALYSIS_END */;
+
 function fmtPct(v) {
   if (v === null || v === undefined || v === '') return '-';
   const n = parseFloat(v);
@@ -624,10 +628,19 @@ function renderStockCard(s) {
       ${tpHTML}
       ${dipHTML}
       ${swHTML}
-      <div class="ai-block" id="ai-${s.code}">
-        <strong>🤖 AI 综合分析(消息面)</strong>
-        <div class="placeholder">待 Claude.ai 补充:最近公告/业绩/行业/突发事件;确认信号有效性;生成最终决策建议。</div>
-      </div>
+      ${(() => {
+        const ai = (window.AI_ANALYSIS || {})[s.code];
+        if (ai) {
+          return `<div class="ai-block filled" id="ai-${s.code}">
+            <strong>🤖 AI 综合分析</strong>
+            <div style="margin-top:8px">${ai}</div>
+          </div>`;
+        }
+        return `<div class="ai-block" id="ai-${s.code}">
+          <strong>🤖 AI 综合分析(消息面)</strong>
+          <div class="placeholder">待 Routine 补充:最近公告/业绩/行业/突发事件;确认信号有效性;生成最终决策建议。</div>
+        </div>`;
+      })()}
     </div>
   `;
 }
