@@ -1,0 +1,69 @@
+name: Daily A-Share Analysis
+
+# Fallback 路径:如果 Claude Code Routine 因为网络问题跑不起来,用 GitHub Actions 备份
+# 注意:GitHub Actions runner 在美国,akshare 对国外 IP 可能限流更严,稳定性不如 Routines 或本地 cron
+
+on:
+  schedule:
+    # UTC 07:30 = 北京 15:30(A 股收盘后 30 分钟)
+    # 工作日(周一到周五)触发;实际是否跑由 trading_day_check.py 再判一次
+    - cron: '30 7 * * 1-5'
+  workflow_dispatch:  # 允许手动触发
+
+permissions:
+  contents: write  # 允许 commit & push
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Trading day check
+        id: tcheck
+        continue-on-error: true
+        run: |
+          python scripts/trading_day_check.py
+          echo "is_trading_day=$?" >> $GITHUB_OUTPUT
+
+      - name: Skip if non-trading day
+        if: steps.tcheck.outcome != 'success'
+        run: |
+          echo "::notice::非 A 股交易日,跳过。"
+          exit 0
+
+      - name: Run daily analysis
+        run: |
+          bash scripts/run_daily.sh --with-news
+
+      - name: Commit results
+        run: |
+          TODAY=$(date +%Y-%m-%d)
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add "data/${TODAY}/" "reports/${TODAY}.md" "reports/${TODAY}_dashboard.html"
+          if git diff --staged --quiet; then
+            echo "::notice::无新产物可提交"
+          else
+            git commit -m "daily: ${TODAY} (via actions)"
+            git push
+          fi
+
+      - name: Upload report as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ github.run_number }}
+          path: reports/
+          retention-days: 30
