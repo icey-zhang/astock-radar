@@ -1,0 +1,99 @@
+{
+  "date": "2026-04-22",
+  "results": [
+    {
+      "code": "002885",
+      "name": "京泉华",
+      "quote": {
+        "code": "002885",
+        "name": "京泉华",
+        "price": 30.43,
+        "pct_change": 3.33,
+        "change": 0.98,
+        "volume": 291179.0,
+        "amount": 871825292.34,
+        "amplitude": 5.67,
+        "high": 30.66,
+        "low": 28.99,
+        "open": 29.46,
+        "prev_close": 29.45,
+        "turnover": 12.61,
+        "pe_ttm": 86.03,
+        "pb": 5.6,
+        "market_cap": 8244003336.0,
+        "float_cap": 7026519881.0
+      },
+      "money_flow_5d": [
+        {
+          "date": "2026-04-16",
+          "close": 26.3,
+          "pct_change": 0.92,
+          "main_net_inflow": -4695079.0,
+          "main_net_inflow_pct": -0.83,
+          "super_large_net": 2886591.0,
+          "large_net": -7581670.0
+        },
+        {
+          "date": "2026-04-17",
+          "close": 26.64,
+          "pct_change": 1.29,
+          "main_net_inflow": 2941790.0,
+          "main_net_inflow_pct": 0.56,
+          "super_large_net": -7873844.0,
+          "large_net": 10815634.0
+        },
+        {
+          "date": "2026-04-20",
+          "close": 29.3,
+          "pct_change": 9.98,
+          "main_net_inflow": 294568273.0,
+          "main_net_inflow_pct": 29.89,
+          "super_large_net": 258825688.0,
+          "large_net": 35742585.0
+        },
+        {
+          "date": "2026-04-21",
+          "close": 29.45,
+          "pct_change": 0.51,
+          "main_net_inflow": 3051715.0,
+          "main_net_inflow_pct": 0.29,
+          "super_large_net": -23881435.0,
+          "large_net": 26933150.0
+        },
+        {
+          "date": "2026-04-22",
+          "close": 30.43,
+          "pct_change": 3.33,
+          "main_net_inflow": 55043740.0,
+          "main_net_inflow_pct": 6.31,
+          "super_large_net": 51762497.0,
+          "large_net": 3281243.0
+        }
+      ],
+      "dip_analysis": {
+        "signals": [],
+        "hit_count": 0,
+        "total": 6,
+        "score": 0,
+        "triggered": false,
+        "details": {
+          "close": 30.43,
+          "rsi_14": 68.65,
+          "bb_lower": 21.12,
+          "bb_mid": 25.447,
+          "kdj_k": 88.01,
+          "kdj_d": 78.87,
+          "kdj_j": 106.28,
+          "macd_dif": 0.487,
+          "macd_dea": -0.334,
+          "macd_hist": 1.643,
+          "volume_ratio_20d": 1.77,
+          "ma20": 25.447,
+          "ma60": 27.564,
+          "low_60d_min": 22.89,
+          "low_60d_band": 23.917
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,615 @@
+{
+  "code": "002885",
+  "name": "京泉华",
+  "fetched_at": "2026-04-22T11:14:40.136070",
+  "close_history": [
+    {
+      "date": "2026-01-20",
+      "close": 28.26
+    },
+    {
+      "date": "2026-01-21",
+      "close": 29.91
+    },
+    {
+      "date": "2026-01-22",
+      "close": 29.24
+    },
+    {
+      "date": "2026-01-23",
+      "close": 29.6
+    },
+    {
+      "date": "2026-01-26",
+      "close": 28.75
+    },
+    {
+      "date": "2026-01-27",
+      "close": 28.29
+    },
+    {
+      "date": "2026-01-28",
+      "close": 27.4
+    },
+    {
+      "date": "2026-01-29",
+      "close": 25.85
+    },
+    {
+      "date": "2026-01-30",
+      "close": 25.54
+    },
+    {
+      "date": "2026-02-02",
+      "close": 26.25
+    },
+    {
+      "date": "2026-02-03",
+      "close": 27.3
+    },
+    {
+      "date": "2026-02-04",
+      "close": 27.52
+    },
+    {
+      "date": "2026-02-05",
+      "close": 26.2
+    },
+    {
+      "date": "2026-02-06",
+      "close": 25.99
+    },
+    {
+      "date": "2026-02-09",
+      "close": 26.41
+    },
+    {
+      "date": "2026-02-10",
+      "close": 26.23
+    },
+    {
+      "date": "2026-02-11",
+      "close": 26.56
+    },
+    {
+      "date": "2026-02-12",
+      "close": 29.22
+    },
+    {
+      "date": "2026-02-13",
+      "close": 29.48
+    },
+    {
+      "date": "2026-02-24",
+      "close": 29.96
+    },
+    {
+      "date": "2026-02-25",
+      "close": 30.18
+    },
+    {
+      "date": "2026-02-26",
+      "close": 31.26
+    },
+    {
+      "date": "2026-02-27",
+      "close": 30.86
+    },
+    {
+      "date": "2026-03-02",
+      "close": 30.43
+    },
+    {
+      "date": "2026-03-03",
+      "close": 29.02
+    },
+    {
+      "date": "2026-03-04",
+      "close": 31.92
+    },
+    {
+      "date": "2026-03-05",
+      "close": 32.3
+    },
+    {
+      "date": "2026-03-06",
+      "close": 32.75
+    },
+    {
+      "date": "2026-03-09",
+      "close": 32.5
+    },
+    {
+      "date": "2026-03-10",
+      "close": 33.16
+    },
+    {
+      "date": "2026-03-11",
+      "close": 32.44
+    },
+    {
+      "date": "2026-03-12",
+      "close": 31.22
+    },
+    {
+      "date": "2026-03-13",
+      "close": 29.7
+    },
+    {
+      "date": "2026-03-16",
+      "close": 29.33
+    },
+    {
+      "date": "2026-03-17",
+      "close": 27.16
+    },
+    {
+      "date": "2026-03-18",
+      "close": 27.49
+    },
+    {
+      "date": "2026-03-19",
+      "close": 26.16
+    },
+    {
+      "date": "2026-03-20",
+      "close": 25.14
+    },
+    {
+      "date": "2026-03-23",
+      "close": 23.62
+    },
+    {
+      "date": "2026-03-24",
+      "close": 24.28
+    },
+    {
+      "date": "2026-03-25",
+      "close": 24.54
+    },
+    {
+      "date": "2026-03-26",
+      "close": 24.63
+    },
+    {
+      "date": "2026-03-27",
+      "close": 24.68
+    },
+    {
+      "date": "2026-03-30",
+      "close": 24.51
+    },
+    {
+      "date": "2026-03-31",
+      "close": 23.58
+    },
+    {
+      "date": "2026-04-01",
+      "close": 24.2
+    },
+    {
+      "date": "2026-04-02",
+      "close": 23.29
+    },
+    {
+      "date": "2026-04-03",
+      "close": 22.89
+    },
+    {
+      "date": "2026-04-07",
+      "close": 22.99
+    },
+    {
+      "date": "2026-04-08",
+      "close": 24.48
+    },
+    {
+      "date": "2026-04-09",
+      "close": 24.53
+    },
+    {
+      "date": "2026-04-10",
+      "close": 24.81
+    },
+    {
+      "date": "2026-04-13",
+      "close": 24.59
+    },
+    {
+      "date": "2026-04-14",
+      "close": 27.05
+    },
+    {
+      "date": "2026-04-15",
+      "close": 26.06
+    },
+    {
+      "date": "2026-04-16",
+      "close": 26.3
+    },
+    {
+      "date": "2026-04-17",
+      "close": 26.64
+    },
+    {
+      "date": "2026-04-20",
+      "close": 29.3
+    },
+    {
+      "date": "2026-04-21",
+      "close": 29.45
+    },
+    {
+      "date": "2026-04-22",
+      "close": 30.43
+    }
+  ],
+  "kline_30d": [
+    {
+      "date": "2026-03-11",
+      "open": 33.15,
+      "close": 32.44,
+      "high": 33.15,
+      "low": 32.25,
+      "volume": 20078369.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-12",
+      "open": 32.5,
+      "close": 31.22,
+      "high": 32.51,
+      "low": 30.95,
+      "volume": 20397296.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-13",
+      "open": 30.95,
+      "close": 29.7,
+      "high": 31.15,
+      "low": 29.22,
+      "volume": 19343435.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-16",
+      "open": 29.77,
+      "close": 29.33,
+      "high": 29.95,
+      "low": 28.52,
+      "volume": 13628414.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-17",
+      "open": 29.5,
+      "close": 27.16,
+      "high": 29.65,
+      "low": 27.03,
+      "volume": 20264660.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-18",
+      "open": 27.21,
+      "close": 27.49,
+      "high": 27.7,
+      "low": 26.96,
+      "volume": 13602100.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-19",
+      "open": 27.0,
+      "close": 26.16,
+      "high": 27.2,
+      "low": 26.0,
+      "volume": 15321904.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-20",
+      "open": 26.31,
+      "close": 25.14,
+      "high": 26.65,
+      "low": 25.11,
+      "volume": 14419417.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-23",
+      "open": 24.47,
+      "close": 23.62,
+      "high": 25.05,
+      "low": 23.4,
+      "volume": 15580255.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-24",
+      "open": 24.12,
+      "close": 24.28,
+      "high": 24.29,
+      "low": 23.48,
+      "volume": 11183460.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-25",
+      "open": 24.55,
+      "close": 24.54,
+      "high": 25.09,
+      "low": 24.32,
+      "volume": 12175900.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-26",
+      "open": 24.39,
+      "close": 24.63,
+      "high": 25.36,
+      "low": 24.23,
+      "volume": 18382894.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-27",
+      "open": 24.18,
+      "close": 24.68,
+      "high": 25.28,
+      "low": 23.96,
+      "volume": 11883286.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-30",
+      "open": 24.2,
+      "close": 24.51,
+      "high": 24.93,
+      "low": 24.0,
+      "volume": 9706525.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-03-31",
+      "open": 24.52,
+      "close": 23.58,
+      "high": 24.65,
+      "low": 23.58,
+      "volume": 11246041.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-01",
+      "open": 24.09,
+      "close": 24.2,
+      "high": 24.36,
+      "low": 23.97,
+      "volume": 9079300.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-02",
+      "open": 24.0,
+      "close": 23.29,
+      "high": 24.31,
+      "low": 23.03,
+      "volume": 10467514.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-03",
+      "open": 23.65,
+      "close": 22.89,
+      "high": 23.65,
+      "low": 22.72,
+      "volume": 8196033.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-07",
+      "open": 22.98,
+      "close": 22.99,
+      "high": 23.28,
+      "low": 22.81,
+      "volume": 6698847.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-08",
+      "open": 23.78,
+      "close": 24.48,
+      "high": 24.5,
+      "low": 23.68,
+      "volume": 12876060.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-09",
+      "open": 24.15,
+      "close": 24.53,
+      "high": 24.83,
+      "low": 24.03,
+      "volume": 10539593.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-10",
+      "open": 24.8,
+      "close": 24.81,
+      "high": 25.15,
+      "low": 24.6,
+      "volume": 11946002.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-13",
+      "open": 24.45,
+      "close": 24.59,
+      "high": 24.78,
+      "low": 24.37,
+      "volume": 8575840.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-14",
+      "open": 26.9,
+      "close": 27.05,
+      "high": 27.05,
+      "low": 26.9,
+      "volume": 8993012.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-15",
+      "open": 28.39,
+      "close": 26.06,
+      "high": 28.39,
+      "low": 25.77,
+      "volume": 37876089.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-16",
+      "open": 26.06,
+      "close": 26.3,
+      "high": 26.4,
+      "low": 25.68,
+      "volume": 21527360.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-17",
+      "open": 26.27,
+      "close": 26.64,
+      "high": 26.66,
+      "low": 25.9,
+      "volume": 19852096.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-20",
+      "open": 26.71,
+      "close": 29.3,
+      "high": 29.3,
+      "low": 26.65,
+      "volume": 34762688.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-21",
+      "open": 29.3,
+      "close": 29.45,
+      "high": 29.8,
+      "low": 28.72,
+      "volume": 35963111.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-04-22",
+      "open": 29.46,
+      "close": 30.43,
+      "high": 30.66,
+      "low": 28.99,
+      "volume": 29117911.0,
+      "pct_change": null,
+      "turnover": null
+    }
+  ],
+  "quote": {
+    "code": "002885",
+    "name": "京泉华",
+    "price": 30.43,
+    "pct_change": 3.33,
+    "change": 0.98,
+    "volume": 291179.0,
+    "amount": 871825292.34,
+    "amplitude": 5.67,
+    "high": 30.66,
+    "low": 28.99,
+    "open": 29.46,
+    "prev_close": 29.45,
+    "turnover": 12.61,
+    "pe_ttm": 86.03,
+    "pb": 5.6,
+    "market_cap": 8244003336.0,
+    "float_cap": 7026519881.0
+  },
+  "money_flow": [
+    {
+      "date": "2026-04-16",
+      "close": 26.3,
+      "pct_change": 0.92,
+      "main_net_inflow": -4695079.0,
+      "main_net_inflow_pct": -0.83,
+      "super_large_net": 2886591.0,
+      "large_net": -7581670.0
+    },
+    {
+      "date": "2026-04-17",
+      "close": 26.64,
+      "pct_change": 1.29,
+      "main_net_inflow": 2941790.0,
+      "main_net_inflow_pct": 0.56,
+      "super_large_net": -7873844.0,
+      "large_net": 10815634.0
+    },
+    {
+      "date": "2026-04-20",
+      "close": 29.3,
+      "pct_change": 9.98,
+      "main_net_inflow": 294568273.0,
+      "main_net_inflow_pct": 29.89,
+      "super_large_net": 258825688.0,
+      "large_net": 35742585.0
+    },
+    {
+      "date": "2026-04-21",
+      "close": 29.45,
+      "pct_change": 0.51,
+      "main_net_inflow": 3051715.0,
+      "main_net_inflow_pct": 0.29,
+      "super_large_net": -23881435.0,
+      "large_net": 26933150.0
+    },
+    {
+      "date": "2026-04-22",
+      "close": 30.43,
+      "pct_change": 3.33,
+      "main_net_inflow": 55043740.0,
+      "main_net_inflow_pct": 6.31,
+      "super_large_net": 51762497.0,
+      "large_net": 3281243.0
+    }
+  ]
+}
