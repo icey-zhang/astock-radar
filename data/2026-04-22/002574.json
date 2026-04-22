@@ -1,1375 +1,1375 @@
 {
-  "code": "002885",
-  "name": "京泉华",
-  "fetched_at": "2026-04-22T15:52:35.782941",
+  "code": "002574",
+  "name": "明牌珠宝",
+  "fetched_at": "2026-04-22T15:58:23.817399",
   "close_history": [
     {
       "date": "2025-04-11",
-      "close": 12.02
+      "close": 5.83
     },
     {
       "date": "2025-04-14",
-      "close": 12.17
+      "close": 6.08
     },
     {
       "date": "2025-04-15",
-      "close": 12.48
+      "close": 6.13
     },
     {
       "date": "2025-04-16",
-      "close": 12.38
+      "close": 6.13
     },
     {
       "date": "2025-04-17",
-      "close": 12.42
+      "close": 6.23
     },
     {
       "date": "2025-04-18",
-      "close": 12.55
+      "close": 6.0
     },
     {
       "date": "2025-04-21",
-      "close": 12.96
+      "close": 6.13
     },
     {
       "date": "2025-04-22",
-      "close": 12.74
+      "close": 6.58
     },
     {
       "date": "2025-04-23",
-      "close": 12.7
+      "close": 5.92
     },
     {
       "date": "2025-04-24",
-      "close": 12.47
+      "close": 5.51
     },
     {
       "date": "2025-04-25",
-      "close": 12.42
+      "close": 5.55
     },
     {
       "date": "2025-04-28",
-      "close": 12.55
+      "close": 5.4
     },
     {
       "date": "2025-04-29",
-      "close": 12.76
+      "close": 5.36
     },
     {
       "date": "2025-04-30",
-      "close": 12.98
+      "close": 5.43
     },
     {
       "date": "2025-05-06",
-      "close": 13.47
+      "close": 5.68
     },
     {
       "date": "2025-05-07",
-      "close": 13.56
+      "close": 5.66
     },
     {
       "date": "2025-05-08",
-      "close": 13.75
+      "close": 5.65
     },
     {
       "date": "2025-05-09",
-      "close": 13.65
+      "close": 5.61
     },
     {
       "date": "2025-05-12",
-      "close": 13.86
+      "close": 5.55
     },
     {
       "date": "2025-05-13",
-      "close": 13.83
+      "close": 5.6
     },
     {
       "date": "2025-05-14",
-      "close": 13.71
+      "close": 5.57
     },
     {
       "date": "2025-05-15",
-      "close": 13.27
+      "close": 5.59
     },
     {
       "date": "2025-05-16",
-      "close": 13.44
+      "close": 5.6
     },
     {
       "date": "2025-05-19",
-      "close": 13.6
+      "close": 5.66
     },
     {
       "date": "2025-05-20",
-      "close": 13.7
+      "close": 5.82
     },
     {
       "date": "2025-05-21",
-      "close": 13.61
+      "close": 6.04
     },
     {
       "date": "2025-05-22",
-      "close": 13.47
+      "close": 6.07
     },
     {
       "date": "2025-05-23",
-      "close": 13.25
+      "close": 6.01
     },
     {
       "date": "2025-05-26",
-      "close": 13.45
+      "close": 6.15
     },
     {
       "date": "2025-05-27",
-      "close": 13.32
+      "close": 6.77
     },
     {
       "date": "2025-05-28",
-      "close": 13.23
+      "close": 7.45
     },
     {
       "date": "2025-05-29",
-      "close": 13.67
+      "close": 6.98
     },
     {
       "date": "2025-05-30",
-      "close": 13.28
+      "close": 6.79
     },
     {
       "date": "2025-06-03",
-      "close": 13.24
+      "close": 7.01
     },
     {
       "date": "2025-06-04",
-      "close": 13.52
+      "close": 7.54
     },
     {
       "date": "2025-06-05",
-      "close": 13.72
+      "close": 6.95
     },
     {
       "date": "2025-06-06",
-      "close": 13.83
+      "close": 6.46
     },
     {
       "date": "2025-06-09",
-      "close": 13.85
+      "close": 6.55
     },
     {
       "date": "2025-06-10",
-      "close": 13.67
+      "close": 6.38
     },
     {
       "date": "2025-06-11",
-      "close": 13.78
+      "close": 6.42
     },
     {
       "date": "2025-06-12",
-      "close": 13.85
+      "close": 6.67
     },
     {
       "date": "2025-06-13",
-      "close": 13.27
+      "close": 6.77
     },
     {
       "date": "2025-06-16",
-      "close": 13.34
+      "close": 6.94
     },
     {
       "date": "2025-06-17",
-      "close": 13.27
+      "close": 6.45
     },
     {
       "date": "2025-06-18",
-      "close": 13.36
+      "close": 6.31
     },
     {
       "date": "2025-06-19",
-      "close": 13.15
+      "close": 6.04
     },
     {
       "date": "2025-06-20",
-      "close": 13.11
+      "close": 5.91
     },
     {
       "date": "2025-06-23",
-      "close": 13.28
+      "close": 6.06
     },
     {
       "date": "2025-06-24",
-      "close": 13.81
+      "close": 5.99
     },
     {
       "date": "2025-06-25",
-      "close": 13.87
+      "close": 5.99
     },
     {
       "date": "2025-06-26",
-      "close": 13.75
+      "close": 6.04
     },
     {
       "date": "2025-06-27",
-      "close": 13.86
+      "close": 6.04
     },
     {
       "date": "2025-06-30",
-      "close": 14.15
+      "close": 6.2
     },
     {
       "date": "2025-07-01",
-      "close": 14.03
+      "close": 6.18
     },
     {
       "date": "2025-07-02",
-      "close": 13.96
+      "close": 6.14
     },
     {
       "date": "2025-07-03",
-      "close": 14.03
+      "close": 6.17
     },
     {
       "date": "2025-07-04",
-      "close": 13.84
+      "close": 5.95
     },
     {
       "date": "2025-07-07",
-      "close": 13.96
+      "close": 6.03
     },
     {
       "date": "2025-07-08",
-      "close": 14.41
+      "close": 6.08
     },
     {
       "date": "2025-07-09",
-      "close": 14.62
+      "close": 6.02
     },
     {
       "date": "2025-07-10",
-      "close": 14.45
+      "close": 6.02
     },
     {
       "date": "2025-07-11",
-      "close": 14.3
+      "close": 6.04
     },
     {
       "date": "2025-07-14",
-      "close": 14.9
+      "close": 6.06
     },
     {
       "date": "2025-07-15",
-      "close": 14.75
+      "close": 5.79
     },
     {
       "date": "2025-07-16",
-      "close": 14.54
+      "close": 5.82
     },
     {
       "date": "2025-07-17",
-      "close": 14.57
+      "close": 5.88
     },
     {
       "date": "2025-07-18",
-      "close": 14.44
+      "close": 5.87
     },
     {
       "date": "2025-07-21",
-      "close": 14.57
+      "close": 5.94
     },
     {
       "date": "2025-07-22",
-      "close": 14.41
+      "close": 5.93
     },
     {
       "date": "2025-07-23",
-      "close": 14.17
+      "close": 5.84
     },
     {
       "date": "2025-07-24",
-      "close": 14.28
+      "close": 5.88
     },
     {
       "date": "2025-07-25",
-      "close": 14.38
+      "close": 5.84
     },
     {
       "date": "2025-07-28",
-      "close": 14.55
+      "close": 5.85
     },
     {
       "date": "2025-07-29",
-      "close": 14.44
+      "close": 5.75
     },
     {
       "date": "2025-07-30",
-      "close": 14.22
+      "close": 5.72
     },
     {
       "date": "2025-07-31",
-      "close": 14.09
+      "close": 5.63
     },
     {
       "date": "2025-08-01",
-      "close": 14.18
+      "close": 5.69
     },
     {
       "date": "2025-08-04",
-      "close": 14.6
+      "close": 5.79
     },
     {
       "date": "2025-08-05",
-      "close": 14.64
+      "close": 5.78
     },
     {
       "date": "2025-08-06",
-      "close": 16.1
+      "close": 5.82
     },
     {
       "date": "2025-08-07",
-      "close": 15.67
+      "close": 5.93
     },
     {
       "date": "2025-08-08",
-      "close": 15.67
+      "close": 5.95
     },
     {
       "date": "2025-08-11",
-      "close": 16.34
+      "close": 5.9
     },
     {
       "date": "2025-08-12",
-      "close": 16.2
+      "close": 5.91
     },
     {
       "date": "2025-08-13",
-      "close": 16.02
+      "close": 5.84
     },
     {
       "date": "2025-08-14",
-      "close": 15.44
+      "close": 5.71
     },
     {
       "date": "2025-08-15",
-      "close": 16.42
+      "close": 5.72
     },
     {
       "date": "2025-08-18",
-      "close": 16.98
+      "close": 5.78
     },
     {
       "date": "2025-08-19",
-      "close": 16.76
+      "close": 5.78
     },
     {
       "date": "2025-08-20",
-      "close": 16.73
+      "close": 5.9
     },
     {
       "date": "2025-08-21",
-      "close": 16.47
+      "close": 5.91
     },
     {
       "date": "2025-08-22",
-      "close": 16.3
+      "close": 5.87
     },
     {
       "date": "2025-08-25",
-      "close": 16.14
+      "close": 5.89
     },
     {
       "date": "2025-08-26",
-      "close": 16.15
+      "close": 5.91
     },
     {
       "date": "2025-08-27",
-      "close": 15.86
+      "close": 5.69
     },
     {
       "date": "2025-08-28",
-      "close": 15.98
+      "close": 5.65
     },
     {
       "date": "2025-08-29",
-      "close": 15.65
+      "close": 5.65
     },
     {
       "date": "2025-09-01",
-      "close": 15.78
+      "close": 5.85
     },
     {
       "date": "2025-09-02",
-      "close": 15.3
+      "close": 6.03
     },
     {
       "date": "2025-09-03",
-      "close": 14.96
+      "close": 5.83
     },
     {
       "date": "2025-09-04",
-      "close": 14.82
+      "close": 5.94
     },
     {
       "date": "2025-09-05",
-      "close": 15.43
+      "close": 6.05
     },
     {
       "date": "2025-09-08",
-      "close": 15.56
+      "close": 6.09
     },
     {
       "date": "2025-09-09",
-      "close": 15.36
+      "close": 6.23
     },
     {
       "date": "2025-09-10",
-      "close": 15.24
+      "close": 6.22
     },
     {
       "date": "2025-09-11",
-      "close": 15.69
+      "close": 6.14
     },
     {
       "date": "2025-09-12",
-      "close": 15.5
+      "close": 6.12
     },
     {
       "date": "2025-09-15",
-      "close": 15.41
+      "close": 6.02
     },
     {
       "date": "2025-09-16",
-      "close": 15.69
+      "close": 6.08
     },
     {
       "date": "2025-09-17",
-      "close": 15.74
+      "close": 5.95
     },
     {
       "date": "2025-09-18",
-      "close": 15.9
+      "close": 5.73
     },
     {
       "date": "2025-09-19",
-      "close": 15.68
+      "close": 5.67
     },
     {
       "date": "2025-09-22",
-      "close": 15.93
+      "close": 5.69
     },
     {
       "date": "2025-09-23",
-      "close": 16.36
+      "close": 5.61
     },
     {
       "date": "2025-09-24",
-      "close": 17.59
+      "close": 5.68
     },
     {
       "date": "2025-09-25",
-      "close": 18.95
+      "close": 5.55
     },
     {
       "date": "2025-09-26",
-      "close": 19.16
+      "close": 5.56
     },
     {
       "date": "2025-09-29",
-      "close": 18.96
+      "close": 5.58
     },
     {
       "date": "2025-09-30",
-      "close": 18.63
+      "close": 5.63
     },
     {
       "date": "2025-10-09",
-      "close": 18.65
+      "close": 5.77
     },
     {
       "date": "2025-10-10",
-      "close": 20.52
+      "close": 5.71
     },
     {
       "date": "2025-10-13",
-      "close": 21.11
+      "close": 5.76
     },
     {
       "date": "2025-10-14",
-      "close": 21.7
+      "close": 5.85
     },
     {
       "date": "2025-10-15",
-      "close": 23.87
+      "close": 5.85
     },
     {
       "date": "2025-10-16",
-      "close": 26.26
+      "close": 5.85
     },
     {
       "date": "2025-10-17",
-      "close": 24.38
+      "close": 5.87
     },
     {
       "date": "2025-10-20",
-      "close": 23.97
+      "close": 5.86
     },
     {
       "date": "2025-10-21",
-      "close": 24.9
+      "close": 5.97
     },
     {
       "date": "2025-10-22",
-      "close": 24.21
+      "close": 5.87
     },
     {
       "date": "2025-10-23",
-      "close": 22.19
+      "close": 5.84
     },
     {
       "date": "2025-10-24",
-      "close": 23.32
+      "close": 5.74
     },
     {
       "date": "2025-10-27",
-      "close": 24.56
+      "close": 5.74
     },
     {
       "date": "2025-10-28",
-      "close": 24.68
+      "close": 5.79
     },
     {
       "date": "2025-10-29",
-      "close": 25.52
+      "close": 5.75
     },
     {
       "date": "2025-10-30",
-      "close": 24.52
+      "close": 5.63
     },
     {
       "date": "2025-10-31",
-      "close": 24.23
+      "close": 5.71
     },
     {
       "date": "2025-11-03",
-      "close": 26.65
+      "close": 5.75
     },
     {
       "date": "2025-11-04",
-      "close": 29.32
+      "close": 5.72
     },
     {
       "date": "2025-11-05",
-      "close": 32.25
+      "close": 5.83
     },
     {
       "date": "2025-11-06",
-      "close": 33.96
+      "close": 5.8
     },
     {
       "date": "2025-11-07",
-      "close": 35.96
+      "close": 5.86
     },
     {
       "date": "2025-11-10",
-      "close": 33.65
+      "close": 5.94
     },
     {
       "date": "2025-11-11",
-      "close": 33.37
+      "close": 6.0
     },
     {
       "date": "2025-11-12",
-      "close": 30.03
+      "close": 5.94
     },
     {
       "date": "2025-11-13",
-      "close": 29.48
+      "close": 6.02
     },
     {
       "date": "2025-11-14",
-      "close": 28.2
+      "close": 6.02
     },
     {
       "date": "2025-11-17",
-      "close": 27.53
+      "close": 6.07
     },
     {
       "date": "2025-11-18",
-      "close": 26.88
+      "close": 6.04
     },
     {
       "date": "2025-11-19",
-      "close": 26.57
+      "close": 6.05
     },
     {
       "date": "2025-11-20",
-      "close": 26.37
+      "close": 5.96
     },
     {
       "date": "2025-11-21",
-      "close": 23.9
+      "close": 5.88
     },
     {
       "date": "2025-11-24",
-      "close": 23.91
+      "close": 6.47
     },
     {
       "date": "2025-11-25",
-      "close": 25.0
+      "close": 6.47
     },
     {
       "date": "2025-11-26",
-      "close": 25.56
+      "close": 6.32
     },
     {
       "date": "2025-11-27",
-      "close": 25.39
+      "close": 6.1
     },
     {
       "date": "2025-11-28",
-      "close": 26.35
+      "close": 6.2
     },
     {
       "date": "2025-12-01",
-      "close": 25.5
+      "close": 6.24
     },
     {
       "date": "2025-12-02",
-      "close": 24.97
+      "close": 6.2
     },
     {
       "date": "2025-12-03",
-      "close": 24.62
+      "close": 6.05
     },
     {
       "date": "2025-12-04",
-      "close": 24.06
+      "close": 5.83
     },
     {
       "date": "2025-12-05",
-      "close": 26.47
+      "close": 5.94
     },
     {
       "date": "2025-12-08",
-      "close": 26.72
+      "close": 5.91
     },
     {
       "date": "2025-12-09",
-      "close": 26.84
+      "close": 5.84
     },
     {
       "date": "2025-12-10",
-      "close": 26.15
+      "close": 5.83
     },
     {
       "date": "2025-12-11",
-      "close": 25.81
+      "close": 5.53
     },
     {
       "date": "2025-12-12",
-      "close": 27.51
+      "close": 5.46
     },
     {
       "date": "2025-12-15",
-      "close": 26.46
+      "close": 5.48
     },
     {
       "date": "2025-12-16",
-      "close": 25.21
+      "close": 5.37
     },
     {
       "date": "2025-12-17",
-      "close": 26.23
+      "close": 5.41
     },
     {
       "date": "2025-12-18",
-      "close": 25.11
+      "close": 5.53
     },
     {
       "date": "2025-12-19",
-      "close": 25.5
+      "close": 5.71
     },
     {
       "date": "2025-12-22",
-      "close": 26.28
+      "close": 5.67
     },
     {
       "date": "2025-12-23",
-      "close": 26.8
+      "close": 5.64
     },
     {
       "date": "2025-12-24",
-      "close": 28.45
+      "close": 5.64
     },
     {
       "date": "2025-12-25",
-      "close": 27.53
+      "close": 5.68
     },
     {
       "date": "2025-12-26",
-      "close": 28.18
+      "close": 5.68
     },
     {
       "date": "2025-12-29",
-      "close": 26.91
+      "close": 5.68
     },
     {
       "date": "2025-12-30",
-      "close": 27.05
+      "close": 5.62
     },
     {
       "date": "2025-12-31",
-      "close": 25.69
+      "close": 5.62
     },
     {
       "date": "2026-01-05",
-      "close": 25.75
+      "close": 5.65
     },
     {
       "date": "2026-01-06",
-      "close": 25.91
+      "close": 5.86
     },
     {
       "date": "2026-01-07",
-      "close": 26.8
+      "close": 5.62
     },
     {
       "date": "2026-01-08",
-      "close": 27.25
+      "close": 5.7
     },
     {
       "date": "2026-01-09",
-      "close": 27.71
+      "close": 5.77
     },
     {
       "date": "2026-01-12",
-      "close": 27.87
+      "close": 6.35
     },
     {
       "date": "2026-01-13",
-      "close": 27.84
+      "close": 6.99
     },
     {
       "date": "2026-01-14",
-      "close": 28.26
+      "close": 7.69
     },
     {
       "date": "2026-01-15",
-      "close": 28.02
+      "close": 6.92
     },
     {
       "date": "2026-01-16",
-      "close": 27.7
+      "close": 6.35
     },
     {
       "date": "2026-01-19",
-      "close": 29.36
+      "close": 6.22
     },
     {
       "date": "2026-01-20",
-      "close": 28.26
+      "close": 6.08
     },
     {
       "date": "2026-01-21",
-      "close": 29.91
+      "close": 6.29
     },
     {
       "date": "2026-01-22",
-      "close": 29.24
+      "close": 6.41
     },
     {
       "date": "2026-01-23",
-      "close": 29.6
+      "close": 6.57
     },
     {
       "date": "2026-01-26",
-      "close": 28.75
+      "close": 6.71
     },
     {
       "date": "2026-01-27",
-      "close": 28.29
+      "close": 6.62
     },
     {
       "date": "2026-01-28",
-      "close": 27.4
+      "close": 6.95
     },
     {
       "date": "2026-01-29",
-      "close": 25.85
+      "close": 6.66
     },
     {
       "date": "2026-01-30",
-      "close": 25.54
+      "close": 6.57
     },
     {
       "date": "2026-02-02",
-      "close": 26.25
+      "close": 6.24
     },
     {
       "date": "2026-02-03",
-      "close": 27.3
+      "close": 6.47
     },
     {
       "date": "2026-02-04",
-      "close": 27.52
+      "close": 6.49
     },
     {
       "date": "2026-02-05",
-      "close": 26.2
+      "close": 6.39
     },
     {
       "date": "2026-02-06",
-      "close": 25.99
+      "close": 6.57
     },
     {
       "date": "2026-02-09",
-      "close": 26.41
+      "close": 6.65
     },
     {
       "date": "2026-02-10",
-      "close": 26.23
+      "close": 6.53
     },
     {
       "date": "2026-02-11",
-      "close": 26.56
+      "close": 6.48
     },
     {
       "date": "2026-02-12",
-      "close": 29.22
+      "close": 6.34
     },
     {
       "date": "2026-02-13",
-      "close": 29.48
+      "close": 6.22
     },
     {
       "date": "2026-02-24",
-      "close": 29.96
+      "close": 6.35
     },
     {
       "date": "2026-02-25",
-      "close": 30.18
+      "close": 6.35
     },
     {
       "date": "2026-02-26",
-      "close": 31.26
+      "close": 6.21
     },
     {
       "date": "2026-02-27",
-      "close": 30.86
+      "close": 6.24
     },
     {
       "date": "2026-03-02",
-      "close": 30.43
+      "close": 6.19
     },
     {
       "date": "2026-03-03",
-      "close": 29.02
+      "close": 5.99
     },
     {
       "date": "2026-03-04",
-      "close": 31.92
+      "close": 5.98
     },
     {
       "date": "2026-03-05",
-      "close": 32.3
+      "close": 5.93
     },
     {
       "date": "2026-03-06",
-      "close": 32.75
+      "close": 6.07
     },
     {
       "date": "2026-03-09",
-      "close": 32.5
+      "close": 6.02
     },
     {
       "date": "2026-03-10",
-      "close": 33.16
+      "close": 6.16
     },
     {
       "date": "2026-03-11",
-      "close": 32.44
+      "close": 6.08
     },
     {
       "date": "2026-03-12",
-      "close": 31.22
+      "close": 6.04
     },
     {
       "date": "2026-03-13",
-      "close": 29.7
+      "close": 5.98
     },
     {
       "date": "2026-03-16",
-      "close": 29.33
+      "close": 5.96
     },
     {
       "date": "2026-03-17",
-      "close": 27.16
+      "close": 5.9
     },
     {
       "date": "2026-03-18",
-      "close": 27.49
+      "close": 5.97
     },
     {
       "date": "2026-03-19",
-      "close": 26.16
+      "close": 5.82
     },
     {
       "date": "2026-03-20",
-      "close": 25.14
+      "close": 5.69
     },
     {
       "date": "2026-03-23",
-      "close": 23.62
+      "close": 5.38
     },
     {
       "date": "2026-03-24",
-      "close": 24.28
+      "close": 5.65
     },
     {
       "date": "2026-03-25",
-      "close": 24.54
+      "close": 5.73
     },
     {
       "date": "2026-03-26",
-      "close": 24.63
+      "close": 5.63
     },
     {
       "date": "2026-03-27",
-      "close": 24.68
+      "close": 5.74
     },
     {
       "date": "2026-03-30",
-      "close": 24.51
+      "close": 5.77
     },
     {
       "date": "2026-03-31",
-      "close": 23.58
+      "close": 5.7
     },
     {
       "date": "2026-04-01",
-      "close": 24.2
+      "close": 5.72
     },
     {
       "date": "2026-04-02",
-      "close": 23.29
+      "close": 5.63
     },
     {
       "date": "2026-04-03",
-      "close": 22.89
+      "close": 5.4
     },
     {
       "date": "2026-04-07",
-      "close": 22.99
+      "close": 5.57
     },
     {
       "date": "2026-04-08",
-      "close": 24.48
+      "close": 5.77
     },
     {
       "date": "2026-04-09",
-      "close": 24.53
+      "close": 5.6
     },
     {
       "date": "2026-04-10",
-      "close": 24.81
+      "close": 5.63
     },
     {
       "date": "2026-04-13",
-      "close": 24.59
+      "close": 5.61
     },
     {
       "date": "2026-04-14",
-      "close": 27.05
+      "close": 5.57
     },
     {
       "date": "2026-04-15",
-      "close": 26.06
+      "close": 5.5
     },
     {
       "date": "2026-04-16",
-      "close": 26.3
+      "close": 5.57
     },
     {
       "date": "2026-04-17",
-      "close": 26.64
+      "close": 5.42
     },
     {
       "date": "2026-04-20",
-      "close": 29.3
+      "close": 5.46
     },
     {
       "date": "2026-04-21",
-      "close": 29.45
+      "close": 5.43
     },
     {
       "date": "2026-04-22",
-      "close": 30.43
+      "close": 5.39
     }
   ],
   "kline_30d": [
     {
       "date": "2026-03-11",
-      "open": 33.15,
-      "close": 32.44,
-      "high": 33.15,
-      "low": 32.25,
-      "volume": 200784,
-      "pct_change": -2.17,
-      "turnover": 8.7
+      "open": 6.17,
+      "close": 6.08,
+      "high": 6.18,
+      "low": 6.06,
+      "volume": 6797300.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-12",
-      "open": 32.5,
-      "close": 31.22,
-      "high": 32.51,
-      "low": 30.95,
-      "volume": 203973,
-      "pct_change": -3.76,
-      "turnover": 8.83
+      "open": 6.08,
+      "close": 6.04,
+      "high": 6.12,
+      "low": 6.03,
+      "volume": 6895500.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-13",
-      "open": 30.95,
-      "close": 29.7,
-      "high": 31.15,
-      "low": 29.22,
-      "volume": 193434,
-      "pct_change": -4.87,
-      "turnover": 8.38
+      "open": 6.01,
+      "close": 5.98,
+      "high": 6.12,
+      "low": 5.96,
+      "volume": 6385100.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-16",
-      "open": 29.77,
-      "close": 29.33,
-      "high": 29.95,
-      "low": 28.52,
-      "volume": 136284,
-      "pct_change": -1.25,
-      "turnover": 5.9
+      "open": 5.94,
+      "close": 5.96,
+      "high": 6.02,
+      "low": 5.91,
+      "volume": 6791461.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-17",
-      "open": 29.5,
-      "close": 27.16,
-      "high": 29.65,
-      "low": 27.03,
-      "volume": 202647,
-      "pct_change": -7.4,
-      "turnover": 8.78
+      "open": 5.96,
+      "close": 5.9,
+      "high": 6.05,
+      "low": 5.9,
+      "volume": 6322300.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-18",
-      "open": 27.21,
-      "close": 27.49,
-      "high": 27.7,
-      "low": 26.96,
-      "volume": 136021,
-      "pct_change": 1.22,
-      "turnover": 5.89
+      "open": 5.91,
+      "close": 5.97,
+      "high": 5.99,
+      "low": 5.86,
+      "volume": 5859200.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-19",
-      "open": 27.0,
-      "close": 26.16,
-      "high": 27.2,
-      "low": 26.0,
-      "volume": 153219,
-      "pct_change": -4.84,
-      "turnover": 6.64
+      "open": 5.91,
+      "close": 5.82,
+      "high": 6.0,
+      "low": 5.8,
+      "volume": 8923000.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-20",
-      "open": 26.31,
-      "close": 25.14,
-      "high": 26.65,
-      "low": 25.11,
-      "volume": 144194,
-      "pct_change": -3.9,
-      "turnover": 6.24
+      "open": 5.86,
+      "close": 5.69,
+      "high": 5.88,
+      "low": 5.69,
+      "volume": 9829100.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-23",
-      "open": 24.47,
-      "close": 23.62,
-      "high": 25.05,
-      "low": 23.4,
-      "volume": 155803,
-      "pct_change": -6.05,
-      "turnover": 6.75
+      "open": 5.62,
+      "close": 5.38,
+      "high": 5.66,
+      "low": 5.36,
+      "volume": 13539774.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-24",
-      "open": 24.12,
-      "close": 24.28,
-      "high": 24.29,
-      "low": 23.48,
-      "volume": 111835,
-      "pct_change": 2.79,
-      "turnover": 4.84
+      "open": 5.48,
+      "close": 5.65,
+      "high": 5.66,
+      "low": 5.37,
+      "volume": 14164050.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-25",
-      "open": 24.55,
-      "close": 24.54,
-      "high": 25.09,
-      "low": 24.32,
-      "volume": 121759,
-      "pct_change": 1.07,
-      "turnover": 5.27
+      "open": 5.65,
+      "close": 5.73,
+      "high": 5.77,
+      "low": 5.63,
+      "volume": 8252591.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-26",
-      "open": 24.39,
-      "close": 24.63,
-      "high": 25.36,
-      "low": 24.23,
-      "volume": 183829,
-      "pct_change": 0.37,
-      "turnover": 7.96
+      "open": 5.73,
+      "close": 5.63,
+      "high": 5.82,
+      "low": 5.6,
+      "volume": 8057400.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-27",
-      "open": 24.18,
-      "close": 24.68,
-      "high": 25.28,
-      "low": 23.96,
-      "volume": 118833,
-      "pct_change": 0.2,
-      "turnover": 5.15
+      "open": 5.61,
+      "close": 5.74,
+      "high": 5.77,
+      "low": 5.55,
+      "volume": 7211000.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-30",
-      "open": 24.2,
-      "close": 24.51,
-      "high": 24.93,
-      "low": 24.0,
-      "volume": 97065,
-      "pct_change": -0.69,
-      "turnover": 4.2
+      "open": 5.77,
+      "close": 5.77,
+      "high": 5.8,
+      "low": 5.64,
+      "volume": 4909000.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-31",
-      "open": 24.52,
-      "close": 23.58,
-      "high": 24.65,
-      "low": 23.58,
-      "volume": 112460,
-      "pct_change": -3.79,
-      "turnover": 4.87
+      "open": 5.81,
+      "close": 5.7,
+      "high": 5.92,
+      "low": 5.68,
+      "volume": 9711000.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-01",
-      "open": 24.09,
-      "close": 24.2,
-      "high": 24.36,
-      "low": 23.97,
-      "volume": 90793,
-      "pct_change": 2.63,
-      "turnover": 3.93
+      "open": 5.8,
+      "close": 5.72,
+      "high": 5.83,
+      "low": 5.66,
+      "volume": 6734300.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-02",
-      "open": 24.0,
-      "close": 23.29,
-      "high": 24.31,
-      "low": 23.03,
-      "volume": 104675,
-      "pct_change": -3.76,
-      "turnover": 4.53
+      "open": 5.7,
+      "close": 5.63,
+      "high": 5.77,
+      "low": 5.59,
+      "volume": 6699800.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-03",
-      "open": 23.65,
-      "close": 22.89,
-      "high": 23.65,
-      "low": 22.72,
-      "volume": 81960,
-      "pct_change": -1.72,
-      "turnover": 3.55
+      "open": 5.66,
+      "close": 5.4,
+      "high": 5.67,
+      "low": 5.37,
+      "volume": 7342400.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-07",
-      "open": 22.98,
-      "close": 22.99,
-      "high": 23.28,
-      "low": 22.81,
-      "volume": 66988,
-      "pct_change": 0.44,
-      "turnover": 2.9
+      "open": 5.42,
+      "close": 5.57,
+      "high": 5.59,
+      "low": 5.37,
+      "volume": 6350901.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-08",
-      "open": 23.78,
-      "close": 24.48,
-      "high": 24.5,
-      "low": 23.68,
-      "volume": 128761,
-      "pct_change": 6.48,
-      "turnover": 5.58
+      "open": 5.68,
+      "close": 5.77,
+      "high": 5.77,
+      "low": 5.63,
+      "volume": 8232400.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-09",
-      "open": 24.15,
-      "close": 24.53,
-      "high": 24.83,
-      "low": 24.03,
-      "volume": 105396,
-      "pct_change": 0.2,
-      "turnover": 4.56
+      "open": 5.75,
+      "close": 5.6,
+      "high": 5.75,
+      "low": 5.58,
+      "volume": 6774900.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-10",
-      "open": 24.8,
-      "close": 24.81,
-      "high": 25.15,
-      "low": 24.6,
-      "volume": 119460,
-      "pct_change": 1.14,
-      "turnover": 5.17
+      "open": 5.65,
+      "close": 5.63,
+      "high": 5.71,
+      "low": 5.6,
+      "volume": 6902900.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-13",
-      "open": 24.45,
-      "close": 24.59,
-      "high": 24.78,
-      "low": 24.37,
-      "volume": 85758,
-      "pct_change": -0.89,
-      "turnover": 3.71
+      "open": 5.64,
+      "close": 5.61,
+      "high": 5.65,
+      "low": 5.56,
+      "volume": 5988884.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-14",
-      "open": 26.9,
-      "close": 27.05,
-      "high": 27.05,
-      "low": 26.9,
-      "volume": 89930,
-      "pct_change": 10.0,
-      "turnover": 3.89
+      "open": 5.64,
+      "close": 5.57,
+      "high": 5.66,
+      "low": 5.5,
+      "volume": 7093048.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-15",
-      "open": 28.39,
-      "close": 26.06,
-      "high": 28.39,
-      "low": 25.77,
-      "volume": 378761,
-      "pct_change": -3.66,
-      "turnover": 16.4
+      "open": 5.59,
+      "close": 5.5,
+      "high": 5.59,
+      "low": 5.48,
+      "volume": 6215235.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-16",
-      "open": 26.06,
-      "close": 26.3,
-      "high": 26.4,
-      "low": 25.68,
-      "volume": 215274,
-      "pct_change": 0.92,
-      "turnover": 9.32
+      "open": 5.51,
+      "close": 5.57,
+      "high": 5.6,
+      "low": 5.48,
+      "volume": 5905183.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-17",
-      "open": 26.27,
-      "close": 26.64,
-      "high": 26.66,
-      "low": 25.9,
-      "volume": 198521,
-      "pct_change": 1.29,
-      "turnover": 8.6
+      "open": 5.57,
+      "close": 5.42,
+      "high": 5.59,
+      "low": 5.38,
+      "volume": 8340200.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-20",
-      "open": 26.71,
-      "close": 29.3,
-      "high": 29.3,
-      "low": 26.65,
-      "volume": 347627,
-      "pct_change": 9.98,
-      "turnover": 15.05
+      "open": 5.42,
+      "close": 5.46,
+      "high": 5.5,
+      "low": 5.38,
+      "volume": 5791600.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-21",
-      "open": 29.3,
-      "close": 29.45,
-      "high": 29.8,
-      "low": 28.72,
-      "volume": 359631,
-      "pct_change": 0.51,
-      "turnover": 15.57
+      "open": 5.45,
+      "close": 5.43,
+      "high": 5.47,
+      "low": 5.38,
+      "volume": 6664320.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-22",
-      "open": 29.46,
-      "close": 30.43,
-      "high": 30.66,
-      "low": 28.99,
-      "volume": 291179,
-      "pct_change": 3.33,
-      "turnover": 12.61
+      "open": 5.41,
+      "close": 5.39,
+      "high": 5.43,
+      "low": 5.34,
+      "volume": 6076820.0,
+      "pct_change": null,
+      "turnover": null
     }
   ],
   "quote": {
-    "code": "002885",
-    "name": "京泉华",
-    "price": 30.43,
-    "pct_change": 3.33,
-    "change": 0.98,
-    "volume": 291179.0,
-    "amount": 871825292.34,
-    "amplitude": 5.67,
-    "high": 30.66,
-    "low": 28.99,
-    "open": 29.46,
-    "prev_close": 29.45,
-    "turnover": 12.61,
-    "pe_ttm": 86.03,
-    "pb": 5.6,
-    "market_cap": 8244003336.0,
-    "float_cap": 7026519881.0
+    "code": "002574",
+    "name": "明牌珠宝",
+    "price": 5.39,
+    "pct_change": -0.74,
+    "change": -0.04,
+    "volume": 60768.0,
+    "amount": 32723947.0,
+    "amplitude": 1.66,
+    "high": 5.43,
+    "low": 5.34,
+    "open": 5.41,
+    "prev_close": 5.43,
+    "turnover": 1.15,
+    "pe_ttm": -19.89,
+    "pb": 0.96,
+    "market_cap": 2845920000.0,
+    "float_cap": 2845920000.0
   },
   "money_flow": [
     {
       "date": "2026-04-16",
-      "close": 26.3,
-      "pct_change": 0.92,
-      "main_net_inflow": -4695079.0,
-      "main_net_inflow_pct": -0.83,
-      "super_large_net": 2886591.0,
-      "large_net": -7581670.0
+      "close": 5.57,
+      "pct_change": 1.27,
+      "main_net_inflow": -683600.0,
+      "main_net_inflow_pct": -2.09,
+      "super_large_net": -2596655.0,
+      "large_net": 1913055.0
     },
     {
       "date": "2026-04-17",
-      "close": 26.64,
-      "pct_change": 1.29,
-      "main_net_inflow": 2941790.0,
-      "main_net_inflow_pct": 0.56,
-      "super_large_net": -7873844.0,
-      "large_net": 10815634.0
+      "close": 5.42,
+      "pct_change": -2.69,
+      "main_net_inflow": 1466571.0,
+      "main_net_inflow_pct": 3.24,
+      "super_large_net": 2280856.0,
+      "large_net": -814285.0
     },
     {
       "date": "2026-04-20",
-      "close": 29.3,
-      "pct_change": 9.98,
-      "main_net_inflow": 294568273.0,
-      "main_net_inflow_pct": 29.89,
-      "super_large_net": 258825688.0,
-      "large_net": 35742585.0
+      "close": 5.46,
+      "pct_change": 0.74,
+      "main_net_inflow": 1437625.0,
+      "main_net_inflow_pct": 4.56,
+      "super_large_net": 1209900.0,
+      "large_net": 227725.0
     },
     {
       "date": "2026-04-21",
-      "close": 29.45,
-      "pct_change": 0.51,
-      "main_net_inflow": 3051715.0,
-      "main_net_inflow_pct": 0.29,
-      "super_large_net": -23881435.0,
-      "large_net": 26933150.0
+      "close": 5.43,
+      "pct_change": -0.55,
+      "main_net_inflow": 7729235.0,
+      "main_net_inflow_pct": 21.44,
+      "super_large_net": 5822942.0,
+      "large_net": 1906293.0
     },
     {
       "date": "2026-04-22",
-      "close": 30.43,
-      "pct_change": 3.33,
-      "main_net_inflow": 55043740.0,
-      "main_net_inflow_pct": 6.31,
-      "super_large_net": 51762497.0,
-      "large_net": 3281243.0
+      "close": 5.39,
+      "pct_change": -0.74,
+      "main_net_inflow": 1370952.0,
+      "main_net_inflow_pct": 4.19,
+      "super_large_net": 356998.0,
+      "large_net": 1013954.0
     }
   ]
 }
