@@ -1,4 +1,28 @@
 {
-  "_comment": "持仓记录。cost_price 是含手续费的成本均价,shares 为持股数,entry_date 用于日后统计。初次配置请删除示例,添加你的真实持仓。没有持仓时保持 positions 为空数组即可。",
-  "positions": []
+  "_comment_doc": "持仓记录。每次买入/卖出后手动更新,commit & push 到 repo,Actions 次日生效。",
+
+  "_field_spec": {
+    "code":       "6位股票代码,字符串。沪市600/601/603,科创688,深市000/002,创业300",
+    "cost_price": "成本均价(元)。含手续费摊薄,买多次就按加权平均算。浮点数。",
+    "shares":     "持股数(股,不是手)。必须>=100且是100的整数倍。整数。",
+    "entry_date": "首次建仓日期,YYYY-MM-DD。仅用于你自己统计,不参与计算,随便写也行。",
+    "note":       "备注(可选)。记录买入理由、加仓点等,脚本不读。"
+  },
+
+  "positions": [
+    {
+      "code": "002885",
+      "cost_price": 24.30,
+      "shares": 100,
+      "entry_date": "2026-01-15",
+      "note": "长线底仓"
+    },
+    {
+      "code": "600053",
+      "cost_price": 17.558,
+      "shares": 400,
+      "entry_date": "2025-12-20",
+      "note": ""
+    }
+  ]
 }
