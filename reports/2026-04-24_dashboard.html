@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股每日分析 · 2026-04-24</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --up: #d9322d; --down: #0a9a5a;
+    --bg: #f7f8fa; --card: #ffffff; --border: #e4e7eb;
+    --text: #1f2329; --text-sec: #6b7280;
+    --accent: #4c6ef5; --warn: #f59e0b; --danger: #ef4444;
+    --swing: #8b5cf6;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.5;
+    padding: 24px 16px 64px;
+  }
+  .container { max-width: 1400px; margin: 0 auto; }
+  header {
+    background: linear-gradient(135deg, #1e3a8a, #4c6ef5);
+    color: white; padding: 24px 28px; border-radius: 12px; margin-bottom: 20px;
+  }
+  header h1 { font-size: 24px; font-weight: 600; }
+  header .date { font-size: 14px; opacity: 0.85; margin-top: 4px; }
+  header .disclaimer {
+    margin-top: 12px; font-size: 12px; opacity: 0.85;
+    padding: 10px 12px; background: rgba(255,255,255,0.1);
+    border-left: 3px solid #fff; border-radius: 4px; line-height: 1.6;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; margin-bottom: 20px;
+  }
+  .stat {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+  }
+  .stat .label { font-size: 12px; color: var(--text-sec); }
+  .stat .value { font-size: 28px; font-weight: 600; margin-top: 4px; }
+  .stat.tp .value { color: var(--warn); }
+  .stat.dip .value { color: var(--accent); }
+  .stat.swing .value { color: var(--swing); }
+
+  section {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 20px;
+  }
+  section > h2 {
+    font-size: 16px; font-weight: 600; margin-bottom: 14px;
+    border-left: 3px solid var(--accent); padding-left: 10px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  th { background: #f9fafb; font-weight: 500; color: var(--text-sec); font-size: 12px; }
+  tr:hover td { background: #fafbfc; }
+  td.code { font-family: "SF Mono", Menlo, monospace; font-weight: 600; }
+
+  .price-up { color: var(--up); font-weight: 500; }
+  .price-down { color: var(--down); font-weight: 500; }
+  .price-flat { color: var(--text-sec); }
+
+  .tag {
+    display: inline-block; padding: 3px 10px; border-radius: 4px;
+    font-size: 12px; font-weight: 500; white-space: nowrap;
+  }
+  .tag-hold        { background: #fef3c7; color: #92400e; }
+  .tag-tp-watch    { background: #fed7aa; color: #9a3412; }
+  .tag-tp-partial  { background: #fdba74; color: #7c2d12; }
+  .tag-tp-strong   { background: #ea580c; color: white; font-weight: 600; }
+  .tag-dip         { background: #e0e7ff; color: #3730a3; }
+  .tag-dip-strong  { background: #4c6ef5; color: white; font-weight: 600; }
+  .tag-swing       { background: #ede9fe; color: #6d28d9; }
+  .tag-swing-hold  { background: #c4b5fd; color: #4c1d95; }
+  .tag-watch       { background: #f3f4f6; color: #6b7280; }
+  /* 浮亏预警标签(仅视觉,不给动作) */
+  .tag-loss-light    { background: #fef3c7; color: #92400e; }
+  .tag-loss-moderate { background: #fed7aa; color: #9a3412; font-weight: 600; }
+  .tag-loss-deep     { background: #fecaca; color: #991b1b; font-weight: 700; border: 1px solid #f87171; }
+
+  .stock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(580px, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 720px) { .stock-grid { grid-template-columns: 1fr; } }
+
+  .stock-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px;
+  }
+  .stock-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+  .stock-head {
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .stock-head .code { font-family: "SF Mono", Menlo, monospace; font-size: 15px; color: var(--text-sec); font-weight: 600; }
+  .stock-head .name { font-size: 18px; font-weight: 600; }
+  .stock-head .price { font-size: 20px; font-weight: 600; margin-left: auto; }
+  .stock-head .change { font-size: 14px; font-weight: 500; }
+
+  .context-box {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    background: #f9fafb; border-radius: 6px; padding: 10px 12px;
+    font-size: 12px; margin: 10px 0;
+  }
+  .context-box .k { color: var(--text-sec); }
+  .context-box .v { font-weight: 500; margin-left: 4px; }
+
+  .chart { width: 100%; height: 280px; margin: 8px 0; }
+
+  .strategy-box {
+    margin: 12px 0; padding: 12px 14px; border-radius: 6px;
+    border-left: 3px solid; font-size: 13px;
+  }
+  .strategy-box.tp        { background: #fff7ed; border-left-color: var(--warn); }
+  .strategy-box.tp.strong { background: #fff7ed; border-left-color: var(--up); border-left-width: 4px; }
+  .strategy-box.dip       { background: #eff6ff; border-left-color: var(--accent); }
+  .strategy-box.dip.strong{ background: #eff6ff; border-left-color: var(--accent); border-left-width: 4px; }
+  .strategy-box.swing     { background: #faf5ff; border-left-color: var(--swing); }
+  .strategy-box.hold      { background: #fffbeb; border-left-color: #d1d5db; }
+  .strategy-box.inactive  { background: #f9fafb; border-left-color: #d1d5db; color: var(--text-sec); }
+
+  .strategy-box .title { font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .strategy-box .price-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    margin: 8px 0; padding: 8px; background: rgba(255,255,255,0.6); border-radius: 4px;
+  }
+  .strategy-box .price-row > div .label {
+    font-size: 11px; color: var(--text-sec); display: block;
+  }
+  .strategy-box .price-row > div .val {
+    font-size: 15px; font-weight: 600; font-family: "SF Mono", Menlo, monospace;
+  }
+  .strategy-box ul.reasons { margin: 4px 0 0 0; list-style: none; }
+  .strategy-box ul.reasons li {
+    font-size: 12px; padding: 2px 0 2px 18px; position: relative;
+  }
+  .strategy-box ul.reasons li::before {
+    content: "✓"; position: absolute; left: 2px; font-weight: 600;
+  }
+  .strategy-box.tp ul.reasons li::before { color: var(--warn); }
+  .strategy-box.dip ul.reasons li::before { color: var(--accent); }
+  .strategy-box.swing ul.reasons li::before { color: var(--swing); }
+
+  .confidence {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 11px; font-weight: 500;
+    background: white; color: var(--text-sec); border: 1px solid var(--border);
+  }
+  .confidence.h, .confidence.较高 { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+  .confidence.m { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; }
+  .confidence.l { background: #f3f4f6; color: #6b7280; }
+
+  .ai-block {
+    margin-top: 14px; padding: 12px 14px;
+    background: #f5f3ff; border: 1px dashed #c4b5fd;
+    border-radius: 6px; font-size: 13px; color: #6d28d9;
+  }
+  .ai-block .placeholder { color: #8b5cf6; font-style: italic; }
+  .ai-block.filled {
+    background: #faf5ff; color: var(--text);
+    border-style: solid; border-color: #ddd6fe;
+  }
+
+  footer {
+    margin-top: 32px; padding: 16px; text-align: center;
+    font-size: 12px; color: var(--text-sec); line-height: 1.8;
+  }
+  footer .disclaimer {
+    max-width: 720px; margin: 0 auto; padding: 12px;
+    background: #fef2f2; color: #7f1d1d;
+    border-radius: 6px; border: 1px solid #fecaca;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>📈 A股三策略仪表盘</h1>
+    <div class="date">交易日 <span>2026-04-24</span> · 生成于 <span>2026-04-24 09:21:41</span></div>
+    <div class="disclaimer">
+      <strong>免责声明:</strong> 本报告由自动化工具 + AI 辅助生成,仅供学习研究参考,<strong>不构成投资建议</strong>。
+      三个策略独立输出信号,消息面综合请在 Claude.ai 对话中补充。股市有风险,决策请独立判断并自负盈亏。
+    </div>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <section>
+    <h2>📋 当日汇总</h2>
+    <table id="summary-table">
+      <thead>
+        <tr>
+          <th>代码</th><th>名称</th><th>现价</th><th>涨跌幅</th>
+          <th>5日趋势</th><th>90日位置</th><th>主要动作</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>🔍 个股三策略详情</h2>
+    <div class="stock-grid" id="stock-grid"></div>
+  </section>
+
+  <footer>
+    <div class="disclaimer">
+      ⚠ 波段策略(策略3)的短期预测能力有限(历史命中率约 50%),仅作候选筛选参考,务必设止损。
+    </div>
+    <div style="margin-top:12px">astock-daily-analysis · routine v3.0 · 数据源 akshare</div>
+  </footer>
+
+</div>
+
+<script>
+const DATA = {"date": "2026-04-24", "generated_at": "2026-04-24 09:21:41", "summary": {"total": 2, "take_profit": 1, "dip_candidates": 0, "swing": 0, "hold": 0}, "stocks": [{"code": "002885", "name": "京泉华", "quote": {"code": "002885", "name": "京泉华", "price": 30.92, "pct_change": -0.51, "change": -0.16, "volume": 236935.0, "amount": 731587917.98, "amplitude": 4.57, "high": 31.57, "low": 30.15, "open": 31.28, "prev_close": 31.08, "turnover": 10.26, "pe_ttm": 87.42, "pb": 5.69, "market_cap": 8376752651.0, "float_cap": 7139664631.0}, "context": {"last_close": 30.92, "trend_5d": {"days_up": 3, "days_down": 1, "cum_pct": 5.53, "min": 29.3, "max": 31.08, "is_5d_low": false, "is_5d_high": false}, "range_90d": {"high": 33.16, "low": 22.89, "position_pct": 78.19}}, "strategy_take_profit": {"triggered": true, "action": "SELL_STRONG", "action_cn": "全部止盈", "confidence": "高", "loss_warning": null, "position": {"cost_price": 24.3, "current_price": 30.92, "shares": 100, "pnl_pct": 27.24, "pnl_amount": 662.0}, "conditions": {"pnl_over_threshold": true, "trend_5d_up": true, "at_90d_high": true, "all_hit": true}, "reasons": ["浮盈 +27.24% ≥ 18.0%", "近 5 天累计涨 +5.53%", "位于 90 天区间 78% 高位"], "suggested_exit_price": 32.5, "exit_basis": "90d_high", "price_reference": {"cost_target_price": 29.16, "price_90d_high_mult": 32.5, "range_90d_high": 33.16}}, "strategy_dip_buy": null, "strategy_swing": {"triggered": false, "hit_count": 0, "total": 4, "signals": [], "signal_details": {"macd_cross": false, "macd_hist": 1.704, "kdj_cross": false, "kdj_k": 79.99, "kdj_d": 80.49, "volume_ratio": 1.31}, "confidence": "未触发", "note": "波段信号预测能力有限,仅用于候选筛选"}, "position": {"code": "002885", "cost_price": 24.3, "shares": 100, "entry_date": "2026-01-15", "note": "长线底仓"}, "money_flow_5d": [{"date": "2026-04-20", "close": 29.3, "pct_change": 9.98, "main_net_inflow": 294568273.0, "main_net_inflow_pct": 29.89, "super_large_net": 258825688.0, "large_net": 35742585.0}, {"date": "2026-04-21", "close": 29.45, "pct_change": 0.51, "main_net_inflow": 3051715.0, "main_net_inflow_pct": 0.29, "super_large_net": -23881435.0, "large_net": 26933150.0}, {"date": "2026-04-22", "close": 30.43, "pct_change": 3.33, "main_net_inflow": 55043740.0, "main_net_inflow_pct": 6.31, "super_large_net": 51762497.0, "large_net": 3281243.0}, {"date": "2026-04-23", "close": 31.08, "pct_change": 2.14, "main_net_inflow": -29559203.0, "main_net_inflow_pct": -2.36, "super_large_net": 23138205.0, "large_net": -52697408.0}, {"date": "2026-04-24", "close": 30.92, "pct_change": -0.51, "main_net_inflow": -4560780.0, "main_net_inflow_pct": -0.62, "super_large_net": -1051154.0, "large_net": -3509626.0}], "chart": {"dates": ["2026-03-13", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-27", "2026-03-30", "2026-03-31", "2026-04-01", "2026-04-02", "2026-04-03", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24"], "ohlc": [[30.95, 29.7, 29.22, 31.15], [29.77, 29.33, 28.52, 29.95], [29.5, 27.16, 27.03, 29.65], [27.21, 27.49, 26.96, 27.7], [27.0, 26.16, 26.0, 27.2], [26.31, 25.14, 25.11, 26.65], [24.47, 23.62, 23.4, 25.05], [24.12, 24.28, 23.48, 24.29], [24.55, 24.54, 24.32, 25.09], [24.39, 24.63, 24.23, 25.36], [24.18, 24.68, 23.96, 25.28], [24.2, 24.51, 24.0, 24.93], [24.52, 23.58, 23.58, 24.65], [24.09, 24.2, 23.97, 24.36], [24.0, 23.29, 23.03, 24.31], [23.65, 22.89, 22.72, 23.65], [22.98, 22.99, 22.81, 23.28], [23.78, 24.48, 23.68, 24.5], [24.15, 24.53, 24.03, 24.83], [24.8, 24.81, 24.6, 25.15], [24.45, 24.59, 24.37, 24.78], [26.9, 27.05, 26.9, 27.05], [28.39, 26.06, 25.77, 28.39], [26.06, 26.3, 25.68, 26.4], [26.27, 26.64, 25.9, 26.66], [26.71, 29.3, 26.65, 29.3], [29.3, 29.45, 28.72, 29.8], [29.46, 30.43, 28.99, 30.66], [30.5, 31.08, 30.35, 33.05], [31.28, 30.92, 30.15, 31.57]], "volumes": [193434, 136284, 202647, 136021, 153219, 144194, 155803, 111835, 121759, 183829, 118833, 97065, 112460, 90793, 104675, 81960, 66988, 128761, 105396, 119460, 85758, 89930, 378761, 215274, 198521, 347627, 359631, 291179, 395372, 236935], "ma5": [null, null, null, null, 27.968, 27.055999999999994, 25.913999999999998, 25.338, 24.748, 24.442, 24.35, 24.528, 24.387999999999998, 24.32, 24.052, 23.694000000000003, 23.389999999999997, 23.57, 23.636000000000003, 23.94, 24.28, 25.092000000000002, 25.408, 25.762, 26.127999999999997, 27.07, 27.55, 28.424, 29.379999999999995, 30.236], "ma10": [null, null, null, null, null, null, null, null, null, 26.205000000000002, 25.702999999999996, 25.220999999999997, 24.863, 24.534, 24.247, 24.022, 23.958999999999996, 23.979, 23.978, 23.996, 23.987000000000002, 24.241, 24.489, 24.699000000000005, 25.034000000000002, 25.675000000000004, 26.321000000000005, 26.916000000000004, 27.570999999999998, 28.182], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 25.100500000000004, 24.845, 24.730999999999998, 24.676, 24.6165, 24.6405, 24.8485, 25.14, 25.447499999999998, 25.7745, 26.089], "bb_upper": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 28.857671675609197, 27.955668738390507, 27.294910294842623, 27.070739234238246, 26.776215490521842, 26.87757375828335, 27.869051439720902, 28.70605664565217, 29.66501526375424, 30.62630574631755, 31.397261108875483], "bb_lower": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 21.34332832439081, 21.73433126160949, 22.167089705157373, 22.28126076576175, 22.456784509478155, 22.403426241716648, 21.8279485602791, 21.573943354347833, 21.229984736245758, 20.92269425368245, 20.780738891124514]}, "decision": "全部止盈", "decision_class": "tag-tp-strong"}, {"code": "002574", "name": "明牌珠宝", "quote": {"code": "002574", "name": "明牌珠宝", "price": 5.32, "pct_change": 0.38, "change": 0.02, "volume": 70622.0, "amount": 37346280.0, "amplitude": 2.83, "high": 5.36, "low": 5.21, "open": 5.3, "prev_close": 5.3, "turnover": 1.34, "pe_ttm": -19.63, "pb": 0.94, "market_cap": 2808960000.0, "float_cap": 2808960000.0}, "context": {"last_close": 5.32, "trend_5d": {"days_up": 1, "days_down": 3, "cum_pct": -2.56, "min": 5.3, "max": 5.46, "is_5d_low": false, "is_5d_high": false}, "range_90d": {"high": 7.69, "low": 5.3, "position_pct": 0.84}}, "strategy_take_profit": null, "strategy_dip_buy": {"triggered": false, "tier": "NONE", "tier_cn": "观望", "confidence": "未触发", "conditions": {"new_low_5d_with_drop": false, "below_90d_low": true}, "reasons": ["接近/跌破 90 天低位 5.30 × 1.02"], "suggested_entry_price_aggressive": 5.32, "suggested_entry_price_conservative": 5.35, "suggested_stop_loss": 5.05, "price_reference": {"range_90d_low": 5.3, "cum_pct_5d": -2.56}}, "strategy_swing": {"triggered": false, "hit_count": 0, "total": 4, "signals": [], "signal_details": {"macd_cross": false, "macd_hist": -0.019, "kdj_cross": false, "kdj_k": 19.95, "kdj_d": 23.23, "volume_ratio": 1.03}, "confidence": "未触发", "note": "波段信号预测能力有限,仅用于候选筛选"}, "position": null, "money_flow_5d": [{"date": "2026-04-20", "close": 5.46, "pct_change": 0.74, "main_net_inflow": 1437625.0, "main_net_inflow_pct": 4.56, "super_large_net": 1209900.0, "large_net": 227725.0}, {"date": "2026-04-21", "close": 5.43, "pct_change": -0.55, "main_net_inflow": 7729235.0, "main_net_inflow_pct": 21.44, "super_large_net": 5822942.0, "large_net": 1906293.0}, {"date": "2026-04-22", "close": 5.39, "pct_change": -0.74, "main_net_inflow": 1370952.0, "main_net_inflow_pct": 4.19, "super_large_net": 356998.0, "large_net": 1013954.0}, {"date": "2026-04-23", "close": 5.3, "pct_change": -1.67, "main_net_inflow": -1886739.0, "main_net_inflow_pct": -5.14, "super_large_net": 3182546.0, "large_net": -5069285.0}, {"date": "2026-04-24", "close": 5.32, "pct_change": 0.38, "main_net_inflow": -1131144.0, "main_net_inflow_pct": -3.03, "super_large_net": -124557.0, "large_net": -1006587.0}], "chart": {"dates": ["2026-03-13", "2026-03-16", "2026-03-17", "2026-03-18", "2026-03-19", "2026-03-20", "2026-03-23", "2026-03-24", "2026-03-25", "2026-03-26", "2026-03-27", "2026-03-30", "2026-03-31", "2026-04-01", "2026-04-02", "2026-04-03", "2026-04-07", "2026-04-08", "2026-04-09", "2026-04-10", "2026-04-13", "2026-04-14", "2026-04-15", "2026-04-16", "2026-04-17", "2026-04-20", "2026-04-21", "2026-04-22", "2026-04-23", "2026-04-24"], "ohlc": [[6.01, 5.98, 5.96, 6.12], [5.94, 5.96, 5.91, 6.02], [5.96, 5.9, 5.9, 6.05], [5.91, 5.97, 5.86, 5.99], [5.91, 5.82, 5.8, 6.0], [5.86, 5.69, 5.69, 5.88], [5.62, 5.38, 5.36, 5.66], [5.48, 5.65, 5.37, 5.66], [5.65, 5.73, 5.63, 5.77], [5.73, 5.63, 5.6, 5.82], [5.61, 5.74, 5.55, 5.77], [5.77, 5.77, 5.64, 5.8], [5.81, 5.7, 5.68, 5.92], [5.8, 5.72, 5.66, 5.83], [5.7, 5.63, 5.59, 5.77], [5.66, 5.4, 5.37, 5.67], [5.42, 5.57, 5.37, 5.59], [5.68, 5.77, 5.63, 5.77], [5.75, 5.6, 5.58, 5.75], [5.65, 5.63, 5.6, 5.71], [5.64, 5.61, 5.56, 5.65], [5.64, 5.57, 5.5, 5.66], [5.59, 5.5, 5.48, 5.59], [5.51, 5.57, 5.48, 5.6], [5.57, 5.42, 5.38, 5.59], [5.42, 5.46, 5.38, 5.5], [5.45, 5.43, 5.38, 5.47], [5.41, 5.39, 5.34, 5.43], [5.38, 5.3, 5.25, 5.4], [5.3, 5.32, 5.21, 5.36]], "volumes": [6385100.0, 6791461.0, 6322300.0, 5859200.0, 8923000.0, 9829100.0, 13539774.0, 14164050.0, 8252591.0, 8057400.0, 7211000.0, 4909000.0, 9711000.0, 6734300.0, 6699800.0, 7342400.0, 6350901.0, 8232400.0, 6774900.0, 6902900.0, 5988884.0, 7093048.0, 6215235.0, 5905183.0, 8340200.0, 5791600.0, 6664320.0, 6076820.0, 6905580.0, 7062200.0], "ma5": [null, null, null, null, 5.926, 5.868, 5.752000000000001, 5.702, 5.654, 5.616, 5.626, 5.704, 5.714, 5.712, 5.712, 5.644, 5.604000000000001, 5.618, 5.593999999999999, 5.594, 5.635999999999999, 5.636, 5.582, 5.5760000000000005, 5.534000000000001, 5.5040000000000004, 5.476000000000001, 5.454, 5.4, 5.380000000000001], "ma10": [null, null, null, null, null, null, null, null, null, 5.771, 5.747, 5.728, 5.708, 5.683, 5.664000000000001, 5.635000000000001, 5.654, 5.6659999999999995, 5.653, 5.6530000000000005, 5.640000000000001, 5.620000000000001, 5.6, 5.585, 5.564000000000001, 5.57, 5.556, 5.518000000000001, 5.488, 5.457], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 5.712, 5.6934999999999985, 5.6739999999999995, 5.653999999999999, 5.633999999999999, 5.613999999999999, 5.602499999999999, 5.6049999999999995, 5.592, 5.5705, 5.555], "bb_upper": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 6.034403473926693, 5.993984608590854, 5.952596482389853, 5.922059694844263, 5.8613675438579556, 5.84277062748526, 5.837861424196913, 5.831759784794394, 5.836098340838277, 5.83691884317743, 5.84111186623417], "bb_lower": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 5.389596526073307, 5.3930153914091425, 5.395403517610146, 5.385940305155735, 5.406632456142042, 5.385229372514738, 5.367138575803085, 5.378240215205605, 5.347901659161722, 5.30408115682257, 5.268888133765829]}, "decision": "观望", "decision_class": "tag-watch"}]};
+
+// AI 分析区块内容由 sync_ai_to_html.py 填入(初始空对象)
+// 格式:{"600519": "<p>...</p>", "002594": "<p>...</p>"}
+window.AI_ANALYSIS = /* AI_ANALYSIS_START */{}/* AI_ANALYSIS_END */;
+
+function fmtPct(v) {
+  if (v === null || v === undefined || v === '') return '-';
+  const n = parseFloat(v);
+  const cls = n > 0 ? 'price-up' : (n < 0 ? 'price-down' : 'price-flat');
+  const sign = n > 0 ? '+' : '';
+  return `<span class="${cls}">${sign}${n.toFixed(2)}%</span>`;
+}
+function fmtNum(v, digits = 2) {
+  if (v === null || v === undefined || v === '') return '-';
+  const n = parseFloat(v);
+  if (isNaN(n)) return '-';
+  return n.toFixed(digits);
+}
+function priceColor(pct) {
+  if (pct === null || pct === undefined) return 'price-flat';
+  return pct > 0 ? 'price-up' : (pct < 0 ? 'price-down' : 'price-flat');
+}
+
+function renderStats() {
+  const s = DATA.summary;
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="label">关注股票</div><div class="value">${s.total}</div></div>
+    <div class="stat tp"><div class="label">止盈触发</div><div class="value">${s.take_profit}</div></div>
+    <div class="stat dip"><div class="label">抄底候选</div><div class="value">${s.dip_candidates}</div></div>
+    <div class="stat swing"><div class="label">波段关注</div><div class="value">${s.swing}</div></div>
+    <div class="stat"><div class="label">持有观望</div><div class="value">${s.hold}</div></div>
+  `;
+}
+
+function renderSummaryTable() {
+  const tbody = document.querySelector('#summary-table tbody');
+  const rows = DATA.stocks.map(s => {
+    const q = s.quote || {};
+    const ctx = s.context || {};
+    const trend = ctx.trend_5d || {};
+    const rng = ctx.range_90d || {};
+
+    // 浮亏预警(不改变决策,只在标签后追加)
+    let lossBadge = '';
+    const tp = s.strategy_take_profit;
+    if (tp && tp.loss_warning) {
+      const lw = tp.loss_warning;
+      lossBadge = ` <span class="tag tag-loss-${lw.level}" title="浮亏 ${lw.pnl_pct}%">⚠ ${lw.level_cn}</span>`;
+    }
+
+    return `<tr>
+      <td class="code">${s.code}</td>
+      <td>${s.name}</td>
+      <td>${fmtNum(q.price)}</td>
+      <td>${fmtPct(q.pct_change)}</td>
+      <td>${fmtPct(trend.cum_pct)}</td>
+      <td>${rng.position_pct !== null && rng.position_pct !== undefined ? rng.position_pct.toFixed(0) + '%' : '-'}</td>
+      <td><span class="tag ${s.decision_class}">${s.decision}</span>${lossBadge}</td>
+    </tr>`;
+  }).join('');
+  tbody.innerHTML = rows;
+}
+
+function renderStrategyTP(tp, pos) {
+  if (!tp) return '';
+  const triggered = tp.triggered;
+  const strong = tp.action === 'SELL_STRONG';
+  const cls = `strategy-box tp${strong ? ' strong' : ''}`;
+
+  const pnl = tp.position.pnl_pct;
+  const pnlCls = priceColor(pnl);
+  const reasonsHTML = tp.reasons.length
+    ? `<ul class="reasons">${tp.reasons.map(r => `<li>${r}</li>`).join('')}</ul>`
+    : '<div style="font-size:12px;color:var(--text-sec)">(未满足触发条件)</div>';
+
+  const confKey = {'高':'h','中':'m','低':'l','较高':'较高','未触发':'l'}[tp.confidence] || 'l';
+
+  // 浮亏预警标签(仅视觉)
+  let lossBadge = '';
+  if (tp.loss_warning) {
+    const lw = tp.loss_warning;
+    lossBadge = `<span class="tag tag-loss-${lw.level}" title="仅视觉提示,不给具体动作">⚠ ${lw.level_cn}</span>`;
+  }
+
+  return `
+    <div class="${cls}">
+      <div class="title">
+        💰 策略1 · 止盈(持仓)
+        <span class="tag tag-${tp.action === 'SELL_STRONG' ? 'tp-strong' : 'tp-partial'}">${tp.action_cn}</span>
+        ${lossBadge}
+        <span class="confidence ${confKey}">置信度 ${tp.confidence}</span>
+      </div>
+      <div style="font-size:12px;margin-bottom:6px">
+        成本 ${fmtNum(tp.position.cost_price)} · 现价 ${fmtNum(tp.position.current_price)} ·
+        持股 ${tp.position.shares} ·
+        浮盈 <strong class="${pnlCls}">${pnl >= 0 ? '+' : ''}${pnl.toFixed(2)}%</strong>
+      </div>
+      <div class="price-row">
+        <div><span class="label">建议卖出价</span><span class="val">${fmtNum(tp.suggested_exit_price)}</span></div>
+        <div><span class="label">价位依据</span><span class="val" style="font-size:12px">${tp.exit_basis === '90d_high' ? '90天高位 × 0.98' : '成本 × 1.20'}</span></div>
+      </div>
+      ${reasonsHTML}
+    </div>
+  `;
+}
+
+function renderStrategyDip(db) {
+  if (!db) return '';
+  const triggered = db.triggered;
+  const strong = db.tier === 'STRONG';
+  const cls = `strategy-box dip${strong ? ' strong' : ''}${triggered ? '' : ' inactive'}`;
+
+  const reasonsHTML = db.reasons.length
+    ? `<ul class="reasons">${db.reasons.map(r => `<li>${r}</li>`).join('')}</ul>`
+    : '<div style="font-size:12px;color:var(--text-sec)">(未触发抄底信号)</div>';
+
+  const confKey = {'高':'h','中':'m','低':'l','未触发':'l'}[db.confidence] || 'l';
+
+  const priceRowHTML = triggered ? `
+    <div class="price-row">
+      <div>
+        <span class="label">激进档买入价</span>
+        <span class="val">${fmtNum(db.suggested_entry_price_aggressive)}</span>
+      </div>
+      <div>
+        <span class="label">稳健档买入价</span>
+        <span class="val">${db.suggested_entry_price_conservative !== null ? fmtNum(db.suggested_entry_price_conservative) : '-'}</span>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--text-sec)">
+      止损参考: ${fmtNum(db.suggested_stop_loss)} (-${db.price_reference.cum_pct_5d ? '5%' : ''})
+    </div>
+  ` : '';
+
+  return `
+    <div class="${cls}">
+      <div class="title">
+        📉 策略2 · 抄底(未持仓)
+        <span class="tag ${strong ? 'tag-dip-strong' : (triggered ? 'tag-dip' : 'tag-watch')}">${db.tier_cn}</span>
+        ${triggered ? `<span class="confidence ${confKey}">置信度 ${db.confidence}</span>` : ''}
+      </div>
+      ${priceRowHTML}
+      ${reasonsHTML}
+    </div>
+  `;
+}
+
+function renderStrategySwing(sw) {
+  if (!sw) return '';
+  const triggered = sw.triggered;
+  const cls = `strategy-box swing${triggered ? '' : ' inactive'}`;
+
+  const confKey = {'较高':'h','中':'m','低':'l','未触发':'l'}[sw.confidence] || 'l';
+
+  const signalsHTML = sw.signals && sw.signals.length
+    ? `<ul class="reasons">${sw.signals.map(s => `<li>${s}</li>`).join('')}</ul>`
+    : `<div style="font-size:12px;color:var(--text-sec)">信号命中 ${sw.hit_count}/4,未达阈值</div>`;
+
+  const priceRowHTML = triggered ? `
+    <div class="price-row">
+      <div><span class="label">买入价</span><span class="val">${fmtNum(sw.suggested_entry)}</span></div>
+      <div><span class="label">目标价 (+${sw.expected_move_pct}%)</span><span class="val">${fmtNum(sw.suggested_target)}</span></div>
+    </div>
+    <div style="font-size:12px;color:var(--text-sec)">止损: ${fmtNum(sw.suggested_stop)}</div>
+  ` : '';
+
+  return `
+    <div class="${cls}">
+      <div class="title">
+        ⚡ 策略3 · 波段(独立候选)
+        <span class="tag ${triggered ? 'tag-swing' : 'tag-watch'}">${triggered ? '波段关注' : '未触发'}</span>
+        ${triggered ? `<span class="confidence ${confKey}">置信度 ${sw.confidence}</span>` : ''}
+      </div>
+      ${priceRowHTML}
+      ${signalsHTML}
+      ${triggered ? `<div style="font-size:11px;color:var(--text-sec);margin-top:6px;font-style:italic">${sw.note || ''}</div>` : ''}
+    </div>
+  `;
+}
+
+function renderStockCard(s) {
+  const q = s.quote || {};
+  const ctx = s.context || {};
+  const trend = ctx.trend_5d || {};
+  const rng = ctx.range_90d || {};
+  const pct = q.pct_change;
+  const pctStr = (pct !== null && pct !== undefined)
+    ? `<span class="change ${priceColor(pct)}">${pct >= 0 ? '+' : ''}${parseFloat(pct).toFixed(2)}%</span>`
+    : '';
+
+  const contextHTML = `
+    <div class="context-box">
+      <div><span class="k">5日累计</span><span class="v">${fmtPct(trend.cum_pct)}</span></div>
+      <div><span class="k">5日涨/跌</span><span class="v">${trend.days_up}涨/${trend.days_down}跌</span></div>
+      <div><span class="k">90日高</span><span class="v">${fmtNum(rng.high)}</span></div>
+      <div><span class="k">90日低</span><span class="v">${fmtNum(rng.low)}</span></div>
+      <div><span class="k">区间位置</span><span class="v">${rng.position_pct !== null && rng.position_pct !== undefined ? rng.position_pct.toFixed(0) + '%' : '-'}</span></div>
+      <div><span class="k">PE/PB</span><span class="v">${fmtNum(q.pe_ttm)} / ${fmtNum(q.pb)}</span></div>
+    </div>
+  `;
+
+  const tpHTML = renderStrategyTP(s.strategy_take_profit, s.position);
+  const dipHTML = renderStrategyDip(s.strategy_dip_buy);
+  const swHTML = renderStrategySwing(s.strategy_swing);
+
+  return `
+    <div class="stock-card" id="card-${s.code}">
+      <div class="stock-head">
+        <span class="code">${s.code}</span>
+        <span class="name">${s.name}</span>
+        <span class="tag ${s.decision_class}">${s.decision}</span>
+        <span class="price ${priceColor(pct)}">${fmtNum(q.price)}</span>
+        ${pctStr}
+      </div>
+      ${contextHTML}
+      <div class="chart" id="chart-${s.code}"></div>
+      ${tpHTML}
+      ${dipHTML}
+      ${swHTML}
+      ${(() => {
+        const ai = (window.AI_ANALYSIS || {})[s.code];
+        if (ai) {
+          return `<div class="ai-block filled" id="ai-${s.code}">
+            <strong>🤖 AI 综合分析</strong>
+            <div style="margin-top:8px">${ai}</div>
+          </div>`;
+        }
+        return `<div class="ai-block" id="ai-${s.code}">
+          <strong>🤖 AI 综合分析(消息面)</strong>
+          <div class="placeholder">待 Routine 补充:最近公告/业绩/行业/突发事件;确认信号有效性;生成最终决策建议。</div>
+        </div>`;
+      })()}
+    </div>
+  `;
+}
+
+function renderChart(stock) {
+  const el = document.getElementById(`chart-${stock.code}`);
+  if (!stock.chart || !el) return;
+  const c = stock.chart;
+  const chart = echarts.init(el);
+
+  const option = {
+    animation: false,
+    grid: [
+      { left: '8%', right: '4%', top: '6%', height: '62%' },
+      { left: '8%', right: '4%', top: '74%', height: '18%' }
+    ],
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'cross' },
+      backgroundColor: 'rgba(255,255,255,0.96)',
+      borderColor: '#e4e7eb',
+      textStyle: { color: '#1f2329', fontSize: 12 }
+    },
+    legend: {
+      data: ['K线', 'MA5', 'MA10', 'MA20', '布林上', '布林下'],
+      top: 0, textStyle: { fontSize: 11 },
+      selected: { '布林上': false, '布林下': false }
+    },
+    xAxis: [
+      { type: 'category', data: c.dates, boundaryGap: false, axisLine: { onZero: false },
+        splitLine: { show: false }, axisLabel: { fontSize: 10 } },
+      { type: 'category', gridIndex: 1, data: c.dates, boundaryGap: false,
+        axisLine: { onZero: false }, axisTick: { show: false }, axisLabel: { show: false } }
+    ],
+    yAxis: [
+      { scale: true, splitArea: { show: false }, axisLabel: { fontSize: 10 } },
+      { gridIndex: 1, splitNumber: 2, axisLine: { show: false },
+        axisTick: { show: false }, axisLabel: { show: false }, splitLine: { show: false } }
+    ],
+    axisPointer: { link: [{ xAxisIndex: 'all' }] },
+    dataZoom: [{ type: 'inside', xAxisIndex: [0, 1], start: 0, end: 100 }],
+    series: [
+      { name: 'K线', type: 'candlestick', data: c.ohlc,
+        itemStyle: {
+          color: '#d9322d', color0: '#0a9a5a',
+          borderColor: '#d9322d', borderColor0: '#0a9a5a'
+        }
+      },
+      { name: 'MA5', type: 'line', data: c.ma5, smooth: true,
+        lineStyle: { width: 1, color: '#f59e0b' }, symbol: 'none' },
+      { name: 'MA10', type: 'line', data: c.ma10, smooth: true,
+        lineStyle: { width: 1, color: '#4c6ef5' }, symbol: 'none' },
+      { name: 'MA20', type: 'line', data: c.ma20, smooth: true,
+        lineStyle: { width: 1, color: '#8b5cf6' }, symbol: 'none' },
+      { name: '布林上', type: 'line', data: c.bb_upper,
+        lineStyle: { width: 1, type: 'dashed', color: '#9ca3af', opacity: 0.6 }, symbol: 'none' },
+      { name: '布林下', type: 'line', data: c.bb_lower,
+        lineStyle: { width: 1, type: 'dashed', color: '#9ca3af', opacity: 0.6 }, symbol: 'none' },
+      { name: '成交量', type: 'bar',
+        xAxisIndex: 1, yAxisIndex: 1,
+        data: c.volumes.map((v, i) => ({
+          value: v,
+          itemStyle: { color: c.ohlc[i][1] >= c.ohlc[i][0] ? '#d9322d' : '#0a9a5a' }
+        }))
+      }
+    ]
+  };
+  chart.setOption(option);
+  window.addEventListener('resize', () => chart.resize());
+}
+
+function init() {
+  renderStats();
+  renderSummaryTable();
+  document.getElementById('stock-grid').innerHTML = DATA.stocks.map(renderStockCard).join('');
+  DATA.stocks.forEach(renderChart);
+}
+document.addEventListener('DOMContentLoaded', init);
+
+window.fillAIAnalysis = function(code, htmlContent) {
+  const el = document.getElementById(`ai-${code}`);
+  if (!el) return;
+  el.classList.add('filled');
+  el.innerHTML = `<strong>🤖 AI 综合分析</strong><div style="margin-top:8px">${htmlContent}</div>`;
+};
+</script>
+</body>
+</html>
