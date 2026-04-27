@@ -1,0 +1,233 @@
+{
+  "date": "2026-04-27",
+  "results": [
+    {
+      "code": "002885",
+      "name": "京泉华",
+      "quote": {},
+      "context": {
+        "last_close": 30.18,
+        "trend_5d": {
+          "days_up": 2,
+          "days_down": 2,
+          "cum_pct": 2.48,
+          "min": 29.45,
+          "max": 31.08,
+          "is_5d_low": false,
+          "is_5d_high": false
+        },
+        "range_90d": {
+          "high": 33.16,
+          "low": 22.89,
+          "position_pct": 70.98
+        }
+      },
+      "money_flow_5d": [
+        {
+          "date": "2026-04-21",
+          "close": 29.45,
+          "pct_change": 0.51,
+          "main_net_inflow": 3051715.0,
+          "main_net_inflow_pct": 0.29,
+          "super_large_net": -23881435.0,
+          "large_net": 26933150.0
+        },
+        {
+          "date": "2026-04-22",
+          "close": 30.43,
+          "pct_change": 3.33,
+          "main_net_inflow": 55043740.0,
+          "main_net_inflow_pct": 6.31,
+          "super_large_net": 51762497.0,
+          "large_net": 3281243.0
+        },
+        {
+          "date": "2026-04-23",
+          "close": 31.08,
+          "pct_change": 2.14,
+          "main_net_inflow": -29559203.0,
+          "main_net_inflow_pct": -2.36,
+          "super_large_net": 23138205.0,
+          "large_net": -52697408.0
+        },
+        {
+          "date": "2026-04-24",
+          "close": 30.92,
+          "pct_change": -0.51,
+          "main_net_inflow": -4560780.0,
+          "main_net_inflow_pct": -0.62,
+          "super_large_net": -1051154.0,
+          "large_net": -3509626.0
+        },
+        {
+          "date": "2026-04-27",
+          "close": 30.18,
+          "pct_change": -2.39,
+          "main_net_inflow": -94701842.0,
+          "main_net_inflow_pct": -13.21,
+          "super_large_net": -59697167.0,
+          "large_net": -35004675.0
+        }
+      ],
+      "strategy_take_profit": {
+        "triggered": false,
+        "action": "SELL_PARTIAL",
+        "action_cn": "部分止盈",
+        "confidence": "中",
+        "loss_warning": null,
+        "position": {
+          "cost_price": 24.3,
+          "current_price": 30.18,
+          "shares": 100,
+          "pnl_pct": 24.2,
+          "pnl_amount": 588.0
+        },
+        "conditions": {
+          "pnl_over_threshold": true,
+          "trend_5d_up": false,
+          "at_90d_high": true,
+          "all_hit": false
+        },
+        "reasons": [
+          "浮盈 +24.20% ≥ 18.0%",
+          "位于 90 天区间 71% 高位"
+        ],
+        "suggested_exit_price": 32.5,
+        "exit_basis": "90d_high",
+        "price_reference": {
+          "cost_target_price": 29.16,
+          "price_90d_high_mult": 32.5,
+          "range_90d_high": 33.16
+        }
+      },
+      "position": {
+        "code": "002885",
+        "cost_price": 24.3,
+        "shares": 100,
+        "entry_date": "2026-01-15",
+        "note": "长线底仓"
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 0,
+        "total": 4,
+        "signals": [],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": 1.493,
+          "kdj_cross": false,
+          "kdj_k": 73.68,
+          "kdj_d": 78.23,
+          "volume_ratio": 1.25
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    },
+    {
+      "code": "002574",
+      "name": "明牌珠宝",
+      "quote": {},
+      "context": {
+        "last_close": 5.4,
+        "trend_5d": {
+          "days_up": 2,
+          "days_down": 2,
+          "cum_pct": -0.55,
+          "min": 5.3,
+          "max": 5.43,
+          "is_5d_low": false,
+          "is_5d_high": false
+        },
+        "range_90d": {
+          "high": 7.69,
+          "low": 5.3,
+          "position_pct": 4.18
+        }
+      },
+      "money_flow_5d": [
+        {
+          "date": "2026-04-21",
+          "close": 5.43,
+          "pct_change": -0.55,
+          "main_net_inflow": 7729235.0,
+          "main_net_inflow_pct": 21.44,
+          "super_large_net": 5822942.0,
+          "large_net": 1906293.0
+        },
+        {
+          "date": "2026-04-22",
+          "close": 5.39,
+          "pct_change": -0.74,
+          "main_net_inflow": 1370952.0,
+          "main_net_inflow_pct": 4.19,
+          "super_large_net": 356998.0,
+          "large_net": 1013954.0
+        },
+        {
+          "date": "2026-04-23",
+          "close": 5.3,
+          "pct_change": -1.67,
+          "main_net_inflow": -1886739.0,
+          "main_net_inflow_pct": -5.14,
+          "super_large_net": 3182546.0,
+          "large_net": -5069285.0
+        },
+        {
+          "date": "2026-04-24",
+          "close": 5.32,
+          "pct_change": 0.38,
+          "main_net_inflow": -1131144.0,
+          "main_net_inflow_pct": -3.03,
+          "super_large_net": -124557.0,
+          "large_net": -1006587.0
+        },
+        {
+          "date": "2026-04-27",
+          "close": 5.4,
+          "pct_change": 1.5,
+          "main_net_inflow": -5551226.0,
+          "main_net_inflow_pct": -12.04,
+          "super_large_net": -2961401.0,
+          "large_net": -2589825.0
+        }
+      ],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": true
+        },
+        "reasons": [
+          "接近/跌破 90 天低位 5.30 × 1.02"
+        ],
+        "suggested_entry_price_aggressive": 5.4,
+        "suggested_entry_price_conservative": 5.35,
+        "suggested_stop_loss": 5.13,
+        "price_reference": {
+          "range_90d_low": 5.3,
+          "cum_pct_5d": -0.55
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 0,
+        "total": 4,
+        "signals": [],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": -0.006,
+          "kdj_cross": false,
+          "kdj_k": 31.13,
+          "kdj_d": 25.85,
+          "volume_ratio": 1.26
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    }
+  ]
+}
