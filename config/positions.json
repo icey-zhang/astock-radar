@@ -24,5 +24,26 @@
       "entry_date": "2025-12-20",
       "note": ""
     }
+    {
+      "code": "600690",
+      "cost_price": 21.610,
+      "shares": 100,
+      "entry_date": "2026-04-21",
+      "note": ""
+    }
+    {
+      "code": "002607",
+      "cost_price": 2.642,
+      "shares": 600,
+      "entry_date": "2025-12-20",
+      "note": ""
+    }
+    {
+      "code": "600053",
+      "cost_price": 17.558,
+      "shares": 400,
+      "entry_date": "2026-3-20",
+      "note": ""
+    }
   ]
 }
