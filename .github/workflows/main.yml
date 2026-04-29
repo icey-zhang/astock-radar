@@ -11,12 +11,16 @@ on:
   workflow_dispatch:  # 允许手动触发
 
 permissions:
-  contents: write  # 允许 commit & push
+  contents: write
+
+concurrency:
+  group: daily-data-pipeline
+  cancel-in-progress: false
 
 jobs:
-  analyze:
+  pipeline:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,14 +33,13 @@ jobs:
 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip setuptools wheel
           pip install -r requirements.txt
 
       - name: Trading day check
         id: tcheck
         continue-on-error: true
-        run: |
-          python scripts/trading_day_check.py
-          echo "is_trading_day=$?" >> $GITHUB_OUTPUT
+        run: python scripts/trading_day_check.py
 
       - name: Skip if non-trading day
         if: steps.tcheck.outcome != 'success'
@@ -44,26 +47,111 @@ jobs:
           echo "::notice::非 A 股交易日,跳过。"
           exit 0
 
-      - name: Run daily analysis
+      - name: Diagnose cache state
+        if: steps.tcheck.outcome == 'success'
         run: |
-          bash scripts/run_daily.sh --with-news
+          echo "=== 工作目录 ==="
+          pwd
+          echo ""
+          echo "=== data/history/ 是否存在 ==="
+          if [ -d data/history ]; then
+            echo "✓ 目录存在,缓存文件:"
+            ls -la data/history/ | head -20
+            echo "..."
+            echo "缓存股票总数: $(ls data/history/*.json 2>/dev/null | wc -l)"
+          else
+            echo "✗ data/history/ 目录不存在 → 这次会 cold start"
+            echo "  ↳ 可能原因:首次跑 / 上次 commit 失败 / .gitignore 挡住"
+          fi
+          echo ""
+          echo "=== 最近 3 次 commit ==="
+          git log --oneline -3
+          echo ""
+          echo "=== git status (是否有未追踪的 data/history) ==="
+          git status --short data/ 2>/dev/null || echo "(目录不存在)"
 
-      - name: Commit results
+      - name: Run data pipeline
+        if: steps.tcheck.outcome == 'success'
+        id: pipeline
+        # continue-on-error 让后续 commit step 即使数据管道部分失败也能跑
+        # 至少把已经成功拉到的 history 缓存保存下来,供下次复用
+        continue-on-error: true
+        env:
+          VERBOSE_FLAG: ${{ github.event.inputs.verbose == 'true' && '--verbose' || '' }}
+        run: |
+          set +e   # 关键:不要让单个命令失败就退出整个 step
+          
+          # 拉数据(含增量缓存) — min-success-rate 设为 0 以确保即使全部限流也写入已拉到的部分
+          python scripts/fetch_data.py \
+            --config config/stocks.yml \
+            --output-dir data \
+            --history-dir data/history \
+            --inter-sleep-min 3 \
+            --inter-sleep-max 7 \
+            --min-success-rate 0.0 \
+            $VERBOSE_FLAG
+          FETCH_RC=$?
+          echo "fetch_data exit code: $FETCH_RC"
+
+          # 只有当至少一只股票拉到数据时才算信号
+          if ls data/$(date +%Y-%m-%d)/*.json >/dev/null 2>&1; then
+            python scripts/analyze_signals.py \
+              --config config/stocks.yml \
+              --positions config/positions.json \
+              --data-dir data
+            python scripts/render_report.py \
+              --signals "data/$(date +%Y-%m-%d)/signals.json" \
+              --output-dir reports
+            python scripts/render_dashboard.py \
+              --signals "data/$(date +%Y-%m-%d)/signals.json" \
+              --output-dir reports
+          else
+            echo "::warning::没有拉到任何股票数据,跳过分析和渲染"
+          fi
+          
+          # 不管怎样都返回 0,让 commit step 能跑
+          exit 0
+
+      - name: Commit pipeline outputs (always, to preserve cache)
+        if: steps.tcheck.outcome == 'success'
         run: |
           TODAY=$(date +%Y-%m-%d)
-          git config user.name "GitHub Actions"
+          git config user.name "Data Pipeline Bot"
           git config user.email "actions@github.com"
-          git add "data/${TODAY}/" "reports/${TODAY}.md" "reports/${TODAY}_dashboard.html"
+
+          # 永远尝试提交 data/history(关键缓存,即使部分股票失败也保留已有的)
+          git add data/history/ 2>/dev/null || true
+          # 当日数据和报告(可能不全)
+          git add "data/${TODAY}/" 2>/dev/null || true
+          git add "reports/${TODAY}.md" "reports/${TODAY}_dashboard.html" 2>/dev/null || true
+
+          echo "=== Staged changes ==="
+          git diff --staged --stat
+
           if git diff --staged --quiet; then
             echo "::notice::无新产物可提交"
           else
-            git commit -m "daily: ${TODAY} (via actions)"
-            git push
+            git commit -m "pipeline: ${TODAY} (run #${{ github.run_number }})"
+            # 重试 push 3 次,以防并发推送冲突
+            for i in 1 2 3; do
+              if git push; then
+                echo "::notice::push 成功(第 $i 次尝试)"
+                break
+              else
+                echo "::warning::push 失败(第 $i 次),pull rebase 后重试"
+                git pull --rebase origin main
+                sleep 3
+              fi
+            done
           fi
 
-      - name: Upload report as artifact
+      - name: Upload as artifact (fallback)
+        if: steps.tcheck.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
-          name: report-${{ github.run_number }}
-          path: reports/
+          name: pipeline-${{ github.run_number }}
+          path: |
+            reports/*.md
+            reports/*_dashboard.html
           retention-days: 30
+
