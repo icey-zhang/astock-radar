@@ -1,7 +1,7 @@
 {
   "code": "600303",
   "name": "曙光股份",
-  "fetched_at": "2026-04-29T06:43:15.164521",
+  "fetched_at": "2026-04-29T07:21:33.894766",
   "close_history": [
     {
       "date": "2025-04-16",
@@ -1309,15 +1309,6 @@
   "quote": {},
   "money_flow": [
     {
-      "date": "2026-04-22",
-      "close": 3.12,
-      "pct_change": 0.32,
-      "main_net_inflow": 1315588.0,
-      "main_net_inflow_pct": 2.09,
-      "super_large_net": 255558.0,
-      "large_net": 1060030.0
-    },
-    {
       "date": "2026-04-23",
       "close": 3.09,
       "pct_change": -0.96,
@@ -1352,6 +1343,15 @@
       "main_net_inflow_pct": 2.01,
       "super_large_net": -1897243.0,
       "large_net": 3252729.0
+    },
+    {
+      "date": "2026-04-29",
+      "close": 3.29,
+      "pct_change": 2.81,
+      "main_net_inflow": -1409405.0,
+      "main_net_inflow_pct": -1.93,
+      "super_large_net": -743047.0,
+      "large_net": -666358.0
     }
   ]
 }

@@ -1,7 +1,7 @@
 {
   "code": "600690",
   "name": "海尔智家",
-  "fetched_at": "2026-04-29T06:41:19.062440",
+  "fetched_at": "2026-04-29T07:19:37.015060",
   "close_history": [
     {
       "date": "2025-04-17",
@@ -1309,15 +1309,6 @@
   "quote": {},
   "money_flow": [
     {
-      "date": "2026-04-22",
-      "close": 20.68,
-      "pct_change": -0.72,
-      "main_net_inflow": -285360908.0,
-      "main_net_inflow_pct": -29.78,
-      "super_large_net": -186364531.0,
-      "large_net": -98996377.0
-    },
-    {
       "date": "2026-04-23",
       "close": 20.53,
       "pct_change": -0.73,
@@ -1352,6 +1343,15 @@
       "main_net_inflow_pct": -1.35,
       "super_large_net": 125843568.0,
       "large_net": -161607808.0
+    },
+    {
+      "date": "2026-04-29",
+      "close": 21.64,
+      "pct_change": 1.41,
+      "main_net_inflow": -171686143.0,
+      "main_net_inflow_pct": -9.66,
+      "super_large_net": -128272991.0,
+      "large_net": -43413152.0
     }
   ]
 }

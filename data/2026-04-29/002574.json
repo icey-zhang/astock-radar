@@ -1,7 +1,7 @@
 {
   "code": "002574",
   "name": "明牌珠宝",
-  "fetched_at": "2026-04-29T06:39:18.408278",
+  "fetched_at": "2026-04-29T07:17:48.724197",
   "close_history": [
     {
       "date": "2025-04-17",
@@ -1309,15 +1309,6 @@
   "quote": {},
   "money_flow": [
     {
-      "date": "2026-04-22",
-      "close": 5.39,
-      "pct_change": -0.74,
-      "main_net_inflow": 1370952.0,
-      "main_net_inflow_pct": 4.19,
-      "super_large_net": 356998.0,
-      "large_net": 1013954.0
-    },
-    {
       "date": "2026-04-23",
       "close": 5.3,
       "pct_change": -1.67,
@@ -1352,6 +1343,15 @@
       "main_net_inflow_pct": -4.26,
       "super_large_net": -3672633.0,
       "large_net": -2019182.0
+    },
+    {
+      "date": "2026-04-29",
+      "close": 5.68,
+      "pct_change": 1.97,
+      "main_net_inflow": -7875762.0,
+      "main_net_inflow_pct": -8.16,
+      "super_large_net": 1125605.0,
+      "large_net": -9001367.0
     }
   ]
 }

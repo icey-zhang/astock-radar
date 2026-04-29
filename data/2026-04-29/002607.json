@@ -1,8 +1,12 @@
 {
   "code": "002607",
   "name": "中公教育",
-  "fetched_at": "2026-04-29T06:43:56.709492",
+  "fetched_at": "2026-04-29T07:23:26.728195",
   "close_history": [
+    {
+      "date": "2025-04-17",
+      "close": 3.03
+    },
     {
       "date": "2025-04-18",
       "close": 3.04
@@ -998,22 +1002,28 @@
     {
       "date": "2026-04-28",
       "close": 2.46
-    },
-    {
-      "date": "2026-04-29",
-      "close": 2.59
     }
   ],
   "kline_30d": [
+    {
+      "date": "2026-03-17",
+      "open": 2.87,
+      "close": 2.82,
+      "high": 2.9,
+      "low": 2.82,
+      "volume": 126505622.0,
+      "pct_change": null,
+      "turnover": null
+    },
     {
       "date": "2026-03-18",
       "open": 2.82,
       "close": 2.82,
       "high": 2.84,
       "low": 2.78,
-      "volume": 1090495,
-      "pct_change": 0.0,
-      "turnover": 1.97
+      "volume": 109049515.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-19",
@@ -1021,9 +1031,9 @@
       "close": 2.75,
       "high": 2.8,
       "low": 2.73,
-      "volume": 1216031,
-      "pct_change": -2.48,
-      "turnover": 2.19
+      "volume": 121603052.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-20",
@@ -1031,9 +1041,9 @@
       "close": 2.68,
       "high": 2.77,
       "low": 2.68,
-      "volume": 1186316,
-      "pct_change": -2.55,
-      "turnover": 2.14
+      "volume": 118631596.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-23",
@@ -1041,9 +1051,9 @@
       "close": 2.51,
       "high": 2.64,
       "low": 2.5,
-      "volume": 1812318,
-      "pct_change": -6.34,
-      "turnover": 3.27
+      "volume": 181231826.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-24",
@@ -1051,9 +1061,9 @@
       "close": 2.58,
       "high": 2.59,
       "low": 2.5,
-      "volume": 1210186,
-      "pct_change": 2.79,
-      "turnover": 2.18
+      "volume": 121018645.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-25",
@@ -1061,9 +1071,9 @@
       "close": 2.69,
       "high": 2.78,
       "low": 2.6,
-      "volume": 1939984,
-      "pct_change": 4.26,
-      "turnover": 3.5
+      "volume": 193998447.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-26",
@@ -1071,9 +1081,9 @@
       "close": 2.62,
       "high": 2.71,
       "low": 2.6,
-      "volume": 1299413,
-      "pct_change": -2.6,
-      "turnover": 2.34
+      "volume": 129941300.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-27",
@@ -1081,9 +1091,9 @@
       "close": 2.65,
       "high": 2.67,
       "low": 2.58,
-      "volume": 953718,
-      "pct_change": 1.15,
-      "turnover": 1.72
+      "volume": 95371762.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-30",
@@ -1091,9 +1101,9 @@
       "close": 2.65,
       "high": 2.66,
       "low": 2.59,
-      "volume": 962003,
-      "pct_change": 0.0,
-      "turnover": 1.74
+      "volume": 96200319.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-03-31",
@@ -1101,9 +1111,9 @@
       "close": 2.62,
       "high": 2.7,
       "low": 2.62,
-      "volume": 905989,
-      "pct_change": -1.13,
-      "turnover": 1.63
+      "volume": 90598933.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-01",
@@ -1111,9 +1121,9 @@
       "close": 2.64,
       "high": 2.67,
       "low": 2.61,
-      "volume": 786884,
-      "pct_change": 0.76,
-      "turnover": 1.42
+      "volume": 78688446.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-02",
@@ -1121,9 +1131,9 @@
       "close": 2.61,
       "high": 2.65,
       "low": 2.58,
-      "volume": 819314,
-      "pct_change": -1.14,
-      "turnover": 1.48
+      "volume": 81931396.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-03",
@@ -1131,9 +1141,9 @@
       "close": 2.56,
       "high": 2.62,
       "low": 2.54,
-      "volume": 708439,
-      "pct_change": -1.92,
-      "turnover": 1.28
+      "volume": 70843937.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-07",
@@ -1141,9 +1151,9 @@
       "close": 2.58,
       "high": 2.6,
       "low": 2.56,
-      "volume": 512948,
-      "pct_change": 0.78,
-      "turnover": 0.93
+      "volume": 51294840.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-08",
@@ -1151,9 +1161,9 @@
       "close": 2.68,
       "high": 2.69,
       "low": 2.63,
-      "volume": 1437784,
-      "pct_change": 3.88,
-      "turnover": 2.59
+      "volume": 143778430.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-09",
@@ -1161,9 +1171,9 @@
       "close": 2.62,
       "high": 2.67,
       "low": 2.61,
-      "volume": 936781,
-      "pct_change": -2.24,
-      "turnover": 1.69
+      "volume": 93678090.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-10",
@@ -1171,9 +1181,9 @@
       "close": 2.65,
       "high": 2.72,
       "low": 2.63,
-      "volume": 1337893,
-      "pct_change": 1.15,
-      "turnover": 2.41
+      "volume": 133789263.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-13",
@@ -1181,9 +1191,9 @@
       "close": 2.65,
       "high": 2.66,
       "low": 2.61,
-      "volume": 857066,
-      "pct_change": 0.0,
-      "turnover": 1.55
+      "volume": 85706573.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-14",
@@ -1191,9 +1201,9 @@
       "close": 2.67,
       "high": 2.68,
       "low": 2.62,
-      "volume": 914069,
-      "pct_change": 0.75,
-      "turnover": 1.65
+      "volume": 91406900.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-15",
@@ -1201,9 +1211,9 @@
       "close": 2.63,
       "high": 2.69,
       "low": 2.63,
-      "volume": 588555,
-      "pct_change": -1.5,
-      "turnover": 1.06
+      "volume": 58855500.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-16",
@@ -1211,9 +1221,9 @@
       "close": 2.65,
       "high": 2.66,
       "low": 2.63,
-      "volume": 776242,
-      "pct_change": 0.76,
-      "turnover": 1.4
+      "volume": 77624236.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-17",
@@ -1221,9 +1231,9 @@
       "close": 2.6,
       "high": 2.66,
       "low": 2.58,
-      "volume": 1057917,
-      "pct_change": -1.89,
-      "turnover": 1.91
+      "volume": 105791687.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-20",
@@ -1231,9 +1241,9 @@
       "close": 2.59,
       "high": 2.61,
       "low": 2.58,
-      "volume": 760142,
-      "pct_change": -0.38,
-      "turnover": 1.37
+      "volume": 76014162.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-21",
@@ -1241,9 +1251,9 @@
       "close": 2.57,
       "high": 2.6,
       "low": 2.56,
-      "volume": 721625,
-      "pct_change": -0.77,
-      "turnover": 1.3
+      "volume": 72162516.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-22",
@@ -1251,9 +1261,9 @@
       "close": 2.54,
       "high": 2.57,
       "low": 2.52,
-      "volume": 985928,
-      "pct_change": -1.17,
-      "turnover": 1.78
+      "volume": 98592825.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-23",
@@ -1261,9 +1271,9 @@
       "close": 2.53,
       "high": 2.56,
       "low": 2.52,
-      "volume": 837267,
-      "pct_change": -0.39,
-      "turnover": 1.51
+      "volume": 83726669.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-24",
@@ -1271,9 +1281,9 @@
       "close": 2.5,
       "high": 2.52,
       "low": 2.46,
-      "volume": 929785,
-      "pct_change": -1.19,
-      "turnover": 1.68
+      "volume": 92978487.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-27",
@@ -1281,9 +1291,9 @@
       "close": 2.5,
       "high": 2.51,
       "low": 2.45,
-      "volume": 854226,
-      "pct_change": 0.0,
-      "turnover": 1.54
+      "volume": 85422606.0,
+      "pct_change": null,
+      "turnover": null
     },
     {
       "date": "2026-04-28",
@@ -1291,32 +1301,13 @@
       "close": 2.46,
       "high": 2.51,
       "low": 2.45,
-      "volume": 831416,
-      "pct_change": -1.6,
-      "turnover": 1.5
-    },
-    {
-      "date": "2026-04-29",
-      "open": 2.51,
-      "close": 2.59,
-      "high": 2.65,
-      "low": 2.51,
-      "volume": 2070584,
-      "pct_change": 5.28,
-      "turnover": 3.74
+      "volume": 83141580.0,
+      "pct_change": null,
+      "turnover": null
     }
   ],
   "quote": {},
   "money_flow": [
-    {
-      "date": "2026-04-22",
-      "close": 2.54,
-      "pct_change": -1.17,
-      "main_net_inflow": -34278367.0,
-      "main_net_inflow_pct": -13.68,
-      "super_large_net": -10471547.0,
-      "large_net": -23806820.0
-    },
     {
       "date": "2026-04-23",
       "close": 2.53,
@@ -1352,6 +1343,15 @@
       "main_net_inflow_pct": -14.31,
       "super_large_net": -26939433.0,
       "large_net": -2545738.0
+    },
+    {
+      "date": "2026-04-29",
+      "close": 2.57,
+      "pct_change": 4.47,
+      "main_net_inflow": 81105410.0,
+      "main_net_inflow_pct": 14.23,
+      "super_large_net": 48176842.0,
+      "large_net": 32928568.0
     }
   ]
 }
