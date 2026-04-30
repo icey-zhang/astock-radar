@@ -105,6 +105,7 @@ jobs:
             python scripts/render_dashboard.py \
               --signals "data/$(date +%Y-%m-%d)/signals.json" \
               --output-dir reports
+            cp "reports/$(date +%Y-%m-%d)_dashboard.html" docs/index.html
           else
             echo "::warning::没有拉到任何股票数据,跳过分析和渲染"
           fi
@@ -124,6 +125,7 @@ jobs:
           # 当日数据和报告(可能不全)
           git add "data/${TODAY}/" 2>/dev/null || true
           git add "reports/${TODAY}.md" "reports/${TODAY}_dashboard.html" 2>/dev/null || true
+          git add docs/index.html 2>/dev/null || true
 
           echo "=== Staged changes ==="
           git diff --staged --stat
