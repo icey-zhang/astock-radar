@@ -4,7 +4,7 @@
 
 1. 在 [claude.ai/code/routines](https://claude.ai/code/routines) 创建 Routine
 2. Trigger:Schedule → Custom cron `0 8 * * 1-5`(UTC 08:00 = 北京 16:00,比 workflow 晚 30 分钟保证 workflow 已跑完)
-3. GitHub connector: 授权访问你的 `astock_daily_analysis` repo
+3. GitHub connector: 授权访问你的 `astock-radar` repo
 4. Prompt: **把下面分割线之间的整段文本复制粘贴**
 5. Max 订阅每天 15 次 Routine 触发配额,每个交易日用 1 次,完全够用
 
@@ -20,7 +20,7 @@ Your job is to take the skeleton and fill in the AI analysis blocks with real ne
 
 ## Repository
 
-`https://github.com/icey-zhang/astock_daily_analysis`
+`https://github.com/icey-zhang/astock-radar`
 
 Use the configured GitHub connector — no cloning needed, read/write directly via MCP tools.
 
@@ -86,7 +86,7 @@ Use the configured GitHub connector — no cloning needed, read/write directly v
    - Date
    - Number of stocks analyzed
    - Stocks with triggered signals (briefly)
-   - Link to the updated report: `https://github.com/icey-zhang/astock_daily_analysis/blob/main/reports/${TODAY}.md`
+   - Link to the updated report: `https://github.com/icey-zhang/astock-radar/blob/main/reports/${TODAY}.md`
 
 ## Hard rules
 
@@ -105,7 +105,7 @@ These come from `prompts/analyst_prompt.md`. Do not violate:
 If `reports/${TODAY}.md` doesn't exist, don't try to regenerate it. Just output:
 ```
 Data pipeline hasn't produced today's report yet. Check GitHub Actions at:
-https://github.com/icey-zhang/astock_daily_analysis/actions
+https://github.com/icey-zhang/astock-radar/actions
 ```
 and exit cleanly.
 
