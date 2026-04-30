@@ -71,8 +71,8 @@ Use the configured GitHub connector — no cloning needed, read/write directly v
      --md "reports/${TODAY}.md" \
      --html "reports/${TODAY}_dashboard.html"
 
-   git config user.email "claude-analyst@local"
-   git config user.name "Claude Analyst"
+   git config user.email "claude-routine@local"
+   git config user.name "Claude Routine"
    git add "reports/${TODAY}.md" "reports/${TODAY}_dashboard.html"
    if git diff --staged --quiet; then
      echo "No changes — analysis already complete or no triggers today"
