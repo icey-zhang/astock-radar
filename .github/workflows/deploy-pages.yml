@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'reports/*_dashboard.html'
+  workflow_dispatch:
 
 permissions:
   pages: write
