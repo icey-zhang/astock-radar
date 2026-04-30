@@ -5,7 +5,7 @@
 1. 在 [claude.ai/code/routines](https://claude.ai/code/routines) 创建 Routine
 2. Trigger:Schedule → Custom cron `0 8 * * 1-5`(UTC 08:00 = 北京 16:00,比 workflow 晚 30 分钟保证 workflow 已跑完)
 3. GitHub connector: 授权访问你的 `astock_daily_analysis` repo
-4. Prompt: **把下面分割线之间的整段文本复制粘贴**,记得替换 `YOUR_USERNAME`
+4. Prompt: **把下面分割线之间的整段文本复制粘贴**
 5. Max 订阅每天 15 次 Routine 触发配额,每个交易日用 1 次,完全够用
 
 ---
@@ -20,23 +20,13 @@ Your job is to take the skeleton and fill in the AI analysis blocks with real ne
 
 ## Repository
 
-`https://github.com/YOUR_USERNAME/astock_daily_analysis.git`
+`https://github.com/icey-zhang/astock_daily_analysis`
 
-(Use the configured GitHub connector. Write access required for `main` branch.)
+Use the configured GitHub connector — no cloning needed, read/write directly via MCP tools.
 
 ## Steps
 
-1. **Clone or pull the repo**
-   ```bash
-   if [ -d astock_daily_analysis ]; then
-     cd astock_daily_analysis && git pull
-   else
-     git clone https://github.com/YOUR_USERNAME/astock_daily_analysis.git
-     cd astock_daily_analysis
-   fi
-   ```
-
-2. **Find today's skeleton report**
+1. **Find today's skeleton report**
    ```bash
    TODAY=$(date +%Y-%m-%d)
    if [ ! -f "reports/${TODAY}.md" ]; then
@@ -45,13 +35,13 @@ Your job is to take the skeleton and fill in the AI analysis blocks with real ne
    fi
    ```
 
-3. **Read the skeleton and signals**
+2. **Read the skeleton and signals**
    - Read `reports/${TODAY}.md` to understand what's triggered
    - Read `data/${TODAY}/signals.json` for structured signal data
    - Read `config/stocks.yml` for watchlist context (names, codes)
    - Read `prompts/analyst_prompt.md` for the analysis style guide and hard rules
 
-4. **For each stock that has triggered signals** (strategy_take_profit.triggered or strategy_dip_buy.triggered or strategy_swing.triggered):
+3. **For each stock that has triggered signals** (strategy_take_profit.triggered or strategy_dip_buy.triggered or strategy_swing.triggered):
    - Use web_search to find news from the last 2 days. Suggested queries:
      - `<股票名> 公告`
      - `<股票名> 业绩`
@@ -59,7 +49,7 @@ Your job is to take the skeleton and fill in the AI analysis blocks with real ne
    - Max 2-3 searches per stock. Don't over-search.
    - For stocks where no signals triggered, write a brief (1-2 sentence) note acknowledging no action needed — don't skip them entirely, users still want to see they were checked.
 
-5. **Fill the AI analysis blocks** in `reports/${TODAY}.md`:
+4. **Fill the AI analysis blocks** in `reports/${TODAY}.md`:
    - Each stock's section has a placeholder between `<!-- CLAUDE_FILL_START -->` and `<!-- CLAUDE_FILL_END -->`
    - Replace the placeholder with your actual analysis following the structure in `prompts/analyst_prompt.md`:
      1. 消息面摘要 (2-3 sentences, cite sources)
@@ -68,13 +58,13 @@ Your job is to take the skeleton and fill in the AI analysis blocks with real ne
      4. 风险点 (1-3 specific concerns)
    - Keep each stock's analysis to 150-250 words in Chinese.
 
-6. **Add overall market summary** at the end of the report:
+5. **Add overall market summary** at the end of the report:
    - Today's major indices (上证/深成/创业板) — one web_search
    - Overall triggered count summary (e.g., "今日 7 只标的中 2 只触发抄底候选,1 只触发波段关注")
    - One portfolio-level risk note (e.g., concentration in certain sectors)
    - Keep it under 150 words.
 
-7. **Sync AI analysis to HTML dashboard, then commit and push**
+6. **Sync AI analysis to HTML dashboard, then commit and push**
    ```bash
    # 先把 MD 里的 AI 分析同步到 HTML dashboard,让 HTML 也能看到消息面内容
    python scripts/sync_ai_to_html.py \
@@ -92,11 +82,11 @@ Your job is to take the skeleton and fill in the AI analysis blocks with real ne
    fi
    ```
 
-8. **Output a summary** (what I will see in the Routine session history):
+7. **Output a summary** (what I will see in the Routine session history):
    - Date
    - Number of stocks analyzed
    - Stocks with triggered signals (briefly)
-   - Link to the updated report: `https://github.com/YOUR_USERNAME/astock_daily_analysis/blob/main/reports/${TODAY}.md`
+   - Link to the updated report: `https://github.com/icey-zhang/astock_daily_analysis/blob/main/reports/${TODAY}.md`
 
 ## Hard rules
 
@@ -115,7 +105,7 @@ These come from `prompts/analyst_prompt.md`. Do not violate:
 If `reports/${TODAY}.md` doesn't exist, don't try to regenerate it. Just output:
 ```
 Data pipeline hasn't produced today's report yet. Check GitHub Actions at:
-https://github.com/YOUR_USERNAME/astock_daily_analysis/actions
+https://github.com/icey-zhang/astock_daily_analysis/actions
 ```
 and exit cleanly.
 
