@@ -1,0 +1,42 @@
+name: Deploy Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'reports/*_dashboard.html'
+
+permissions:
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Pick latest dashboard
+        run: |
+          LATEST=$(ls reports/*_dashboard.html | sort | tail -1)
+          echo "latest=$LATEST" >> $GITHUB_ENV
+          mkdir -p docs
+          cp "$LATEST" docs/index.html
+          echo "部署: $LATEST"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
