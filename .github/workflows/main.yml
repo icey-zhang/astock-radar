@@ -5,13 +5,15 @@ name: Daily A-Share Analysis
 
 on:
   schedule:
-    # UTC 07:30 = 北京 15:30(A 股收盘后 30 分钟)
+    # UTC 06:00 = 北京 14:00(A 股收盘后 30 分钟)
     # 工作日(周一到周五)触发;实际是否跑由 trading_day_check.py 再判一次
     - cron: '00 6 * * 1-5'
   workflow_dispatch:  # 允许手动触发
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: daily-data-pipeline
@@ -21,6 +23,9 @@ jobs:
   pipeline:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -73,15 +78,12 @@ jobs:
       - name: Run data pipeline
         if: steps.tcheck.outcome == 'success'
         id: pipeline
-        # continue-on-error 让后续 commit step 即使数据管道部分失败也能跑
-        # 至少把已经成功拉到的 history 缓存保存下来,供下次复用
         continue-on-error: true
         env:
           VERBOSE_FLAG: ${{ github.event.inputs.verbose == 'true' && '--verbose' || '' }}
         run: |
-          set +e   # 关键:不要让单个命令失败就退出整个 step
-          
-          # 拉数据(含增量缓存) — min-success-rate 设为 0 以确保即使全部限流也写入已拉到的部分
+          set +e
+
           python scripts/fetch_data.py \
             --config config/stocks.yml \
             --output-dir data \
@@ -93,7 +95,6 @@ jobs:
           FETCH_RC=$?
           echo "fetch_data exit code: $FETCH_RC"
 
-          # 只有当至少一只股票拉到数据时才算信号
           if ls data/$(date +%Y-%m-%d)/*.json >/dev/null 2>&1; then
             python scripts/analyze_signals.py \
               --config config/stocks.yml \
@@ -105,12 +106,12 @@ jobs:
             python scripts/render_dashboard.py \
               --signals "data/$(date +%Y-%m-%d)/signals.json" \
               --output-dir reports
+            # 把当日 dashboard 复制到 docs/index.html 供 Pages 部署
             cp "reports/$(date +%Y-%m-%d)_dashboard.html" docs/index.html
           else
             echo "::warning::没有拉到任何股票数据,跳过分析和渲染"
           fi
-          
-          # 不管怎样都返回 0,让 commit step 能跑
+
           exit 0
 
       - name: Commit pipeline outputs (always, to preserve cache)
@@ -120,12 +121,9 @@ jobs:
           git config user.name "Data Pipeline Bot"
           git config user.email "actions@github.com"
 
-          # 永远尝试提交 data/history(关键缓存,即使部分股票失败也保留已有的)
           git add data/history/ 2>/dev/null || true
-          # 当日数据和报告(可能不全)
           git add "data/${TODAY}/" 2>/dev/null || true
           git add "reports/${TODAY}.md" "reports/${TODAY}_dashboard.html" 2>/dev/null || true
-          git add docs/index.html 2>/dev/null || true
 
           echo "=== Staged changes ==="
           git diff --staged --stat
@@ -134,7 +132,6 @@ jobs:
             echo "::notice::无新产物可提交"
           else
             git commit -m "pipeline: ${TODAY} (run #${{ github.run_number }})"
-            # 重试 push 3 次,以防并发推送冲突
             for i in 1 2 3; do
               if git push; then
                 echo "::notice::push 成功(第 $i 次尝试)"
@@ -147,7 +144,18 @@ jobs:
             done
           fi
 
-      - name: Upload as artifact (fallback)
+      - name: Upload Pages artifact
+        if: steps.tcheck.outcome == 'success' && hashFiles('docs/index.html') != ''
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/
+
+      - name: Deploy to GitHub Pages
+        if: steps.tcheck.outcome == 'success' && hashFiles('docs/index.html') != ''
+        id: deploy
+        uses: actions/deploy-pages@v4
+
+      - name: Upload pipeline artifact (fallback)
         if: steps.tcheck.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
@@ -156,4 +164,3 @@ jobs:
             reports/*.md
             reports/*_dashboard.html
           retention-days: 30
-
