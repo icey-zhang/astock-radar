@@ -1,0 +1,643 @@
+{
+  "date": "2026-04-30",
+  "results": [
+    {
+      "code": "002885",
+      "name": "京泉华",
+      "quote": {},
+      "context": {
+        "last_close": 31.26,
+        "trend_5d": {
+          "days_up": 2,
+          "days_down": 2,
+          "cum_pct": 1.1,
+          "min": 30.07,
+          "max": 31.26,
+          "is_5d_low": false,
+          "is_5d_high": true
+        },
+        "range_90d": {
+          "high": 33.16,
+          "low": 22.89,
+          "position_pct": 81.5
+        }
+      },
+      "money_flow_5d": [
+        {
+          "date": "2026-04-24",
+          "close": 30.92,
+          "pct_change": -0.51,
+          "main_net_inflow": -4560780.0,
+          "main_net_inflow_pct": -0.62,
+          "super_large_net": -1051154.0,
+          "large_net": -3509626.0
+        },
+        {
+          "date": "2026-04-27",
+          "close": 30.18,
+          "pct_change": -2.39,
+          "main_net_inflow": -94701842.0,
+          "main_net_inflow_pct": -13.21,
+          "super_large_net": -59697167.0,
+          "large_net": -35004675.0
+        },
+        {
+          "date": "2026-04-28",
+          "close": 30.07,
+          "pct_change": -0.36,
+          "main_net_inflow": -6208034.0,
+          "main_net_inflow_pct": -1.07,
+          "super_large_net": -29591313.0,
+          "large_net": 23383279.0
+        },
+        {
+          "date": "2026-04-29",
+          "close": 30.65,
+          "pct_change": 1.93,
+          "main_net_inflow": 96171907.0,
+          "main_net_inflow_pct": 11.52,
+          "super_large_net": 54811070.0,
+          "large_net": 41360837.0
+        },
+        {
+          "date": "2026-04-30",
+          "close": 31.26,
+          "pct_change": 1.99,
+          "main_net_inflow": 58160886.0,
+          "main_net_inflow_pct": 7.83,
+          "super_large_net": 43186868.0,
+          "large_net": 14974018.0
+        }
+      ],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 31.26,
+        "suggested_entry_price_conservative": 23.12,
+        "suggested_stop_loss": 29.7,
+        "price_reference": {
+          "range_90d_low": 22.89,
+          "cum_pct_5d": 1.1
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 1,
+        "total": 4,
+        "signals": [
+          "突破 10 日高点"
+        ],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": 1.036,
+          "kdj_cross": false,
+          "kdj_k": 69.43,
+          "kdj_d": 71.66,
+          "volume_ratio": 0.01,
+          "prev_10d_high": 31.08
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    },
+    {
+      "code": "002574",
+      "name": "明牌珠宝",
+      "quote": {},
+      "context": {
+        "last_close": 5.68,
+        "trend_5d": {
+          "days_up": 4,
+          "days_down": 0,
+          "cum_pct": 7.17,
+          "min": 5.3,
+          "max": 5.68,
+          "is_5d_low": false,
+          "is_5d_high": true
+        },
+        "range_90d": {
+          "high": 7.69,
+          "low": 5.3,
+          "position_pct": 15.9
+        }
+      },
+      "money_flow_5d": [
+        {
+          "date": "2026-04-24",
+          "close": 5.32,
+          "pct_change": 0.38,
+          "main_net_inflow": -1131144.0,
+          "main_net_inflow_pct": -3.03,
+          "super_large_net": -124557.0,
+          "large_net": -1006587.0
+        },
+        {
+          "date": "2026-04-27",
+          "close": 5.4,
+          "pct_change": 1.5,
+          "main_net_inflow": -5551226.0,
+          "main_net_inflow_pct": -12.04,
+          "super_large_net": -2961401.0,
+          "large_net": -2589825.0
+        },
+        {
+          "date": "2026-04-28",
+          "close": 5.57,
+          "pct_change": 3.15,
+          "main_net_inflow": -5691815.0,
+          "main_net_inflow_pct": -4.26,
+          "super_large_net": -3672633.0,
+          "large_net": -2019182.0
+        },
+        {
+          "date": "2026-04-29",
+          "close": 5.68,
+          "pct_change": 1.97,
+          "main_net_inflow": -7875762.0,
+          "main_net_inflow_pct": -8.16,
+          "super_large_net": 1125605.0,
+          "large_net": -9001367.0
+        },
+        {
+          "date": "2026-04-30",
+          "close": 5.71,
+          "pct_change": 0.53,
+          "main_net_inflow": -755448.0,
+          "main_net_inflow_pct": -1.27,
+          "super_large_net": 246252.0,
+          "large_net": -1001700.0
+        }
+      ],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 5.68,
+        "suggested_entry_price_conservative": 5.35,
+        "suggested_stop_loss": 5.4,
+        "price_reference": {
+          "range_90d_low": 5.3,
+          "cum_pct_5d": 7.17
+        }
+      },
+      "strategy_swing": {
+        "triggered": true,
+        "hit_count": 3,
+        "total": 4,
+        "signals": [
+          "MACD 金叉(近 3 日)",
+          "量能放大:量比 2.07",
+          "突破 10 日高点"
+        ],
+        "signal_details": {
+          "macd_cross": true,
+          "macd_hist": 0.061,
+          "kdj_cross": false,
+          "kdj_k": 59.82,
+          "kdj_d": 41.45,
+          "volume_ratio": 2.07,
+          "prev_10d_high": 5.57
+        },
+        "confidence": "中",
+        "suggested_entry": 5.68,
+        "suggested_target": 6.02,
+        "suggested_stop": 5.51,
+        "expected_move_pct": 6.0,
+        "note": "波段信号仅作候选参考,历史命中率有限,务必设止损"
+      }
+    },
+    {
+      "code": "600690",
+      "name": "海尔智家",
+      "quote": {},
+      "context": {
+        "last_close": 21.53,
+        "trend_5d": {
+          "days_up": 3,
+          "days_down": 1,
+          "cum_pct": 5.13,
+          "min": 20.48,
+          "max": 21.64,
+          "is_5d_low": false,
+          "is_5d_high": false
+        },
+        "range_90d": {
+          "high": 27.51,
+          "low": 20.48,
+          "position_pct": 14.94
+        }
+      },
+      "money_flow_5d": [
+        {
+          "date": "2026-04-24",
+          "close": 20.48,
+          "pct_change": -0.24,
+          "main_net_inflow": -55362636.0,
+          "main_net_inflow_pct": -5.78,
+          "super_large_net": -6456435.0,
+          "large_net": -48906201.0
+        },
+        {
+          "date": "2026-04-27",
+          "close": 20.52,
+          "pct_change": 0.2,
+          "main_net_inflow": -129900990.0,
+          "main_net_inflow_pct": -11.43,
+          "super_large_net": -41355903.0,
+          "large_net": -88545087.0
+        },
+        {
+          "date": "2026-04-28",
+          "close": 21.34,
+          "pct_change": 4.0,
+          "main_net_inflow": -35764240.0,
+          "main_net_inflow_pct": -1.35,
+          "super_large_net": 125843568.0,
+          "large_net": -161607808.0
+        },
+        {
+          "date": "2026-04-29",
+          "close": 21.64,
+          "pct_change": 1.41,
+          "main_net_inflow": -171686143.0,
+          "main_net_inflow_pct": -9.66,
+          "super_large_net": -128272991.0,
+          "large_net": -43413152.0
+        },
+        {
+          "date": "2026-04-30",
+          "close": 21.53,
+          "pct_change": -0.51,
+          "main_net_inflow": 15525703.0,
+          "main_net_inflow_pct": 1.42,
+          "super_large_net": 29029768.0,
+          "large_net": -13504065.0
+        }
+      ],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 21.53,
+        "suggested_entry_price_conservative": 20.68,
+        "suggested_stop_loss": 20.45,
+        "price_reference": {
+          "range_90d_low": 20.48,
+          "cum_pct_5d": 5.13
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 0,
+        "total": 4,
+        "signals": [],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": 0.47,
+          "kdj_cross": false,
+          "kdj_k": 68.12,
+          "kdj_d": 51.53,
+          "volume_ratio": 0.92
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    },
+    {
+      "code": "600303",
+      "name": "曙光股份",
+      "quote": {},
+      "context": {
+        "last_close": 3.31,
+        "trend_5d": {
+          "days_up": 4,
+          "days_down": 0,
+          "cum_pct": 5.41,
+          "min": 3.14,
+          "max": 3.31,
+          "is_5d_low": false,
+          "is_5d_high": true
+        },
+        "range_90d": {
+          "high": 3.51,
+          "low": 2.93,
+          "position_pct": 65.52
+        }
+      },
+      "money_flow_5d": [
+        {
+          "date": "2026-04-24",
+          "close": 3.14,
+          "pct_change": 1.62,
+          "main_net_inflow": -1256621.0,
+          "main_net_inflow_pct": -1.81,
+          "super_large_net": 151212.0,
+          "large_net": -1407833.0
+        },
+        {
+          "date": "2026-04-27",
+          "close": 3.18,
+          "pct_change": 1.27,
+          "main_net_inflow": -10676940.0,
+          "main_net_inflow_pct": -11.26,
+          "super_large_net": -7105095.0,
+          "large_net": -3571845.0
+        },
+        {
+          "date": "2026-04-28",
+          "close": 3.2,
+          "pct_change": 0.63,
+          "main_net_inflow": 1355486.0,
+          "main_net_inflow_pct": 2.01,
+          "super_large_net": -1897243.0,
+          "large_net": 3252729.0
+        },
+        {
+          "date": "2026-04-29",
+          "close": 3.29,
+          "pct_change": 2.81,
+          "main_net_inflow": -1409405.0,
+          "main_net_inflow_pct": -1.93,
+          "super_large_net": -743047.0,
+          "large_net": -666358.0
+        },
+        {
+          "date": "2026-04-30",
+          "close": 3.31,
+          "pct_change": 0.61,
+          "main_net_inflow": -8738763.0,
+          "main_net_inflow_pct": -11.89,
+          "super_large_net": -4024808.0,
+          "large_net": -4713955.0
+        }
+      ],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 3.31,
+        "suggested_entry_price_conservative": 2.96,
+        "suggested_stop_loss": 3.14,
+        "price_reference": {
+          "range_90d_low": 2.93,
+          "cum_pct_5d": 5.41
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 1,
+        "total": 4,
+        "signals": [
+          "突破 10 日高点"
+        ],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": 0.062,
+          "kdj_cross": false,
+          "kdj_k": 81.74,
+          "kdj_d": 71.58,
+          "volume_ratio": 0.95,
+          "prev_10d_high": 3.29
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    },
+    {
+      "code": "002607",
+      "name": "中公教育",
+      "quote": {},
+      "context": {
+        "last_close": 2.57,
+        "trend_5d": {
+          "days_up": 1,
+          "days_down": 2,
+          "cum_pct": 1.58,
+          "min": 2.46,
+          "max": 2.57,
+          "is_5d_low": false,
+          "is_5d_high": true
+        },
+        "range_90d": {
+          "high": 3.33,
+          "low": 2.46,
+          "position_pct": 12.64
+        }
+      },
+      "money_flow_5d": [
+        {
+          "date": "2026-04-24",
+          "close": 2.5,
+          "pct_change": -1.19,
+          "main_net_inflow": -19547099.0,
+          "main_net_inflow_pct": -8.46,
+          "super_large_net": -672195.0,
+          "large_net": -18874904.0
+        },
+        {
+          "date": "2026-04-27",
+          "close": 2.5,
+          "pct_change": 0.0,
+          "main_net_inflow": 6347711.0,
+          "main_net_inflow_pct": 3.0,
+          "super_large_net": 10224002.0,
+          "large_net": -3876291.0
+        },
+        {
+          "date": "2026-04-28",
+          "close": 2.46,
+          "pct_change": -1.6,
+          "main_net_inflow": -29485171.0,
+          "main_net_inflow_pct": -14.31,
+          "super_large_net": -26939433.0,
+          "large_net": -2545738.0
+        },
+        {
+          "date": "2026-04-29",
+          "close": 2.57,
+          "pct_change": 4.47,
+          "main_net_inflow": 81105410.0,
+          "main_net_inflow_pct": 14.23,
+          "super_large_net": 48176842.0,
+          "large_net": 32928568.0
+        },
+        {
+          "date": "2026-04-30",
+          "close": 2.65,
+          "pct_change": 3.11,
+          "main_net_inflow": 57364847.0,
+          "main_net_inflow_pct": 12.81,
+          "super_large_net": 11614199.0,
+          "large_net": 45750648.0
+        }
+      ],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 2.57,
+        "suggested_entry_price_conservative": 2.48,
+        "suggested_stop_loss": 2.44,
+        "price_reference": {
+          "range_90d_low": 2.46,
+          "cum_pct_5d": 1.58
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 1,
+        "total": 4,
+        "signals": [
+          "量能放大:量比 2.33"
+        ],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": -0.006,
+          "kdj_cross": false,
+          "kdj_k": 27.91,
+          "kdj_d": 21.75,
+          "volume_ratio": 2.33
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    },
+    {
+      "code": "600053",
+      "name": "九鼎投资",
+      "quote": {},
+      "context": {
+        "last_close": 10.86,
+        "trend_5d": {
+          "days_up": 0,
+          "days_down": 4,
+          "cum_pct": -24.21,
+          "min": 10.86,
+          "max": 14.33,
+          "is_5d_low": true,
+          "is_5d_high": false
+        },
+        "range_90d": {
+          "high": 25.8,
+          "low": 10.86,
+          "position_pct": 0.0
+        }
+      },
+      "money_flow_5d": [
+        {
+          "date": "2026-04-23",
+          "close": 14.33,
+          "pct_change": -0.76,
+          "main_net_inflow": -7142176.0,
+          "main_net_inflow_pct": -10.22,
+          "super_large_net": -2661648.0,
+          "large_net": -4480528.0
+        },
+        {
+          "date": "2026-04-24",
+          "close": 14.11,
+          "pct_change": -1.54,
+          "main_net_inflow": -12340595.0,
+          "main_net_inflow_pct": -17.93,
+          "super_large_net": -2426698.0,
+          "large_net": -9913897.0
+        },
+        {
+          "date": "2026-04-27",
+          "close": 12.7,
+          "pct_change": -9.99,
+          "main_net_inflow": -4504423.0,
+          "main_net_inflow_pct": -21.79,
+          "super_large_net": -3703320.0,
+          "large_net": -801103.0
+        },
+        {
+          "date": "2026-04-28",
+          "close": 11.43,
+          "pct_change": -10.0,
+          "main_net_inflow": -2460879.0,
+          "main_net_inflow_pct": -32.06,
+          "super_large_net": -1729359.0,
+          "large_net": -731520.0
+        },
+        {
+          "date": "2026-04-30",
+          "close": 10.86,
+          "pct_change": -4.99,
+          "main_net_inflow": -3338364.0,
+          "main_net_inflow_pct": -8.72,
+          "super_large_net": -6336810.0,
+          "large_net": 2998446.0
+        }
+      ],
+      "strategy_dip_buy": {
+        "triggered": true,
+        "tier": "STRONG",
+        "tier_cn": "强抄底候选",
+        "confidence": "高",
+        "conditions": {
+          "new_low_5d_with_drop": true,
+          "below_90d_low": true
+        },
+        "reasons": [
+          "近 5 天最低 + 累计跌 -24.21% ≤ -3.0%",
+          "接近/跌破 90 天低位 10.86 × 1.02"
+        ],
+        "suggested_entry_price_aggressive": 10.86,
+        "suggested_entry_price_conservative": 10.97,
+        "suggested_stop_loss": 10.32,
+        "price_reference": {
+          "range_90d_low": 10.86,
+          "cum_pct_5d": -24.21
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 0,
+        "total": 4,
+        "signals": [],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": -0.584,
+          "kdj_cross": false,
+          "kdj_k": 6.39,
+          "kdj_d": 16.4,
+          "volume_ratio": 0.89
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    }
+  ]
+}
