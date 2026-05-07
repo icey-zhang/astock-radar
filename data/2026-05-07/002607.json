@@ -1,12 +1,8 @@
 {
   "code": "002607",
   "name": "中公教育",
-  "fetched_at": "2026-05-07T03:40:01.674352",
+  "fetched_at": "2026-05-07T08:47:01.403906",
   "close_history": [
-    {
-      "date": "2025-04-22",
-      "close": 3.11
-    },
     {
       "date": "2025-04-23",
       "close": 3.07
@@ -1002,19 +998,13 @@
     {
       "date": "2026-05-06",
       "close": 2.66
+    },
+    {
+      "date": "2026-05-07",
+      "close": 2.67
     }
   ],
   "kline_30d": [
-    {
-      "date": "2026-03-20",
-      "open": 2.75,
-      "close": 2.68,
-      "high": 2.77,
-      "low": 2.68,
-      "volume": 118631596.0,
-      "pct_change": null,
-      "turnover": null
-    },
     {
       "date": "2026-03-23",
       "open": 2.64,
@@ -1304,19 +1294,20 @@
       "volume": 154404945.0,
       "pct_change": null,
       "turnover": null
+    },
+    {
+      "date": "2026-05-07",
+      "open": 2.66,
+      "close": 2.67,
+      "high": 2.68,
+      "low": 2.64,
+      "volume": 120081292.0,
+      "pct_change": null,
+      "turnover": null
     }
   ],
   "quote": {},
   "money_flow": [
-    {
-      "date": "2026-04-27",
-      "close": 2.5,
-      "pct_change": 0.0,
-      "main_net_inflow": 6347711.0,
-      "main_net_inflow_pct": 3.0,
-      "super_large_net": 10224002.0,
-      "large_net": -3876291.0
-    },
     {
       "date": "2026-04-28",
       "close": 2.46,
@@ -1352,6 +1343,15 @@
       "main_net_inflow_pct": -9.28,
       "super_large_net": -40895925.0,
       "large_net": 2938834.0
+    },
+    {
+      "date": "2026-05-07",
+      "close": 2.67,
+      "pct_change": 0.38,
+      "main_net_inflow": -11457490.0,
+      "main_net_inflow_pct": -3.58,
+      "super_large_net": -1419718.0,
+      "large_net": -10037772.0
     }
   ]
 }

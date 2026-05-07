@@ -1,12 +1,8 @@
 {
   "code": "600303",
   "name": "曙光股份",
-  "fetched_at": "2026-05-07T03:38:10.656657",
+  "fetched_at": "2026-05-07T08:45:16.987709",
   "close_history": [
-    {
-      "date": "2025-04-22",
-      "close": 4.2
-    },
     {
       "date": "2025-04-23",
       "close": 4.47
@@ -1002,19 +998,13 @@
     {
       "date": "2026-05-06",
       "close": 3.35
+    },
+    {
+      "date": "2026-05-07",
+      "close": 3.31
     }
   ],
   "kline_30d": [
-    {
-      "date": "2026-03-20",
-      "open": 3.33,
-      "close": 3.09,
-      "high": 3.33,
-      "low": 3.08,
-      "volume": 40024441.0,
-      "pct_change": null,
-      "turnover": null
-    },
     {
       "date": "2026-03-23",
       "open": 3.03,
@@ -1304,19 +1294,20 @@
       "volume": 26944102.0,
       "pct_change": null,
       "turnover": null
+    },
+    {
+      "date": "2026-05-07",
+      "open": 3.36,
+      "close": 3.31,
+      "high": 3.4,
+      "low": 3.3,
+      "volume": 23936153.0,
+      "pct_change": null,
+      "turnover": null
     }
   ],
   "quote": {},
   "money_flow": [
-    {
-      "date": "2026-04-27",
-      "close": 3.18,
-      "pct_change": 1.27,
-      "main_net_inflow": -10676940.0,
-      "main_net_inflow_pct": -11.26,
-      "super_large_net": -7105095.0,
-      "large_net": -3571845.0
-    },
     {
       "date": "2026-04-28",
       "close": 3.2,
@@ -1352,6 +1343,15 @@
       "main_net_inflow_pct": -9.23,
       "super_large_net": -1658575.0,
       "large_net": -6686469.0
+    },
+    {
+      "date": "2026-05-07",
+      "close": 3.31,
+      "pct_change": -1.19,
+      "main_net_inflow": -9425863.0,
+      "main_net_inflow_pct": -11.78,
+      "super_large_net": -3689728.0,
+      "large_net": -5736135.0
     }
   ]
 }

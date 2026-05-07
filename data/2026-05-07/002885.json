@@ -1,12 +1,8 @@
 {
   "code": "002885",
   "name": "京泉华",
-  "fetched_at": "2026-05-07T03:30:16.038876",
+  "fetched_at": "2026-05-07T08:37:34.444810",
   "close_history": [
-    {
-      "date": "2025-04-22",
-      "close": 12.74
-    },
     {
       "date": "2025-04-23",
       "close": 12.7
@@ -1002,19 +998,13 @@
     {
       "date": "2026-05-06",
       "close": 33.53
+    },
+    {
+      "date": "2026-05-07",
+      "close": 36.88
     }
   ],
   "kline_30d": [
-    {
-      "date": "2026-03-20",
-      "open": 26.31,
-      "close": 25.14,
-      "high": 26.65,
-      "low": 25.11,
-      "volume": 14419417.0,
-      "pct_change": null,
-      "turnover": null
-    },
     {
       "date": "2026-03-23",
       "open": 24.47,
@@ -1301,22 +1291,23 @@
       "close": 33.53,
       "high": 33.93,
       "low": 31.16,
-      "volume": 31534212.0,
-      "pct_change": null,
-      "turnover": null
+      "volume": 315342,
+      "pct_change": 7.26,
+      "turnover": 13.29
+    },
+    {
+      "date": "2026-05-07",
+      "open": 34.09,
+      "close": 36.88,
+      "high": 36.88,
+      "low": 33.8,
+      "volume": 377109,
+      "pct_change": 9.99,
+      "turnover": 15.89
     }
   ],
   "quote": {},
   "money_flow": [
-    {
-      "date": "2026-04-27",
-      "close": 30.18,
-      "pct_change": -2.39,
-      "main_net_inflow": -94701842.0,
-      "main_net_inflow_pct": -13.21,
-      "super_large_net": -59697167.0,
-      "large_net": -35004675.0
-    },
     {
       "date": "2026-04-28",
       "close": 30.07,
@@ -1352,6 +1343,15 @@
       "main_net_inflow_pct": 11.05,
       "super_large_net": 82801015.0,
       "large_net": 31209711.0
+    },
+    {
+      "date": "2026-05-07",
+      "close": 36.88,
+      "pct_change": 9.99,
+      "main_net_inflow": 183215539.0,
+      "main_net_inflow_pct": 13.54,
+      "super_large_net": 156722051.0,
+      "large_net": 26493488.0
     }
   ]
 }

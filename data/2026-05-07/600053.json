@@ -1,12 +1,8 @@
 {
   "code": "600053",
   "name": "九鼎投资",
-  "fetched_at": "2026-05-07T03:41:46.024378",
+  "fetched_at": "2026-05-07T08:48:51.678680",
   "close_history": [
-    {
-      "date": "2025-04-21",
-      "close": 14.21
-    },
     {
       "date": "2025-04-22",
       "close": 14.0
@@ -1002,19 +998,13 @@
     {
       "date": "2026-05-06",
       "close": 10.32
+    },
+    {
+      "date": "2026-05-07",
+      "close": 9.8
     }
   ],
   "kline_30d": [
-    {
-      "date": "2026-03-19",
-      "open": 16.48,
-      "close": 16.29,
-      "high": 16.54,
-      "low": 16.23,
-      "volume": 3019945.0,
-      "pct_change": null,
-      "turnover": null
-    },
     {
       "date": "2026-03-20",
       "open": 16.25,
@@ -1304,19 +1294,20 @@
       "volume": 530200.0,
       "pct_change": null,
       "turnover": null
+    },
+    {
+      "date": "2026-05-07",
+      "open": 9.8,
+      "close": 9.8,
+      "high": 9.8,
+      "low": 9.8,
+      "volume": 9030000.0,
+      "pct_change": null,
+      "turnover": null
     }
   ],
   "quote": {},
   "money_flow": [
-    {
-      "date": "2026-04-24",
-      "close": 14.11,
-      "pct_change": -1.54,
-      "main_net_inflow": -12340595.0,
-      "main_net_inflow_pct": -17.93,
-      "super_large_net": -2426698.0,
-      "large_net": -9913897.0
-    },
     {
       "date": "2026-04-27",
       "close": 12.7,
@@ -1352,6 +1343,15 @@
       "main_net_inflow_pct": -24.84,
       "super_large_net": -1032000.0,
       "large_net": -327144.0
+    },
+    {
+      "date": "2026-05-07",
+      "close": 9.8,
+      "pct_change": -5.04,
+      "main_net_inflow": 29711640.0,
+      "main_net_inflow_pct": 33.57,
+      "super_large_net": 26368860.0,
+      "large_net": 3342780.0
     }
   ]
 }
