@@ -11,39 +11,39 @@
 
   "positions": [
     {
-      "code": "002885",
-      "cost_price": 24.30,
-      "shares": 100,
-      "entry_date": "2026-01-15",
-      "note": "长线底仓"
-    },
-    {
       "code": "600053",
       "cost_price": 17.558,
       "shares": 400,
       "entry_date": "2025-12-20",
-      "note": ""
+      "note": "ST九鼎"
     }
     {
       "code": "600690",
       "cost_price": 21.610,
       "shares": 100,
       "entry_date": "2026-04-21",
-      "note": ""
+      "note": "海尔智家"
     }
     {
       "code": "002607",
       "cost_price": 2.642,
       "shares": 600,
       "entry_date": "2025-12-20",
-      "note": ""
+      "note": "中公教育"
     }
     {
-      "code": "600053",
-      "cost_price": 17.558,
-      "shares": 400,
+      "code": "002574",
+      "cost_price": 6.050,
+      "shares": 100,
       "entry_date": "2026-3-20",
-      "note": ""
+      "note": "明牌珠宝"
+    }
+    {
+      "code": "600056",
+      "cost_price": 11.070,
+      "shares": 100,
+      "entry_date": "2026-3-20",
+      "note": "中国医药"
     }
   ]
 }
