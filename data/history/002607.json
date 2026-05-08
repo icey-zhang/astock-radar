@@ -1,6 +1,6 @@
 {
   "code": "002607",
-  "updated_at": "2026-05-07T08:47:01.401467",
+  "updated_at": "2026-05-08T07:52:16.568503",
   "kline": [
     {
       "date": "2025-03-10",
@@ -2248,7 +2248,23 @@
       "close": 2.67,
       "high": 2.68,
       "low": 2.64,
-      "volume": 120081292.0
+      "volume": 1200813,
+      "amount": 320019960.7,
+      "turnover": 2.17,
+      "pct_change": 0.38,
+      "amplitude": 1.5
+    },
+    {
+      "date": "2026-05-08",
+      "open": 2.68,
+      "close": 2.71,
+      "high": 2.72,
+      "low": 2.67,
+      "volume": 1636711,
+      "amount": 442107039.64,
+      "turnover": 2.95,
+      "pct_change": 1.5,
+      "amplitude": 1.87
     }
   ]
 }
