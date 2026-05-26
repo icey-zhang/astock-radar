@@ -7,7 +7,7 @@ on:
   schedule:
     # UTC 06:00 = 北京 14:00(A 股收盘后 30 分钟)
     # 工作日(周一到周五)触发;实际是否跑由 trading_day_check.py 再判一次
-    - cron: '00 6 * * 1-5'
+    - cron: '00 8 * * 1-5'
   workflow_dispatch:  # 允许手动触发
 
 permissions:
