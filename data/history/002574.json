@@ -1,6 +1,6 @@
 {
   "code": "002574",
-  "updated_at": "2026-05-26T07:56:20.224642",
+  "updated_at": "2026-05-29T02:32:37.395862",
   "kline": [
     {
       "date": "2025-03-10",
@@ -2352,7 +2352,59 @@
       "close": 5.27,
       "high": 5.47,
       "low": 5.21,
-      "volume": 8111800.0
+      "volume": 81118,
+      "amount": 43133918.0,
+      "turnover": 1.54,
+      "pct_change": -1.13,
+      "amplitude": 4.88
+    },
+    {
+      "date": "2026-05-26",
+      "open": 5.27,
+      "close": 5.18,
+      "high": 5.29,
+      "low": 5.13,
+      "volume": 86721,
+      "amount": 44964689.6,
+      "turnover": 1.64,
+      "pct_change": -1.71,
+      "amplitude": 3.04
+    },
+    {
+      "date": "2026-05-27",
+      "open": 5.18,
+      "close": 5.03,
+      "high": 5.2,
+      "low": 4.98,
+      "volume": 94542,
+      "amount": 47762024.0,
+      "turnover": 1.79,
+      "pct_change": -2.9,
+      "amplitude": 4.25
+    },
+    {
+      "date": "2026-05-28",
+      "open": 5.03,
+      "close": 5.06,
+      "high": 5.09,
+      "low": 4.93,
+      "volume": 88839,
+      "amount": 44628747.16,
+      "turnover": 1.68,
+      "pct_change": 0.6,
+      "amplitude": 3.18
+    },
+    {
+      "date": "2026-05-29",
+      "open": 5.06,
+      "close": 5.09,
+      "high": 5.14,
+      "low": 5.05,
+      "volume": 29570,
+      "amount": 15081144.0,
+      "turnover": 0.56,
+      "pct_change": 0.59,
+      "amplitude": 1.78
     }
   ]
 }

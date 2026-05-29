@@ -1,6 +1,6 @@
 {
   "code": "601888",
-  "updated_at": "2026-05-26T08:11:02.244197",
+  "updated_at": "2026-05-29T02:40:29.515779",
   "kline": [
     {
       "date": "2025-03-17",
@@ -2308,7 +2308,59 @@
       "close": 56.8,
       "high": 57.56,
       "low": 56.5,
-      "volume": 24987739.0
+      "volume": 249877,
+      "amount": 1423216272.0,
+      "turnover": 1.28,
+      "pct_change": 0.26,
+      "amplitude": 1.87
+    },
+    {
+      "date": "2026-05-26",
+      "open": 56.55,
+      "close": 56.53,
+      "high": 57.58,
+      "low": 55.55,
+      "volume": 353263,
+      "amount": 1990873979.0,
+      "turnover": 1.81,
+      "pct_change": -0.48,
+      "amplitude": 3.57
+    },
+    {
+      "date": "2026-05-27",
+      "open": 56.36,
+      "close": 56.23,
+      "high": 57.4,
+      "low": 55.16,
+      "volume": 480992,
+      "amount": 2701681825.0,
+      "turnover": 2.46,
+      "pct_change": -0.53,
+      "amplitude": 3.96
+    },
+    {
+      "date": "2026-05-28",
+      "open": 55.8,
+      "close": 54.76,
+      "high": 56.0,
+      "low": 54.56,
+      "volume": 359294,
+      "amount": 1979079976.0,
+      "turnover": 1.84,
+      "pct_change": -2.61,
+      "amplitude": 2.56
+    },
+    {
+      "date": "2026-05-29",
+      "open": 55.2,
+      "close": 58.45,
+      "high": 59.8,
+      "low": 54.83,
+      "volume": 610192,
+      "amount": 3519492261.0,
+      "turnover": 3.13,
+      "pct_change": 6.74,
+      "amplitude": 9.08
     }
   ]
 }
