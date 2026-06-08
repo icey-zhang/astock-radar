@@ -1,6 +1,6 @@
 {
   "code": "600303",
-  "updated_at": "2026-05-29T02:35:49.786669",
+  "updated_at": "2026-06-08T02:43:43.098832",
   "kline": [
     {
       "date": "2025-03-10",
@@ -2385,14 +2385,86 @@
     {
       "date": "2026-05-29",
       "open": 3.39,
-      "close": 3.36,
+      "close": 3.23,
       "high": 3.53,
-      "low": 3.33,
-      "volume": 267553,
-      "amount": 91570700.0,
-      "turnover": 3.96,
-      "pct_change": -0.3,
-      "amplitude": 5.93
+      "low": 3.2,
+      "volume": 595159,
+      "amount": 198230061.0,
+      "turnover": 8.81,
+      "pct_change": -4.15,
+      "amplitude": 9.79
+    },
+    {
+      "date": "2026-06-01",
+      "open": 3.22,
+      "close": 3.37,
+      "high": 3.54,
+      "low": 3.18,
+      "volume": 633705,
+      "amount": 214882107.0,
+      "turnover": 9.35,
+      "pct_change": 4.33,
+      "amplitude": 11.15
+    },
+    {
+      "date": "2026-06-02",
+      "open": 3.41,
+      "close": 3.28,
+      "high": 3.45,
+      "low": 3.23,
+      "volume": 493632,
+      "amount": 162810032.0,
+      "turnover": 7.29,
+      "pct_change": -2.67,
+      "amplitude": 6.53
+    },
+    {
+      "date": "2026-06-03",
+      "open": 3.27,
+      "close": 3.21,
+      "high": 3.29,
+      "low": 3.12,
+      "volume": 506157,
+      "amount": 161584125.0,
+      "turnover": 7.47,
+      "pct_change": -2.13,
+      "amplitude": 5.18
+    },
+    {
+      "date": "2026-06-04",
+      "open": 3.2,
+      "close": 3.15,
+      "high": 3.31,
+      "low": 3.11,
+      "volume": 383092,
+      "amount": 121624673.0,
+      "turnover": 5.65,
+      "pct_change": -1.87,
+      "amplitude": 6.23
+    },
+    {
+      "date": "2026-06-05",
+      "open": 3.13,
+      "close": 3.47,
+      "high": 3.47,
+      "low": 3.07,
+      "volume": 796495,
+      "amount": 262269161.0,
+      "turnover": 11.76,
+      "pct_change": 10.16,
+      "amplitude": 12.7
+    },
+    {
+      "date": "2026-06-08",
+      "open": 3.29,
+      "close": 3.49,
+      "high": 3.51,
+      "low": 3.29,
+      "volume": 482693,
+      "amount": 166014246.0,
+      "turnover": 7.12,
+      "pct_change": 0.58,
+      "amplitude": 6.34
     }
   ]
 }

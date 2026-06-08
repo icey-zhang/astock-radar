@@ -1,6 +1,6 @@
 {
   "code": "002885",
-  "updated_at": "2026-05-29T02:27:47.879037",
+  "updated_at": "2026-06-08T02:38:06.753563",
   "kline": [
     {
       "date": "2025-03-10",
@@ -2432,15 +2432,87 @@
     },
     {
       "date": "2026-05-29",
-      "open": 49.04,
-      "close": 45.94,
-      "high": 49.6,
-      "low": 45.5,
-      "volume": 148596,
-      "amount": 691712908.28,
-      "turnover": 6.26,
-      "pct_change": -4.37,
-      "amplitude": 8.53
+      "open": 49.01,
+      "close": 44.17,
+      "high": 49.57,
+      "low": 43.38,
+      "volume": 345814,
+      "amount": 1571791028.2,
+      "turnover": 14.58,
+      "pct_change": -8.0,
+      "amplitude": 12.89
+    },
+    {
+      "date": "2026-06-01",
+      "open": 45.05,
+      "close": 43.38,
+      "high": 46.61,
+      "low": 42.9,
+      "volume": 237149,
+      "amount": 1056874231.81,
+      "turnover": 10.0,
+      "pct_change": -1.79,
+      "amplitude": 8.4
+    },
+    {
+      "date": "2026-06-02",
+      "open": 43.55,
+      "close": 41.7,
+      "high": 43.66,
+      "low": 41.3,
+      "volume": 253513,
+      "amount": 1066688372.01,
+      "turnover": 10.69,
+      "pct_change": -3.87,
+      "amplitude": 5.44
+    },
+    {
+      "date": "2026-06-03",
+      "open": 41.8,
+      "close": 42.19,
+      "high": 43.41,
+      "low": 41.23,
+      "volume": 196634,
+      "amount": 834370378.44,
+      "turnover": 8.29,
+      "pct_change": 1.18,
+      "amplitude": 5.23
+    },
+    {
+      "date": "2026-06-04",
+      "open": 42.0,
+      "close": 43.49,
+      "high": 44.18,
+      "low": 41.2,
+      "volume": 225699,
+      "amount": 974794748.65,
+      "turnover": 9.51,
+      "pct_change": 3.08,
+      "amplitude": 7.06
+    },
+    {
+      "date": "2026-06-05",
+      "open": 42.37,
+      "close": 41.82,
+      "high": 43.48,
+      "low": 41.2,
+      "volume": 184409,
+      "amount": 778722536.27,
+      "turnover": 7.77,
+      "pct_change": -3.84,
+      "amplitude": 5.24
+    },
+    {
+      "date": "2026-06-08",
+      "open": 40.11,
+      "close": 41.32,
+      "high": 41.48,
+      "low": 39.73,
+      "volume": 74943,
+      "amount": 304821445.46,
+      "turnover": 3.16,
+      "pct_change": -1.2,
+      "amplitude": 4.18
     }
   ]
 }
