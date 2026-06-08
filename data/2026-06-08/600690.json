@@ -1,7 +1,7 @@
 {
   "code": "600690",
   "name": "海尔智家",
-  "fetched_at": "2026-06-08T02:43:34.641852",
+  "fetched_at": "2026-06-08T12:34:47.056576",
   "close_history": [
     {
       "date": "2025-05-28",
@@ -1001,7 +1001,7 @@
     },
     {
       "date": "2026-06-08",
-      "close": 20.36
+      "close": 20.17
     }
   ],
   "kline_30d": [
@@ -1298,60 +1298,14 @@
     {
       "date": "2026-06-08",
       "open": 20.17,
-      "close": 20.36,
+      "close": 20.17,
       "high": 20.45,
-      "low": 20.12,
-      "volume": 170704,
-      "pct_change": 0.25,
-      "turnover": 0.27
+      "low": 20.09,
+      "volume": 38452009.0,
+      "pct_change": null,
+      "turnover": null
     }
   ],
   "quote": {},
-  "money_flow": [
-    {
-      "date": "2026-06-01",
-      "close": 21.08,
-      "pct_change": 0.96,
-      "main_net_inflow": -13468360.0,
-      "main_net_inflow_pct": -1.15,
-      "super_large_net": 13468423.0,
-      "large_net": -26936783.0
-    },
-    {
-      "date": "2026-06-02",
-      "close": 21.13,
-      "pct_change": 0.24,
-      "main_net_inflow": -34587910.0,
-      "main_net_inflow_pct": -4.03,
-      "super_large_net": 24587945.0,
-      "large_net": -59175855.0
-    },
-    {
-      "date": "2026-06-03",
-      "close": 20.7,
-      "pct_change": -2.04,
-      "main_net_inflow": -209519509.0,
-      "main_net_inflow_pct": -17.68,
-      "super_large_net": -57653986.0,
-      "large_net": -151865523.0
-    },
-    {
-      "date": "2026-06-04",
-      "close": 20.36,
-      "pct_change": -1.64,
-      "main_net_inflow": -90458139.0,
-      "main_net_inflow_pct": -11.86,
-      "super_large_net": 45695307.0,
-      "large_net": -136153446.0
-    },
-    {
-      "date": "2026-06-05",
-      "close": 20.31,
-      "pct_change": -0.25,
-      "main_net_inflow": 76375488.0,
-      "main_net_inflow_pct": 11.02,
-      "super_large_net": 54223259.0,
-      "large_net": 22152229.0
-    }
-  ]
+  "money_flow": []
 }

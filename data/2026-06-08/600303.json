@@ -1,7 +1,7 @@
 {
   "code": "600303",
   "name": "曙光股份",
-  "fetched_at": "2026-06-08T02:43:43.101504",
+  "fetched_at": "2026-06-08T12:37:23.689137",
   "close_history": [
     {
       "date": "2025-05-28",
@@ -1001,7 +1001,7 @@
     },
     {
       "date": "2026-06-08",
-      "close": 3.49
+      "close": 3.42
     }
   ],
   "kline_30d": [
@@ -1298,60 +1298,14 @@
     {
       "date": "2026-06-08",
       "open": 3.29,
-      "close": 3.49,
-      "high": 3.51,
+      "close": 3.42,
+      "high": 3.58,
       "low": 3.29,
-      "volume": 482693,
-      "pct_change": 0.58,
-      "turnover": 7.12
+      "volume": 89725096.0,
+      "pct_change": null,
+      "turnover": null
     }
   ],
   "quote": {},
-  "money_flow": [
-    {
-      "date": "2026-06-01",
-      "close": 3.37,
-      "pct_change": 4.33,
-      "main_net_inflow": -912087.0,
-      "main_net_inflow_pct": -0.42,
-      "super_large_net": 130005.0,
-      "large_net": -1042092.0
-    },
-    {
-      "date": "2026-06-02",
-      "close": 3.28,
-      "pct_change": -2.67,
-      "main_net_inflow": -17521568.0,
-      "main_net_inflow_pct": -10.76,
-      "super_large_net": -964244.0,
-      "large_net": -16557324.0
-    },
-    {
-      "date": "2026-06-03",
-      "close": 3.21,
-      "pct_change": -2.13,
-      "main_net_inflow": -1088993.0,
-      "main_net_inflow_pct": -0.67,
-      "super_large_net": -3055504.0,
-      "large_net": 1966511.0
-    },
-    {
-      "date": "2026-06-04",
-      "close": 3.15,
-      "pct_change": -1.87,
-      "main_net_inflow": 662571.0,
-      "main_net_inflow_pct": 0.54,
-      "super_large_net": 1923048.0,
-      "large_net": -1260477.0
-    },
-    {
-      "date": "2026-06-05",
-      "close": 3.47,
-      "pct_change": 10.16,
-      "main_net_inflow": 59665122.0,
-      "main_net_inflow_pct": 22.75,
-      "super_large_net": 43587581.0,
-      "large_net": 16077541.0
-    }
-  ]
+  "money_flow": []
 }

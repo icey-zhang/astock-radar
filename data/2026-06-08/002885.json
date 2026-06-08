@@ -1,7 +1,7 @@
 {
   "code": "002885",
   "name": "京泉华",
-  "fetched_at": "2026-06-08T02:38:06.756245",
+  "fetched_at": "2026-06-08T12:27:24.962405",
   "close_history": [
     {
       "date": "2025-05-28",
@@ -1001,7 +1001,7 @@
     },
     {
       "date": "2026-06-08",
-      "close": 41.32
+      "close": 39.33
     }
   ],
   "kline_30d": [
@@ -1298,12 +1298,12 @@
     {
       "date": "2026-06-08",
       "open": 40.11,
-      "close": 41.32,
+      "close": 39.33,
       "high": 41.48,
-      "low": 39.73,
-      "volume": 74943,
-      "pct_change": -1.2,
-      "turnover": 3.16
+      "low": 39.05,
+      "volume": 18285903.0,
+      "pct_change": null,
+      "turnover": null
     }
   ],
   "quote": {},

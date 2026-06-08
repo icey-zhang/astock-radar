@@ -1,12 +1,8 @@
 {
   "code": "002574",
   "name": "明牌珠宝",
-  "fetched_at": "2026-06-08T02:42:49.087495",
+  "fetched_at": "2026-06-08T12:32:09.756052",
   "close_history": [
-    {
-      "date": "2025-05-27",
-      "close": 6.77
-    },
     {
       "date": "2025-05-28",
       "close": 7.45
@@ -1002,19 +998,13 @@
     {
       "date": "2026-06-05",
       "close": 4.89
+    },
+    {
+      "date": "2026-06-08",
+      "close": 4.71
     }
   ],
   "kline_30d": [
-    {
-      "date": "2026-04-22",
-      "open": 5.41,
-      "close": 5.39,
-      "high": 5.43,
-      "low": 5.34,
-      "volume": 6076820.0,
-      "pct_change": null,
-      "turnover": null
-    },
     {
       "date": "2026-04-23",
       "open": 5.38,
@@ -1302,6 +1292,16 @@
       "high": 4.98,
       "low": 4.74,
       "volume": 6978501.0,
+      "pct_change": null,
+      "turnover": null
+    },
+    {
+      "date": "2026-06-08",
+      "open": 4.8,
+      "close": 4.71,
+      "high": 4.89,
+      "low": 4.64,
+      "volume": 9164055.0,
       "pct_change": null,
       "turnover": null
     }

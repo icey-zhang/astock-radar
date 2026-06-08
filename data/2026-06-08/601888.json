@@ -1,7 +1,7 @@
 {
   "code": "601888",
   "name": "中国中免",
-  "fetched_at": "2026-06-08T02:45:38.987448",
+  "fetched_at": "2026-06-08T12:42:25.480139",
   "close_history": [
     {
       "date": "2025-05-28",
@@ -1001,7 +1001,7 @@
     },
     {
       "date": "2026-06-08",
-      "close": 58.88
+      "close": 57.45
     }
   ],
   "kline_30d": [
@@ -1298,60 +1298,14 @@
     {
       "date": "2026-06-08",
       "open": 59.0,
-      "close": 58.88,
+      "close": 57.45,
       "high": 59.8,
-      "low": 57.66,
-      "volume": 473076,
-      "pct_change": 2.94,
-      "turnover": 2.42
+      "low": 57.27,
+      "volume": 74742560.0,
+      "pct_change": null,
+      "turnover": null
     }
   ],
   "quote": {},
-  "money_flow": [
-    {
-      "date": "2026-06-01",
-      "close": 58.68,
-      "pct_change": -1.51,
-      "main_net_inflow": -91801504.0,
-      "main_net_inflow_pct": -2.08,
-      "super_large_net": -255036048.0,
-      "large_net": 163234544.0
-    },
-    {
-      "date": "2026-06-02",
-      "close": 56.94,
-      "pct_change": -2.97,
-      "main_net_inflow": -234437168.0,
-      "main_net_inflow_pct": -7.73,
-      "super_large_net": -180028240.0,
-      "large_net": -54408928.0
-    },
-    {
-      "date": "2026-06-03",
-      "close": 57.05,
-      "pct_change": 0.19,
-      "main_net_inflow": -70027632.0,
-      "main_net_inflow_pct": -2.81,
-      "super_large_net": 7268496.0,
-      "large_net": -77296128.0
-    },
-    {
-      "date": "2026-06-04",
-      "close": 55.59,
-      "pct_change": -2.56,
-      "main_net_inflow": -196328560.0,
-      "main_net_inflow_pct": -8.69,
-      "super_large_net": -131229024.0,
-      "large_net": -65099536.0
-    },
-    {
-      "date": "2026-06-05",
-      "close": 57.2,
-      "pct_change": 2.9,
-      "main_net_inflow": 212361472.0,
-      "main_net_inflow_pct": 5.29,
-      "super_large_net": 96257632.0,
-      "large_net": 116103840.0
-    }
-  ]
+  "money_flow": []
 }

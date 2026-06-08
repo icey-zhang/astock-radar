@@ -1,7 +1,7 @@
 {
   "code": "600171",
   "name": "上海贝岭",
-  "fetched_at": "2026-06-08T02:48:10.582845",
+  "fetched_at": "2026-06-08T12:47:17.883074",
   "close_history": [
     {
       "date": "2025-05-28",
@@ -1001,7 +1001,7 @@
     },
     {
       "date": "2026-06-08",
-      "close": 26.56
+      "close": 26.28
     }
   ],
   "kline_30d": [
@@ -1298,12 +1298,12 @@
     {
       "date": "2026-06-08",
       "open": 26.5,
-      "close": 26.56,
+      "close": 26.28,
       "high": 26.9,
-      "low": 26.35,
-      "volume": 79902,
-      "pct_change": -3.38,
-      "turnover": 1.13
+      "low": 26.01,
+      "volume": 18026859.0,
+      "pct_change": null,
+      "turnover": null
     }
   ],
   "quote": {},

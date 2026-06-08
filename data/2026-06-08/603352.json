@@ -1,7 +1,7 @@
 {
   "code": "603352",
   "name": "至信股份",
-  "fetched_at": "2026-06-08T02:47:27.305893",
+  "fetched_at": "2026-06-08T12:44:52.460731",
   "close_history": [
     {
       "date": "2026-01-15",
@@ -373,7 +373,7 @@
     },
     {
       "date": "2026-06-08",
-      "close": 29.9
+      "close": 29.37
     }
   ],
   "kline_30d": [
@@ -670,60 +670,14 @@
     {
       "date": "2026-06-08",
       "open": 30.05,
-      "close": 29.9,
+      "close": 29.37,
       "high": 30.31,
-      "low": 29.7,
-      "volume": 7361,
-      "pct_change": -1.48,
-      "turnover": 1.66
+      "low": 29.23,
+      "volume": 1602788.0,
+      "pct_change": null,
+      "turnover": null
     }
   ],
   "quote": {},
-  "money_flow": [
-    {
-      "date": "2026-06-01",
-      "close": 30.31,
-      "pct_change": 0.63,
-      "main_net_inflow": -1426112.0,
-      "main_net_inflow_pct": -4.26,
-      "super_large_net": -3900.0,
-      "large_net": -1422212.0
-    },
-    {
-      "date": "2026-06-02",
-      "close": 29.58,
-      "pct_change": -2.41,
-      "main_net_inflow": -1480601.0,
-      "main_net_inflow_pct": -3.61,
-      "super_large_net": -1384412.0,
-      "large_net": -96189.0
-    },
-    {
-      "date": "2026-06-03",
-      "close": 29.34,
-      "pct_change": -0.81,
-      "main_net_inflow": -3589492.0,
-      "main_net_inflow_pct": -8.48,
-      "super_large_net": -3840529.0,
-      "large_net": 251037.0
-    },
-    {
-      "date": "2026-06-04",
-      "close": 31.72,
-      "pct_change": 8.11,
-      "main_net_inflow": 15446675.0,
-      "main_net_inflow_pct": 9.58,
-      "super_large_net": 2818026.0,
-      "large_net": 12628649.0
-    },
-    {
-      "date": "2026-06-05",
-      "close": 30.35,
-      "pct_change": -4.32,
-      "main_net_inflow": -7028938.0,
-      "main_net_inflow_pct": -7.88,
-      "super_large_net": -2360110.0,
-      "large_net": -4668828.0
-    }
-  ]
+  "money_flow": []
 }
