@@ -1,6 +1,6 @@
 {
   "code": "603352",
-  "updated_at": "2026-06-25T10:57:19.265856",
+  "updated_at": "2026-06-29T12:38:25.466052",
   "kline": [
     {
       "date": "2026-01-15",
@@ -892,7 +892,35 @@
       "close": 26.59,
       "high": 27.37,
       "low": 26.4,
-      "volume": 1239814.0
+      "volume": 12398,
+      "amount": 33095513.0,
+      "turnover": 2.79,
+      "pct_change": -2.85,
+      "amplitude": 3.54
+    },
+    {
+      "date": "2026-06-26",
+      "open": 26.6,
+      "close": 25.61,
+      "high": 26.85,
+      "low": 25.61,
+      "volume": 10780,
+      "amount": 27989311.0,
+      "turnover": 2.43,
+      "pct_change": -3.69,
+      "amplitude": 4.66
+    },
+    {
+      "date": "2026-06-29",
+      "open": 25.58,
+      "close": 25.85,
+      "high": 26.04,
+      "low": 25.08,
+      "volume": 10863,
+      "amount": 27817594.0,
+      "turnover": 2.45,
+      "pct_change": 0.94,
+      "amplitude": 3.75
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "code": "002574",
-  "updated_at": "2026-06-25T10:45:32.110364",
+  "updated_at": "2026-06-29T12:37:54.882979",
   "kline": [
     {
       "date": "2025-03-10",
@@ -2544,7 +2544,35 @@
       "close": 4.32,
       "high": 4.38,
       "low": 4.25,
-      "volume": 6280260.0
+      "volume": 62803,
+      "amount": 27058884.0,
+      "turnover": 1.19,
+      "pct_change": -1.14,
+      "amplitude": 2.97
+    },
+    {
+      "date": "2026-06-26",
+      "open": 4.34,
+      "close": 4.27,
+      "high": 4.35,
+      "low": 4.18,
+      "volume": 90631,
+      "amount": 38750746.06,
+      "turnover": 1.72,
+      "pct_change": -1.16,
+      "amplitude": 3.94
+    },
+    {
+      "date": "2026-06-29",
+      "open": 4.26,
+      "close": 4.25,
+      "high": 4.3,
+      "low": 4.09,
+      "volume": 67100,
+      "amount": 28241689.6,
+      "turnover": 1.27,
+      "pct_change": -0.47,
+      "amplitude": 4.92
     }
   ]
 }
