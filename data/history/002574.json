@@ -1,6 +1,6 @@
 {
   "code": "002574",
-  "updated_at": "2026-06-30T11:01:47.918234",
+  "updated_at": "2026-07-01T11:25:22.596482",
   "kline": [
     {
       "date": "2025-03-10",
@@ -2576,7 +2576,23 @@
       "close": 4.15,
       "high": 4.27,
       "low": 4.12,
-      "volume": 9167802.0
+      "volume": 91678,
+      "amount": 38289743.52,
+      "turnover": 1.74,
+      "pct_change": -2.35,
+      "amplitude": 3.53
+    },
+    {
+      "date": "2026-07-01",
+      "open": 4.16,
+      "close": 4.2,
+      "high": 4.23,
+      "low": 4.11,
+      "volume": 224921,
+      "amount": 94064877.4,
+      "turnover": 4.26,
+      "pct_change": 1.2,
+      "amplitude": 2.89
     }
   ]
 }

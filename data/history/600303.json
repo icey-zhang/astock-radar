@@ -1,6 +1,6 @@
 {
   "code": "600303",
-  "updated_at": "2026-06-30T11:06:41.860145",
+  "updated_at": "2026-07-01T11:26:09.944460",
   "kline": [
     {
       "date": "2025-03-10",
@@ -2588,7 +2588,23 @@
       "close": 2.49,
       "high": 2.53,
       "low": 2.43,
-      "volume": 21940700.0
+      "volume": 219407,
+      "amount": 54428178.0,
+      "turnover": 3.24,
+      "pct_change": 0.0,
+      "amplitude": 4.02
+    },
+    {
+      "date": "2026-07-01",
+      "open": 2.49,
+      "close": 2.56,
+      "high": 2.6,
+      "low": 2.46,
+      "volume": 312840,
+      "amount": 79438572.0,
+      "turnover": 4.62,
+      "pct_change": 2.81,
+      "amplitude": 5.62
     }
   ]
 }
