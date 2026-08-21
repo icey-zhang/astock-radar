@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A股每日分析 · 2026-08-21</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --up: #d9322d; --down: #0a9a5a;
+    --bg: #f7f8fa; --card: #ffffff; --border: #e4e7eb;
+    --text: #1f2329; --text-sec: #6b7280;
+    --accent: #4c6ef5; --warn: #f59e0b; --danger: #ef4444;
+    --swing: #8b5cf6;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.5;
+    padding: 24px 16px 64px;
+  }
+  .container { max-width: 1400px; margin: 0 auto; }
+  header {
+    background: linear-gradient(135deg, #1e3a8a, #4c6ef5);
+    color: white; padding: 24px 28px; border-radius: 12px; margin-bottom: 20px;
+  }
+  header h1 { font-size: 24px; font-weight: 600; }
+  header .date { font-size: 14px; opacity: 0.85; margin-top: 4px; }
+  header .disclaimer {
+    margin-top: 12px; font-size: 12px; opacity: 0.85;
+    padding: 10px 12px; background: rgba(255,255,255,0.1);
+    border-left: 3px solid #fff; border-radius: 4px; line-height: 1.6;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px; margin-bottom: 20px;
+  }
+  .stat {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+  }
+  .stat .label { font-size: 12px; color: var(--text-sec); }
+  .stat .value { font-size: 28px; font-weight: 600; margin-top: 4px; }
+  .stat.tp .value { color: var(--warn); }
+  .stat.dip .value { color: var(--accent); }
+  .stat.swing .value { color: var(--swing); }
+
+  section {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 20px; margin-bottom: 20px;
+  }
+  section > h2 {
+    font-size: 16px; font-weight: 600; margin-bottom: 14px;
+    border-left: 3px solid var(--accent); padding-left: 10px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); }
+  th { background: #f9fafb; font-weight: 500; color: var(--text-sec); font-size: 12px; }
+  tr:hover td { background: #fafbfc; }
+  td.code { font-family: "SF Mono", Menlo, monospace; font-weight: 600; }
+
+  .price-up { color: var(--up); font-weight: 500; }
+  .price-down { color: var(--down); font-weight: 500; }
+  .price-flat { color: var(--text-sec); }
+
+  .tag {
+    display: inline-block; padding: 3px 10px; border-radius: 4px;
+    font-size: 12px; font-weight: 500; white-space: nowrap;
+  }
+  .tag-hold        { background: #fef3c7; color: #92400e; }
+  .tag-tp-watch    { background: #fed7aa; color: #9a3412; }
+  .tag-tp-partial  { background: #fdba74; color: #7c2d12; }
+  .tag-tp-strong   { background: #ea580c; color: white; font-weight: 600; }
+  .tag-dip         { background: #e0e7ff; color: #3730a3; }
+  .tag-dip-strong  { background: #4c6ef5; color: white; font-weight: 600; }
+  .tag-swing       { background: #ede9fe; color: #6d28d9; }
+  .tag-swing-hold  { background: #c4b5fd; color: #4c1d95; }
+  .tag-watch       { background: #f3f4f6; color: #6b7280; }
+  /* 浮亏预警标签(仅视觉,不给动作) */
+  .tag-loss-light    { background: #fef3c7; color: #92400e; }
+  .tag-loss-moderate { background: #fed7aa; color: #9a3412; font-weight: 600; }
+  .tag-loss-deep     { background: #fecaca; color: #991b1b; font-weight: 700; border: 1px solid #f87171; }
+
+  .stock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(580px, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 720px) { .stock-grid { grid-template-columns: 1fr; } }
+
+  .stock-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px;
+  }
+  .stock-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+  .stock-head {
+    display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border);
+    margin-bottom: 12px;
+  }
+  .stock-head .code { font-family: "SF Mono", Menlo, monospace; font-size: 15px; color: var(--text-sec); font-weight: 600; }
+  .stock-head .name { font-size: 18px; font-weight: 600; }
+  .stock-head .price { font-size: 20px; font-weight: 600; margin-left: auto; }
+  .stock-head .change { font-size: 14px; font-weight: 500; }
+
+  .context-box {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    background: #f9fafb; border-radius: 6px; padding: 10px 12px;
+    font-size: 12px; margin: 10px 0;
+  }
+  .context-box .k { color: var(--text-sec); }
+  .context-box .v { font-weight: 500; margin-left: 4px; }
+
+  .chart { width: 100%; height: 280px; margin: 8px 0; }
+
+  .strategy-box {
+    margin: 12px 0; padding: 12px 14px; border-radius: 6px;
+    border-left: 3px solid; font-size: 13px;
+  }
+  .strategy-box.tp        { background: #fff7ed; border-left-color: var(--warn); }
+  .strategy-box.tp.strong { background: #fff7ed; border-left-color: var(--up); border-left-width: 4px; }
+  .strategy-box.dip       { background: #eff6ff; border-left-color: var(--accent); }
+  .strategy-box.dip.strong{ background: #eff6ff; border-left-color: var(--accent); border-left-width: 4px; }
+  .strategy-box.swing     { background: #faf5ff; border-left-color: var(--swing); }
+  .strategy-box.hold      { background: #fffbeb; border-left-color: #d1d5db; }
+  .strategy-box.inactive  { background: #f9fafb; border-left-color: #d1d5db; color: var(--text-sec); }
+
+  .strategy-box .title { font-weight: 600; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .strategy-box .price-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    margin: 8px 0; padding: 8px; background: rgba(255,255,255,0.6); border-radius: 4px;
+  }
+  .strategy-box .price-row > div .label {
+    font-size: 11px; color: var(--text-sec); display: block;
+  }
+  .strategy-box .price-row > div .val {
+    font-size: 15px; font-weight: 600; font-family: "SF Mono", Menlo, monospace;
+  }
+  .strategy-box ul.reasons { margin: 4px 0 0 0; list-style: none; }
+  .strategy-box ul.reasons li {
+    font-size: 12px; padding: 2px 0 2px 18px; position: relative;
+  }
+  .strategy-box ul.reasons li::before {
+    content: "✓"; position: absolute; left: 2px; font-weight: 600;
+  }
+  .strategy-box.tp ul.reasons li::before { color: var(--warn); }
+  .strategy-box.dip ul.reasons li::before { color: var(--accent); }
+  .strategy-box.swing ul.reasons li::before { color: var(--swing); }
+
+  .confidence {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 11px; font-weight: 500;
+    background: white; color: var(--text-sec); border: 1px solid var(--border);
+  }
+  .confidence.h, .confidence.较高 { background: #fef3c7; color: #92400e; border-color: #fde68a; }
+  .confidence.m { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; }
+  .confidence.l { background: #f3f4f6; color: #6b7280; }
+
+  .ai-block {
+    margin-top: 14px; padding: 12px 14px;
+    background: #f5f3ff; border: 1px dashed #c4b5fd;
+    border-radius: 6px; font-size: 13px; color: #6d28d9;
+  }
+  .ai-block .placeholder { color: #8b5cf6; font-style: italic; }
+  .ai-block.filled {
+    background: #faf5ff; color: var(--text);
+    border-style: solid; border-color: #ddd6fe;
+  }
+
+  footer {
+    margin-top: 32px; padding: 16px; text-align: center;
+    font-size: 12px; color: var(--text-sec); line-height: 1.8;
+  }
+  footer .disclaimer {
+    max-width: 720px; margin: 0 auto; padding: 12px;
+    background: #fef2f2; color: #7f1d1d;
+    border-radius: 6px; border: 1px solid #fecaca;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <h1>📈 A股三策略仪表盘</h1>
+    <div class="date">交易日 <span>2026-08-21</span> · 生成于 <span>2026-08-21 08:57:00</span></div>
+    <div class="disclaimer">
+      <strong>免责声明:</strong> 本报告由自动化工具 + AI 辅助生成,仅供学习研究参考,<strong>不构成投资建议</strong>。
+      三个策略独立输出信号,消息面综合请在 Claude.ai 对话中补充。股市有风险,决策请独立判断并自负盈亏。
+    </div>
+  </header>
+
+  <div class="stats" id="stats"></div>
+
+  <section>
+    <h2>📋 当日汇总</h2>
+    <table id="summary-table">
+      <thead>
+        <tr>
+          <th>代码</th><th>名称</th><th>现价</th><th>涨跌幅</th>
+          <th>5日趋势</th><th>90日位置</th><th>主要动作</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>🔍 个股三策略详情</h2>
+    <div class="stock-grid" id="stock-grid"></div>
+  </section>
+
+  <footer>
+    <div class="disclaimer">
+      ⚠ 波段策略(策略3)的短期预测能力有限(历史命中率约 50%),仅作候选筛选参考,务必设止损。
+    </div>
+    <div style="margin-top:12px">astock-daily-analysis · routine v3.0 · 数据源 akshare</div>
+  </footer>
+
+</div>
+
+<script>
+const DATA = {"date": "2026-08-21", "generated_at": "2026-08-21 08:57:00", "summary": {"total": 8, "take_profit": 0, "dip_candidates": 2, "swing": 0, "hold": 0}, "stocks": [{"code": "002885", "name": "京泉华", "quote": {}, "context": {"last_close": 28.31, "trend_5d": {"days_up": 1, "days_down": 3, "cum_pct": -8.94, "min": 28.31, "max": 31.97, "is_5d_low": true, "is_5d_high": false}, "range_90d": {"high": 53.71, "low": 22.35, "position_pct": 19.01}}, "strategy_take_profit": null, "strategy_dip_buy": {"triggered": true, "tier": "LIGHT", "tier_cn": "初级抄底候选", "confidence": "中", "conditions": {"new_low_5d_with_drop": true, "below_90d_low": false}, "reasons": ["近 5 天最低 + 累计跌 -8.94% ≤ -3.0%"], "suggested_entry_price_aggressive": 28.31, "suggested_entry_price_conservative": 22.57, "suggested_stop_loss": 26.89, "price_reference": {"range_90d_low": 22.35, "cum_pct_5d": -8.94}}, "strategy_swing": {"triggered": false, "hit_count": 0, "total": 4, "signals": [], "signal_details": {"macd_cross": false, "macd_hist": 1.141, "kdj_cross": false, "kdj_k": 44.83, "kdj_d": 65.52, "volume_ratio": 0.63}, "confidence": "未触发", "note": "波段信号预测能力有限,仅用于候选筛选"}, "position": null, "money_flow_5d": [], "chart": {"dates": ["2026-07-10", "2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-17", "2026-08-18", "2026-08-19", "2026-08-20"], "ohlc": [[35.19, 34.07, 34.0, 36.06], [33.99, 30.75, 30.68, 34.86], [31.01, 31.25, 29.77, 32.19], [32.02, 29.73, 29.5, 32.48], [29.28, 28.45, 28.04, 30.04], [28.2, 26.16, 25.72, 28.8], [26.68, 23.54, 23.54, 27.0], [23.96, 25.27, 21.19, 25.47], [25.94, 25.57, 25.0, 26.65], [25.5, 26.17, 25.47, 26.85], [26.11, 25.08, 24.77, 26.15], [25.15, 25.99, 24.71, 25.99], [25.8, 24.18, 23.92, 26.23], [24.0, 24.38, 23.32, 25.39], [24.24, 22.35, 22.1, 24.34], [23.9, 23.27, 23.27, 24.55], [23.62, 23.34, 23.16, 24.02], [23.98, 25.01, 23.54, 25.18], [25.02, 26.19, 24.58, 26.41], [26.15, 26.86, 25.73, 27.15], [26.85, 29.01, 26.1, 29.45], [31.91, 31.91, 31.91, 31.91], [31.96, 30.39, 28.72, 32.0], [30.5, 31.88, 30.5, 32.43], [32.45, 31.74, 31.5, 33.37], [31.89, 31.09, 30.67, 32.2], [31.4, 31.97, 30.62, 32.24], [32.05, 31.3, 30.74, 32.22], [29.91, 28.42, 28.26, 30.48], [28.8, 28.31, 27.96, 29.0]], "volumes": [18564416.0, 17777500.0, 13904360.0, 13140118.0, 12814570.0, 14978316.0, 15724261.0, 22902513.0, 20271066.0, 14385109.0, 12045362.0, 11791400.0, 12521140.0, 16774770.0, 16255640.0, 16118093.0, 14367860.0, 16903880.0, 19032556.0, 15465786.0, 26272673.0, 7410449.0, 56046280.0, 42723657.0, 35508036.0, 30085549.0, 25599220.0, 20599310.0, 18920768.0, 13561406.0], "ma5": [null, null, null, null, 30.85, 29.268, 27.826, 26.630000000000003, 25.798000000000002, 25.342, 25.125999999999998, 25.616000000000003, 25.397999999999996, 25.159999999999997, 24.395999999999997, 24.034, 23.503999999999998, 23.67, 24.032000000000004, 24.934, 26.082, 27.796000000000003, 28.872000000000003, 30.01, 30.986, 31.401999999999997, 31.413999999999998, 31.595999999999997, 30.903999999999996, 30.218], "ma10": [null, null, null, null, null, null, null, null, null, 28.095999999999997, 27.196999999999996, 26.720999999999997, 26.014, 25.479000000000003, 24.869, 24.580000000000002, 24.560000000000002, 24.534, 24.595999999999997, 24.665, 25.058, 25.65, 26.271000000000004, 27.020999999999997, 27.96, 28.741999999999997, 29.604999999999997, 30.234, 30.457000000000004, 30.602000000000004], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 26.380499999999994, 26.127499999999998, 26.185499999999998, 26.142500000000002, 26.25, 26.414499999999997, 26.661, 27.0825, 27.383999999999997, 27.52649999999999, 27.633499999999998], "bb_upper": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 32.304750079123934, 31.066920512570274, 31.36221507811662, 31.16213295470894, 31.650022222176496, 32.255049546061564, 32.843885734024205, 33.50172074710007, 33.99786543558304, 34.10058023985104, 34.18540743219102], "bb_lower": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 20.456249920876054, 21.18807948742972, 21.008784921883375, 21.122867045291063, 20.849977777823504, 20.57395045393843, 20.478114265975798, 20.663279252899926, 20.77013456441696, 20.952419760148945, 21.081592567808972]}, "decision": "抄底候选", "decision_class": "tag-dip"}, {"code": "002574", "name": "明牌珠宝", "quote": {}, "context": {"last_close": 4.66, "trend_5d": {"days_up": 2, "days_down": 1, "cum_pct": 2.19, "min": 4.53, "max": 4.66, "is_5d_low": false, "is_5d_high": true}, "range_90d": {"high": 5.85, "low": 4.11, "position_pct": 31.61}}, "strategy_take_profit": null, "strategy_dip_buy": {"triggered": false, "tier": "NONE", "tier_cn": "观望", "confidence": "未触发", "conditions": {"new_low_5d_with_drop": false, "below_90d_low": false}, "reasons": [], "suggested_entry_price_aggressive": 4.66, "suggested_entry_price_conservative": 4.15, "suggested_stop_loss": 4.43, "price_reference": {"range_90d_low": 4.11, "cum_pct_5d": 2.19}}, "strategy_swing": {"triggered": false, "hit_count": 0, "total": 4, "signals": [], "signal_details": {"macd_cross": false, "macd_hist": 0.021, "kdj_cross": false, "kdj_k": 60.84, "kdj_d": 64.37, "volume_ratio": 0.99}, "confidence": "未触发", "note": "波段信号预测能力有限,仅用于候选筛选"}, "position": null, "money_flow_5d": [], "chart": {"dates": ["2026-07-10", "2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-17", "2026-08-18", "2026-08-19", "2026-08-20"], "ohlc": [[4.21, 4.29, 4.13, 4.45], [4.33, 4.18, 4.16, 4.34], [4.17, 4.28, 4.1, 4.3], [4.27, 4.36, 4.26, 4.43], [4.4, 4.41, 4.29, 4.46], [4.38, 4.26, 4.23, 4.5], [4.26, 4.18, 4.11, 4.36], [4.17, 4.11, 3.98, 4.18], [4.08, 4.11, 4.04, 4.17], [4.09, 4.25, 4.08, 4.27], [4.23, 4.13, 4.09, 4.26], [4.15, 4.21, 4.11, 4.27], [4.21, 4.27, 4.18, 4.32], [4.27, 4.37, 4.27, 4.38], [4.35, 4.37, 4.32, 4.47], [4.36, 4.47, 4.35, 4.48], [4.47, 4.54, 4.44, 4.57], [4.56, 4.53, 4.49, 4.61], [4.56, 4.55, 4.48, 4.62], [4.65, 4.59, 4.49, 4.69], [4.53, 4.56, 4.44, 4.57], [4.58, 4.7, 4.54, 4.72], [4.71, 4.65, 4.63, 4.72], [4.63, 4.68, 4.62, 4.71], [4.68, 4.59, 4.58, 4.7], [4.61, 4.56, 4.52, 4.62], [4.65, 4.64, 4.57, 4.7], [4.66, 4.64, 4.58, 4.7], [4.61, 4.53, 4.52, 4.64], [4.54, 4.66, 4.54, 4.7]], "volumes": [16776040.0, 9866500.0, 8030800.0, 8938300.0, 7632800.0, 10059100.0, 11589100.0, 12462565.0, 7806180.0, 8612768.0, 60044, 5577600.0, 7591701.0, 7609035.0, 7829456.0, 6622094.0, 7021013.0, 5068418.0, 6990500.0, 10623512.0, 8592000.0, 9005452.0, 7280900.0, 6077244.0, 4990100.0, 4439100.0, 7721945.0, 5636200.0, 5201100.0, 6487587.0], "ma5": [null, null, null, null, 4.304, 4.298, 4.298, 4.264, 4.214, 4.182, 4.156, 4.162000000000001, 4.194, 4.246, 4.2700000000000005, 4.338, 4.404, 4.456, 4.492, 4.536, 4.554, 4.586, 4.609999999999999, 4.636, 4.636, 4.636, 4.6240000000000006, 4.622, 4.5920000000000005, 4.606], "ma10": [null, null, null, null, null, null, null, null, null, 4.243, 4.227, 4.23, 4.229000000000001, 4.229999999999999, 4.225999999999999, 4.246999999999999, 4.2829999999999995, 4.325, 4.369, 4.4030000000000005, 4.446000000000001, 4.495, 4.533, 4.564, 4.586, 4.595000000000001, 4.6049999999999995, 4.616, 4.614, 4.6209999999999996], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 4.323, 4.3365, 4.362500000000001, 4.381, 4.397, 4.406000000000001, 4.421000000000001, 4.444000000000001, 4.470500000000001, 4.4915, 4.5120000000000005], "bb_upper": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 4.621134197971316, 4.651414274049304, 4.706004002887886, 4.744037188177741, 4.7824400083022, 4.80053263489856, 4.815000000000001, 4.832710689330767, 4.8360940371505, 4.818013399418769, 4.8265536520214], "bb_lower": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 4.0248658020286845, 4.021585725950696, 4.018995997112116, 4.01796281182226, 4.0115599916978, 4.011467365101441, 4.027000000000001, 4.0552893106692345, 4.104905962849503, 4.164986600581232, 4.197446347978601]}, "decision": "观望", "decision_class": "tag-watch"}, {"code": "600690", "name": "海尔智家", "quote": {}, "context": {"last_close": 20.86, "trend_5d": {"days_up": 2, "days_down": 2, "cum_pct": -2.93, "min": 20.86, "max": 21.97, "is_5d_low": true, "is_5d_high": false}, "range_90d": {"high": 23.27, "low": 19.34, "position_pct": 38.68}}, "strategy_take_profit": null, "strategy_dip_buy": {"triggered": false, "tier": "NONE", "tier_cn": "观望", "confidence": "未触发", "conditions": {"new_low_5d_with_drop": false, "below_90d_low": false}, "reasons": [], "suggested_entry_price_aggressive": 20.86, "suggested_entry_price_conservative": 19.53, "suggested_stop_loss": 19.82, "price_reference": {"range_90d_low": 19.34, "cum_pct_5d": -2.93}}, "strategy_swing": {"triggered": false, "hit_count": 0, "total": 4, "signals": [], "signal_details": {"macd_cross": false, "macd_hist": -0.403, "kdj_cross": false, "kdj_k": 18.57, "kdj_d": 23.67, "volume_ratio": 1.06}, "confidence": "未触发", "note": "波段信号预测能力有限,仅用于候选筛选"}, "position": null, "money_flow_5d": [], "chart": {"dates": ["2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-17", "2026-08-18", "2026-08-19", "2026-08-20", "2026-08-21"], "ohlc": [[20.18, 20.25, 20.08, 20.35], [20.21, 20.33, 20.02, 20.39], [20.21, 21.02, 20.15, 21.11], [20.92, 21.11, 20.89, 21.34], [21.05, 20.95, 20.86, 21.25], [20.95, 21.46, 20.94, 21.48], [21.45, 21.85, 21.35, 22.32], [21.76, 21.92, 21.54, 21.92], [21.78, 21.86, 21.62, 21.88], [21.72, 21.76, 21.58, 21.86], [21.74, 21.87, 21.66, 22.04], [21.94, 22.4, 21.83, 22.45], [22.36, 22.98, 22.33, 23.19], [23.0, 23.27, 22.9, 23.49], [22.9, 23.19, 22.56, 23.29], [23.2, 22.92, 22.85, 23.34], [22.81, 22.49, 22.45, 22.89], [22.48, 22.34, 22.13, 22.58], [22.32, 22.12, 21.91, 22.39], [22.12, 21.93, 21.83, 22.17], [21.95, 22.25, 21.88, 22.33], [22.1, 22.0, 22.0, 22.39], [21.97, 21.75, 21.48, 21.99], [21.72, 21.79, 21.61, 21.98], [21.71, 21.76, 21.61, 21.89], [21.86, 21.49, 21.3, 21.91], [21.41, 21.65, 21.37, 21.69], [21.59, 21.97, 21.56, 22.01], [21.05, 20.9, 20.88, 21.24], [20.92, 20.86, 20.74, 21.16]], "volumes": [37484802.0, 39265604.0, 78529919.0, 53330966.0, 45033860.0, 56000571.0, 94521945.0, 49076302.0, 30383675.0, 42908337.0, 36409130.0, 52056186.0, 71377087.0, 54642138.0, 63097075.0, 465658, 52341084.0, 37216576.0, 34302450.0, 30602616.0, 44705020.0, 332182, 428218, 29166611.0, 26153526.0, 46895324.0, 34313718.0, 50354488.0, 42319396.0, 39463127.0], "ma5": [null, null, null, null, 20.732, 20.974, 21.278, 21.458000000000002, 21.607999999999997, 21.770000000000003, 21.852, 21.962, 22.174000000000003, 22.456, 22.741999999999997, 22.951999999999998, 22.97, 22.842, 22.612000000000002, 22.360000000000003, 22.226, 22.128, 22.009999999999998, 21.944, 21.91, 21.758, 21.688, 21.732, 21.554000000000002, 21.374], "ma10": [null, null, null, null, null, null, null, null, null, 21.250999999999998, 21.413, 21.62, 21.816, 22.032, 22.256, 22.401999999999997, 22.466, 22.508000000000003, 22.534, 22.551000000000002, 22.589000000000002, 22.549, 22.426, 22.278, 22.134999999999998, 21.991999999999997, 21.907999999999998, 21.871000000000002, 21.749000000000002, 21.642000000000003], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 21.901, 22.000999999999998, 22.0845, 22.121000000000002, 22.155, 22.195500000000003, 22.197, 22.187, 22.1895, 22.141499999999997, 22.0965], "bb_upper": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 23.59190390028529, 23.51703298117158, 23.392941439270402, 23.346738960790596, 23.301865292874453, 23.21997010693334, 23.217237227315294, 23.224421804282137, 23.224574393461648, 23.313255520575854, 23.38655852580416], "bb_lower": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 20.21009609971471, 20.484967018828414, 20.776058560729595, 20.89526103920941, 21.00813470712555, 21.171029893066667, 21.176762772684704, 21.149578195717865, 21.15442560653835, 20.96974447942414, 20.80644147419584]}, "decision": "观望", "decision_class": "tag-watch"}, {"code": "600303", "name": "曙光股份", "quote": {}, "context": {"last_close": 2.87, "trend_5d": {"days_up": 3, "days_down": 1, "cum_pct": -0.69, "min": 2.78, "max": 2.91, "is_5d_low": false, "is_5d_high": false}, "range_90d": {"high": 3.83, "low": 2.32, "position_pct": 36.42}}, "strategy_take_profit": null, "strategy_dip_buy": {"triggered": false, "tier": "NONE", "tier_cn": "观望", "confidence": "未触发", "conditions": {"new_low_5d_with_drop": false, "below_90d_low": false}, "reasons": [], "suggested_entry_price_aggressive": 2.87, "suggested_entry_price_conservative": 2.34, "suggested_stop_loss": 2.73, "price_reference": {"range_90d_low": 2.32, "cum_pct_5d": -0.69}}, "strategy_swing": {"triggered": false, "hit_count": 0, "total": 4, "signals": [], "signal_details": {"macd_cross": false, "macd_hist": 0.008, "kdj_cross": false, "kdj_k": 46.24, "kdj_d": 56.62, "volume_ratio": 0.6}, "confidence": "未触发", "note": "波段信号预测能力有限,仅用于候选筛选"}, "position": null, "money_flow_5d": [], "chart": {"dates": ["2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-17", "2026-08-18", "2026-08-19", "2026-08-20", "2026-08-21"], "ohlc": [[2.55, 2.41, 2.39, 2.58], [2.42, 2.53, 2.4, 2.53], [2.51, 2.57, 2.48, 2.65], [2.57, 2.62, 2.53, 2.65], [2.62, 2.48, 2.46, 2.67], [2.48, 2.42, 2.38, 2.56], [2.41, 2.36, 2.25, 2.41], [2.32, 2.32, 2.31, 2.39], [2.33, 2.43, 2.31, 2.44], [2.39, 2.38, 2.34, 2.43], [2.37, 2.46, 2.35, 2.48], [2.42, 2.71, 2.42, 2.71], [2.69, 2.64, 2.61, 2.7], [2.63, 2.66, 2.63, 2.75], [2.63, 2.7, 2.59, 2.71], [2.69, 2.75, 2.66, 2.77], [2.75, 2.77, 2.74, 2.8], [2.79, 2.79, 2.74, 2.83], [2.79, 2.79, 2.72, 2.8], [2.8, 2.79, 2.71, 2.82], [2.79, 2.91, 2.76, 2.93], [2.9, 2.92, 2.85, 2.93], [2.87, 2.92, 2.87, 2.95], [2.9, 2.95, 2.89, 3.02], [2.93, 2.87, 2.85, 2.95], [2.86, 2.89, 2.85, 2.92], [2.9, 2.91, 2.89, 2.95], [2.9, 2.78, 2.76, 2.91], [2.79, 2.86, 2.78, 2.87], [2.85, 2.87, 2.79, 2.89]], "volumes": [30983900.0, 24537300.0, 30504900.0, 22605300.0, 23325800.0, 26993799.0, 36342701.0, 21089302.0, 25469001.0, 19360701.0, 21089200.0, 25740760.0, 62845560.0, 50243101.0, 34333802.0, 31138600.0, 29382200.0, 25781700.0, 25235700.0, 25616101.0, 31257000.0, 20220500.0, 24178550.0, 32131250.0, 26767400.0, 18891350.0, 22085324.0, 23476000.0, 16650600.0, 16923300.0], "ma5": [null, null, null, null, 2.522, 2.524, 2.4899999999999998, 2.44, 2.402, 2.382, 2.3899999999999997, 2.46, 2.524, 2.57, 2.6340000000000003, 2.692, 2.7039999999999997, 2.7339999999999995, 2.7600000000000002, 2.7779999999999996, 2.81, 2.8400000000000003, 2.866, 2.8980000000000006, 2.914, 2.91, 2.9080000000000004, 2.88, 2.8619999999999997, 2.8619999999999997], "ma10": [null, null, null, null, null, null, null, null, null, 2.452, 2.457, 2.475, 2.482, 2.486, 2.508, 2.541, 2.582, 2.629, 2.665, 2.706, 2.751, 2.772, 2.8, 2.829, 2.846, 2.8600000000000003, 2.874, 2.873, 2.8800000000000003, 2.8880000000000003], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 2.5789999999999997, 2.604, 2.6235, 2.6410000000000005, 2.6575, 2.677, 2.7005, 2.728, 2.7510000000000003, 2.7725, 2.797], "bb_upper": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 2.8952846818927527, 2.9412476834612806, 2.985564911307351, 3.0242440475728234, 3.0634495042489895, 3.0844358845266333, 3.1000735226463334, 3.1051259736480636, 3.0786522546847497, 3.067923424934449, 3.0335671152125756], "bb_lower": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 2.262715318107247, 2.2667523165387196, 2.261435088692649, 2.2577559524271775, 2.251550495751011, 2.269564115473367, 2.3009264773536664, 2.3508740263519368, 2.423347745315251, 2.477076575065551, 2.5604328847874247]}, "decision": "观望", "decision_class": "tag-watch"}, {"code": "002607", "name": "中公教育", "quote": {}, "context": {"last_close": 2.02, "trend_5d": {"days_up": 1, "days_down": 3, "cum_pct": -4.27, "min": 2.01, "max": 2.11, "is_5d_low": false, "is_5d_high": false}, "range_90d": {"high": 2.75, "low": 1.74, "position_pct": 27.72}}, "strategy_take_profit": null, "strategy_dip_buy": {"triggered": false, "tier": "NONE", "tier_cn": "观望", "confidence": "未触发", "conditions": {"new_low_5d_with_drop": false, "below_90d_low": false}, "reasons": [], "suggested_entry_price_aggressive": 2.02, "suggested_entry_price_conservative": 1.76, "suggested_stop_loss": 1.92, "price_reference": {"range_90d_low": 1.74, "cum_pct_5d": -4.27}}, "strategy_swing": {"triggered": false, "hit_count": 0, "total": 4, "signals": [], "signal_details": {"macd_cross": false, "macd_hist": -0.035, "kdj_cross": false, "kdj_k": 17.41, "kdj_d": 25.32, "volume_ratio": 0.36}, "confidence": "未触发", "note": "波段信号预测能力有限,仅用于候选筛选"}, "position": null, "money_flow_5d": [], "chart": {"dates": ["2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-17", "2026-08-18", "2026-08-19", "2026-08-20", "2026-08-21"], "ohlc": [[1.87, 1.8, 1.79, 1.89], [1.79, 1.82, 1.76, 1.82], [1.81, 1.84, 1.79, 1.85], [1.82, 1.84, 1.79, 1.85], [1.83, 1.79, 1.78, 1.85], [1.79, 1.78, 1.77, 1.81], [1.78, 1.77, 1.67, 1.79], [1.75, 1.76, 1.73, 1.78], [1.75, 1.81, 1.74, 1.82], [1.79, 1.74, 1.74, 1.81], [1.74, 1.81, 1.72, 1.82], [1.8, 1.89, 1.79, 1.93], [1.94, 2.08, 1.93, 2.08], [2.03, 2.03, 1.98, 2.13], [2.01, 2.11, 2.01, 2.15], [2.1, 2.1, 2.06, 2.14], [2.1, 2.14, 2.09, 2.17], [2.13, 2.35, 2.11, 2.35], [2.31, 2.17, 2.16, 2.31], [2.19, 2.15, 2.09, 2.2], [2.13, 2.21, 2.13, 2.22], [2.18, 2.16, 2.15, 2.19], [2.15, 2.2, 2.13, 2.22], [2.18, 2.14, 2.13, 2.19], [2.14, 2.1, 2.06, 2.14], [2.1, 2.11, 2.05, 2.12], [2.11, 2.09, 2.08, 2.15], [2.07, 2.01, 1.99, 2.09], [2.01, 2.03, 2.0, 2.04], [2.02, 2.02, 1.99, 2.04]], "volumes": [208604076.0, 141146771.0, 146990300.0, 120074931.0, 144378824.0, 123635173.0, 192820636.0, 128765264.0, 160012594.0, 114875100.0, 151783322.0, 264828771.0, 301838337.0, 455035785.0, 323915579.0, 213297782.0, 244080639.0, 675122729.0, 559877086.0, 307134681.0, 261297397.0, 160506071.0, 223472255.0, 191827444.0, 171834169.0, 134079569.0, 124201732.0, 158216811.0, 108197187.0, 91034767.0], "ma5": [null, null, null, null, 1.818, 1.814, 1.8040000000000003, 1.7879999999999998, 1.782, 1.7719999999999998, 1.778, 1.8020000000000003, 1.8659999999999997, 1.9099999999999997, 1.984, 2.042, 2.0919999999999996, 2.146, 2.174, 2.182, 2.2039999999999997, 2.2079999999999997, 2.178, 2.1719999999999997, 2.162, 2.142, 2.1279999999999997, 2.09, 2.0679999999999996, 2.0519999999999996], "ma10": [null, null, null, null, null, null, null, null, null, 1.7949999999999995, 1.7959999999999998, 1.8030000000000002, 1.8270000000000004, 1.846, 1.8780000000000001, 1.9100000000000001, 1.9470000000000003, 2.006, 2.0420000000000003, 2.0829999999999997, 2.1229999999999998, 2.15, 2.162, 2.173, 2.172, 2.173, 2.168, 2.1340000000000003, 2.1199999999999997, 2.107], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1.939, 1.9595000000000002, 1.9765000000000001, 1.9945000000000008, 2.0095000000000005, 2.0250000000000004, 2.0415, 2.0575, 2.07, 2.081, 2.095], "bb_upper": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 2.293112976322529, 2.3262955833976195, 2.3473517223904996, 2.3719903972288576, 2.3850782208808177, 2.388455636907725, 2.388560513455507, 2.3817761169127323, 2.3654318872430666, 2.352285827127036, 2.3192766149200583], "bb_lower": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 1.584887023677471, 1.592704416602381, 1.605648277609501, 1.6170096027711442, 1.6339217791191831, 1.6615443630922755, 1.6944394865444932, 1.733223883087268, 1.7745681127569333, 1.809714172872964, 1.870723385079942]}, "decision": "观望", "decision_class": "tag-watch"}, {"code": "601888", "name": "中国中免", "quote": {}, "context": {"last_close": 52.29, "trend_5d": {"days_up": 1, "days_down": 3, "cum_pct": -3.22, "min": 52.29, "max": 54.03, "is_5d_low": true, "is_5d_high": false}, "range_90d": {"high": 69.08, "low": 50.46, "position_pct": 9.83}}, "strategy_take_profit": null, "strategy_dip_buy": {"triggered": true, "tier": "LIGHT", "tier_cn": "初级抄底候选", "confidence": "中", "conditions": {"new_low_5d_with_drop": true, "below_90d_low": false}, "reasons": ["近 5 天最低 + 累计跌 -3.22% ≤ -3.0%"], "suggested_entry_price_aggressive": 52.29, "suggested_entry_price_conservative": 50.96, "suggested_stop_loss": 49.68, "price_reference": {"range_90d_low": 50.46, "cum_pct_5d": -3.22}}, "strategy_swing": {"triggered": false, "hit_count": 0, "total": 4, "signals": [], "signal_details": {"macd_cross": false, "macd_hist": -0.834, "kdj_cross": false, "kdj_k": 11.04, "kdj_d": 15.01, "volume_ratio": 0.55}, "confidence": "未触发", "note": "波段信号预测能力有限,仅用于候选筛选"}, "position": null, "money_flow_5d": [], "chart": {"dates": ["2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-17", "2026-08-18", "2026-08-19", "2026-08-20", "2026-08-21"], "ohlc": [[51.94, 50.46, 50.45, 52.25], [50.9, 50.92, 50.21, 51.34], [50.6, 54.41, 50.5, 55.3], [53.7, 54.52, 53.33, 55.32], [54.11, 52.9, 52.59, 55.74], [52.5, 54.67, 52.4, 55.14], [54.7, 54.08, 53.65, 54.96], [53.8, 55.7, 53.28, 55.96], [55.42, 55.24, 54.33, 55.57], [54.9, 53.2, 53.02, 55.21], [53.75, 54.44, 53.16, 55.17], [53.98, 55.51, 53.92, 55.7], [55.92, 57.38, 55.52, 57.96], [56.99, 58.08, 56.99, 59.5], [56.2, 58.01, 56.2, 58.06], [58.02, 57.97, 57.32, 58.7], [57.76, 56.82, 56.62, 57.96], [56.68, 56.39, 55.91, 56.93], [56.51, 55.56, 55.31, 56.66], [55.26, 55.82, 54.9, 55.95], [55.56, 56.24, 55.5, 56.68], [56.1, 55.45, 55.41, 56.16], [55.25, 55.59, 55.1, 55.92], [55.3, 54.97, 54.92, 55.87], [55.0, 54.06, 53.86, 55.01], [53.77, 54.03, 53.26, 54.05], [53.85, 53.88, 53.62, 54.29], [53.9, 52.88, 52.59, 54.18], [52.72, 53.1, 52.71, 53.58], [52.92, 52.29, 52.02, 52.98]], "volumes": [30841297.0, 20197439.0, 71404179.0, 42566997.0, 42019247.0, 50134368.0, 42228454.0, 54497119.0, 31531873.0, 32369094.0, 28464759.0, 40248923.0, 57859639.0, 59956529.0, 40284097.0, 30332807.0, 37283057.0, 38003565.0, 34607129.0, 33263759.0, 30119807.0, 25272785.0, 24202539.0, 26011427.0, 27260149.0, 21952597.0, 17746602.0, 23753546.0, 18209426.0, 17242816.0], "ma5": [null, null, null, null, 52.641999999999996, 53.484, 54.116, 54.374, 54.517999999999994, 54.577999999999996, 54.532000000000004, 54.818, 55.153999999999996, 55.722, 56.68399999999999, 57.39, 57.652, 57.45399999999999, 56.95, 56.512, 56.166, 55.89200000000001, 55.73199999999999, 55.614, 55.262, 54.82000000000001, 54.50600000000001, 53.964, 53.589999999999996, 53.236000000000004], "ma10": [null, null, null, null, null, null, null, null, null, 53.61, 54.007999999999996, 54.467, 54.763999999999996, 55.11999999999999, 55.63099999999999, 55.961, 56.235, 56.303999999999995, 56.336, 56.598, 56.778, 56.772000000000006, 56.592999999999996, 56.282000000000004, 55.887000000000015, 55.49300000000001, 55.19900000000001, 54.848, 54.602, 54.249], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 55.104, 55.392999999999994, 55.6195, 55.6785, 55.70100000000001, 55.759, 55.72700000000001, 55.717000000000006, 55.57600000000001, 55.46900000000001, 55.423500000000004], "bb_upper": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 59.26594858209469, 58.98917630268594, 58.573544515575215, 58.58023241357641, 58.573280626958315, 58.443398629116025, 58.47701890902591, 58.49224125077443, 58.61443644001319, 58.692326852802864, 58.79590136994398], "bb_lower": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 50.94205141790531, 51.796823697314046, 52.66545548442479, 52.77676758642359, 52.8287193730417, 53.074601370883975, 52.976981090974114, 52.941758749225585, 52.53756355998682, 52.24567314719715, 52.05109863005603]}, "decision": "抄底候选", "decision_class": "tag-dip"}, {"code": "603352", "name": "至信股份", "quote": {}, "context": {"last_close": 25.91, "trend_5d": {"days_up": 3, "days_down": 1, "cum_pct": -3.43, "min": 25.44, "max": 26.86, "is_5d_low": false, "is_5d_high": false}, "range_90d": {"high": 38.63, "low": 23.81, "position_pct": 14.17}}, "strategy_take_profit": null, "strategy_dip_buy": {"triggered": false, "tier": "NONE", "tier_cn": "观望", "confidence": "未触发", "conditions": {"new_low_5d_with_drop": false, "below_90d_low": false}, "reasons": [], "suggested_entry_price_aggressive": 25.91, "suggested_entry_price_conservative": 24.05, "suggested_stop_loss": 24.61, "price_reference": {"range_90d_low": 23.81, "cum_pct_5d": -3.43}}, "strategy_swing": {"triggered": false, "hit_count": 0, "total": 4, "signals": [], "signal_details": {"macd_cross": false, "macd_hist": -0.286, "kdj_cross": false, "kdj_k": 12.47, "kdj_d": 21.1, "volume_ratio": 0.3}, "confidence": "未触发", "note": "波段信号预测能力有限,仅用于候选筛选"}, "position": null, "money_flow_5d": [], "chart": {"dates": ["2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-17", "2026-08-18", "2026-08-19", "2026-08-20", "2026-08-21"], "ohlc": [[25.34, 24.43, 24.4, 25.59], [24.43, 24.66, 23.98, 24.75], [24.78, 24.82, 24.02, 25.04], [24.36, 25.16, 24.3, 25.58], [25.0, 24.43, 24.2, 25.46], [24.44, 23.99, 23.55, 24.83], [23.81, 24.08, 23.5, 24.17], [23.96, 24.14, 23.61, 24.15], [24.1, 24.62, 23.91, 24.84], [24.32, 23.81, 23.81, 24.58], [23.7, 24.3, 23.59, 24.39], [24.3, 24.37, 24.2, 24.69], [24.37, 24.6, 24.32, 24.7], [24.6, 27.06, 24.42, 27.06], [27.39, 26.94, 26.7, 27.85], [26.71, 27.01, 26.71, 27.22], [27.01, 27.03, 26.75, 27.06], [27.2, 27.44, 27.03, 27.5], [27.36, 27.01, 27.01, 28.28], [27.27, 28.09, 26.79, 28.23], [28.08, 27.83, 27.47, 28.09], [27.68, 28.43, 27.25, 29.79], [28.01, 28.11, 27.77, 28.24], [28.3, 27.15, 27.15, 28.32], [27.1, 26.66, 26.5, 27.35], [26.98, 26.83, 26.48, 26.98], [26.81, 26.86, 26.3, 27.24], [26.55, 25.44, 25.4, 26.55], [25.67, 25.69, 25.5, 26.06], [25.67, 25.91, 25.48, 25.93]], "volumes": [1126293.0, 987018.0, 1640968.0, 1558963.0, 1429042.0, 1657921.0, 1369699.0, 1326926.0, 1275139.0, 858771.0, 1071698.0, 796500.0, 1064704.0, 4397788.0, 6481547.0, 2856964.0, 2344426.0, 3468739.0, 3909220.0, 4273318.0, 2486529.0, 4195739.0, 2283869.0, 2244902.0, 2126120.0, 1373074.0, 2036451.0, 1709207.0, 1047087.0, 768819.0], "ma5": [null, null, null, null, 24.7, 24.612, 24.496, 24.36, 24.252000000000002, 24.128, 24.19, 24.248, 24.340000000000003, 24.828000000000003, 25.454, 25.996, 26.528, 27.096000000000004, 27.086000000000002, 27.316000000000003, 27.48, 27.76, 27.894000000000005, 27.921999999999997, 27.636000000000003, 27.436, 27.122000000000003, 26.588, 26.296, 26.145999999999997], "ma10": [null, null, null, null, null, null, null, null, null, 24.413999999999998, 24.401, 24.372000000000003, 24.35, 24.54, 24.791, 25.092999999999996, 25.387999999999998, 25.718, 25.957, 26.384999999999998, 26.738, 27.144, 27.495000000000005, 27.504, 27.476000000000006, 27.458, 27.441000000000003, 27.241000000000003, 27.108999999999998, 26.891000000000002], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 25.3995, 25.569499999999998, 25.758, 25.922499999999996, 26.022, 26.133499999999998, 26.2755, 26.414499999999997, 26.4795, 26.532999999999998, 26.637999999999998], "bb_upper": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 28.176364958905996, 28.500175519398212, 28.907251339604382, 29.199687055997867, 29.32130659381634, 29.359985859259265, 29.35894920502998, 29.33591387002937, 29.24952148006112, 29.196584802479542, 29.01397643085953], "bb_lower": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 22.622635041094004, 22.638824480601784, 22.608748660395616, 22.645312944002125, 22.722693406183655, 22.90701414074073, 23.192050794970022, 23.493086129970624, 23.709478519938884, 23.869415197520453, 24.262023569140467]}, "decision": "观望", "decision_class": "tag-watch"}, {"code": "600171", "name": "上海贝岭", "quote": {}, "context": {"last_close": 22.66, "trend_5d": {"days_up": 1, "days_down": 3, "cum_pct": -4.79, "min": 22.46, "max": 23.8, "is_5d_low": false, "is_5d_high": false}, "range_90d": {"high": 31.95, "low": 22.3, "position_pct": 3.73}}, "strategy_take_profit": null, "strategy_dip_buy": {"triggered": false, "tier": "NONE", "tier_cn": "观望", "confidence": "未触发", "conditions": {"new_low_5d_with_drop": false, "below_90d_low": true}, "reasons": ["接近/跌破 90 天低位 22.30 × 1.02"], "suggested_entry_price_aggressive": 22.66, "suggested_entry_price_conservative": 22.52, "suggested_stop_loss": 21.53, "price_reference": {"range_90d_low": 22.3, "cum_pct_5d": -4.79}}, "strategy_swing": {"triggered": false, "hit_count": 0, "total": 4, "signals": [], "signal_details": {"macd_cross": false, "macd_hist": 0.218, "kdj_cross": false, "kdj_k": 28.4, "kdj_d": 40.77, "volume_ratio": 0.72}, "confidence": "未触发", "note": "波段信号预测能力有限,仅用于候选筛选"}, "position": null, "money_flow_5d": [], "chart": {"dates": ["2026-07-13", "2026-07-14", "2026-07-15", "2026-07-16", "2026-07-17", "2026-07-20", "2026-07-21", "2026-07-22", "2026-07-23", "2026-07-24", "2026-07-27", "2026-07-28", "2026-07-29", "2026-07-30", "2026-07-31", "2026-08-03", "2026-08-04", "2026-08-05", "2026-08-06", "2026-08-07", "2026-08-10", "2026-08-11", "2026-08-12", "2026-08-13", "2026-08-14", "2026-08-17", "2026-08-18", "2026-08-19", "2026-08-20", "2026-08-21"], "ohlc": [[27.79, 27.06, 27.0, 28.59], [27.06, 26.4, 25.62, 27.35], [26.61, 25.84, 25.25, 26.64], [25.38, 25.2, 25.15, 25.88], [25.1, 23.27, 23.25, 25.18], [23.5, 22.49, 22.05, 23.67], [22.49, 23.45, 21.95, 23.46], [23.16, 22.99, 22.91, 23.64], [22.93, 22.66, 22.43, 23.06], [22.39, 22.4, 22.3, 22.9], [22.3, 22.71, 21.97, 22.72], [22.4, 22.3, 22.21, 22.6], [22.31, 22.72, 22.03, 22.74], [22.5, 22.63, 22.17, 22.86], [23.5, 23.01, 23.0, 23.68], [22.9, 23.05, 22.81, 23.15], [23.18, 23.4, 23.06, 23.5], [23.3, 23.71, 23.25, 23.9], [23.4, 23.43, 23.26, 23.76], [23.4, 23.48, 23.08, 23.57], [23.45, 23.38, 23.16, 23.59], [23.22, 23.41, 23.19, 23.65], [23.39, 23.69, 23.36, 23.72], [23.77, 23.11, 23.09, 23.83], [23.24, 23.23, 22.96, 23.33], [23.24, 23.8, 23.13, 23.8], [23.7, 23.48, 23.13, 23.85], [23.15, 22.51, 22.45, 23.46], [22.64, 22.46, 22.33, 22.71], [22.33, 22.66, 22.3, 23.04]], "volumes": [23703515.0, 26371114.0, 22381144.0, 20232352.0, 21171137.0, 19294838.0, 20791477.0, 17968793.0, 14764431.0, 12180600.0, 10594722.0, 8996536.0, 13255692.0, 13626133.0, 18389319.0, 11199600.0, 15048048.0, 19444394.0, 16462007.0, 14165191.0, 10874790.0, 12043864.0, 12340058.0, 14670488.0, 9698359.0, 17219364.0, 15758065.0, 15910386.0, 9160166.0, 9633774.0], "ma5": [null, null, null, null, 25.554, 24.639999999999997, 24.05, 23.479999999999997, 22.971999999999998, 22.797999999999995, 22.842000000000002, 22.612, 22.558, 22.552, 22.674, 22.741999999999997, 22.962, 23.160000000000004, 23.320000000000004, 23.414, 23.479999999999997, 23.482, 23.477999999999998, 23.413999999999998, 23.364, 23.448, 23.462, 23.226000000000003, 23.096000000000004, 22.982], "ma10": [null, null, null, null, null, null, null, null, null, 24.176, 23.741, 23.331000000000003, 23.019000000000002, 22.762, 22.735999999999997, 22.792, 22.787, 22.859, 22.936, 23.044000000000004, 23.110999999999997, 23.222, 23.319, 23.367, 23.389000000000003, 23.464000000000002, 23.471999999999998, 23.351999999999997, 23.255, 23.173], "ma20": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 23.61, 23.425999999999995, 23.276500000000002, 23.169000000000004, 23.064500000000002, 23.062500000000004, 23.128000000000007, 23.129500000000004, 23.105500000000006, 23.095500000000005, 23.108500000000003], "bb_upper": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 26.30776944900783, 25.61063177675323, 24.98364117752458, 24.42915713305921, 23.91303933320737, 23.90927919199754, 23.990034802081688, 23.99387202638679, 24.00976710655647, 24.02336798629978, 24.003737957193508], "bb_lower": [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 20.91223055099217, 21.24136822324676, 21.569358822475426, 21.908842866940798, 22.215960666792636, 22.215720808002466, 22.265965197918327, 22.265127973613218, 22.201232893443542, 22.167632013700228, 22.213262042806498]}, "decision": "观望", "decision_class": "tag-watch"}]};
+
+// AI 分析区块内容由 sync_ai_to_html.py 填入(初始空对象)
+// 格式:{"600519": "<p>...</p>", "002594": "<p>...</p>"}
+window.AI_ANALYSIS = /* AI_ANALYSIS_START */{}/* AI_ANALYSIS_END */;
+
+function fmtPct(v) {
+  if (v === null || v === undefined || v === '') return '-';
+  const n = parseFloat(v);
+  const cls = n > 0 ? 'price-up' : (n < 0 ? 'price-down' : 'price-flat');
+  const sign = n > 0 ? '+' : '';
+  return `<span class="${cls}">${sign}${n.toFixed(2)}%</span>`;
+}
+function fmtNum(v, digits = 2) {
+  if (v === null || v === undefined || v === '') return '-';
+  const n = parseFloat(v);
+  if (isNaN(n)) return '-';
+  return n.toFixed(digits);
+}
+function priceColor(pct) {
+  if (pct === null || pct === undefined) return 'price-flat';
+  return pct > 0 ? 'price-up' : (pct < 0 ? 'price-down' : 'price-flat');
+}
+
+function renderStats() {
+  const s = DATA.summary;
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="label">关注股票</div><div class="value">${s.total}</div></div>
+    <div class="stat tp"><div class="label">止盈触发</div><div class="value">${s.take_profit}</div></div>
+    <div class="stat dip"><div class="label">抄底候选</div><div class="value">${s.dip_candidates}</div></div>
+    <div class="stat swing"><div class="label">波段关注</div><div class="value">${s.swing}</div></div>
+    <div class="stat"><div class="label">持有观望</div><div class="value">${s.hold}</div></div>
+  `;
+}
+
+function renderSummaryTable() {
+  const tbody = document.querySelector('#summary-table tbody');
+  const rows = DATA.stocks.map(s => {
+    const q = s.quote || {};
+    const ctx = s.context || {};
+    const trend = ctx.trend_5d || {};
+    const rng = ctx.range_90d || {};
+
+    // 浮亏预警(不改变决策,只在标签后追加)
+    let lossBadge = '';
+    const tp = s.strategy_take_profit;
+    if (tp && tp.loss_warning) {
+      const lw = tp.loss_warning;
+      lossBadge = ` <span class="tag tag-loss-${lw.level}" title="浮亏 ${lw.pnl_pct}%">⚠ ${lw.level_cn}</span>`;
+    }
+
+    return `<tr>
+      <td class="code">${s.code}</td>
+      <td>${s.name}</td>
+      <td>${fmtNum(q.price)}</td>
+      <td>${fmtPct(q.pct_change)}</td>
+      <td>${fmtPct(trend.cum_pct)}</td>
+      <td>${rng.position_pct !== null && rng.position_pct !== undefined ? rng.position_pct.toFixed(0) + '%' : '-'}</td>
+      <td><span class="tag ${s.decision_class}">${s.decision}</span>${lossBadge}</td>
+    </tr>`;
+  }).join('');
+  tbody.innerHTML = rows;
+}
+
+function renderStrategyTP(tp, pos) {
+  if (!tp) return '';
+  const triggered = tp.triggered;
+  const strong = tp.action === 'SELL_STRONG';
+  const cls = `strategy-box tp${strong ? ' strong' : ''}`;
+
+  const pnl = tp.position.pnl_pct;
+  const pnlCls = priceColor(pnl);
+  const reasonsHTML = tp.reasons.length
+    ? `<ul class="reasons">${tp.reasons.map(r => `<li>${r}</li>`).join('')}</ul>`
+    : '<div style="font-size:12px;color:var(--text-sec)">(未满足触发条件)</div>';
+
+  const confKey = {'高':'h','中':'m','低':'l','较高':'较高','未触发':'l'}[tp.confidence] || 'l';
+
+  // 浮亏预警标签(仅视觉)
+  let lossBadge = '';
+  if (tp.loss_warning) {
+    const lw = tp.loss_warning;
+    lossBadge = `<span class="tag tag-loss-${lw.level}" title="仅视觉提示,不给具体动作">⚠ ${lw.level_cn}</span>`;
+  }
+
+  return `
+    <div class="${cls}">
+      <div class="title">
+        💰 策略1 · 止盈(持仓)
+        <span class="tag tag-${tp.action === 'SELL_STRONG' ? 'tp-strong' : 'tp-partial'}">${tp.action_cn}</span>
+        ${lossBadge}
+        <span class="confidence ${confKey}">置信度 ${tp.confidence}</span>
+      </div>
+      <div style="font-size:12px;margin-bottom:6px">
+        成本 ${fmtNum(tp.position.cost_price)} · 现价 ${fmtNum(tp.position.current_price)} ·
+        持股 ${tp.position.shares} ·
+        浮盈 <strong class="${pnlCls}">${pnl >= 0 ? '+' : ''}${pnl.toFixed(2)}%</strong>
+      </div>
+      <div class="price-row">
+        <div><span class="label">建议卖出价</span><span class="val">${fmtNum(tp.suggested_exit_price)}</span></div>
+        <div><span class="label">价位依据</span><span class="val" style="font-size:12px">${tp.exit_basis === '90d_high' ? '90天高位 × 0.98' : '成本 × 1.20'}</span></div>
+      </div>
+      ${reasonsHTML}
+    </div>
+  `;
+}
+
+function renderStrategyDip(db) {
+  if (!db) return '';
+  const triggered = db.triggered;
+  const strong = db.tier === 'STRONG';
+  const cls = `strategy-box dip${strong ? ' strong' : ''}${triggered ? '' : ' inactive'}`;
+
+  const reasonsHTML = db.reasons.length
+    ? `<ul class="reasons">${db.reasons.map(r => `<li>${r}</li>`).join('')}</ul>`
+    : '<div style="font-size:12px;color:var(--text-sec)">(未触发抄底信号)</div>';
+
+  const confKey = {'高':'h','中':'m','低':'l','未触发':'l'}[db.confidence] || 'l';
+
+  const priceRowHTML = triggered ? `
+    <div class="price-row">
+      <div>
+        <span class="label">激进档买入价</span>
+        <span class="val">${fmtNum(db.suggested_entry_price_aggressive)}</span>
+      </div>
+      <div>
+        <span class="label">稳健档买入价</span>
+        <span class="val">${db.suggested_entry_price_conservative !== null ? fmtNum(db.suggested_entry_price_conservative) : '-'}</span>
+      </div>
+    </div>
+    <div style="font-size:12px;color:var(--text-sec)">
+      止损参考: ${fmtNum(db.suggested_stop_loss)} (-${db.price_reference.cum_pct_5d ? '5%' : ''})
+    </div>
+  ` : '';
+
+  return `
+    <div class="${cls}">
+      <div class="title">
+        📉 策略2 · 抄底(未持仓)
+        <span class="tag ${strong ? 'tag-dip-strong' : (triggered ? 'tag-dip' : 'tag-watch')}">${db.tier_cn}</span>
+        ${triggered ? `<span class="confidence ${confKey}">置信度 ${db.confidence}</span>` : ''}
+      </div>
+      ${priceRowHTML}
+      ${reasonsHTML}
+    </div>
+  `;
+}
+
+function renderStrategySwing(sw) {
+  if (!sw) return '';
+  const triggered = sw.triggered;
+  const cls = `strategy-box swing${triggered ? '' : ' inactive'}`;
+
+  const confKey = {'较高':'h','中':'m','低':'l','未触发':'l'}[sw.confidence] || 'l';
+
+  const signalsHTML = sw.signals && sw.signals.length
+    ? `<ul class="reasons">${sw.signals.map(s => `<li>${s}</li>`).join('')}</ul>`
+    : `<div style="font-size:12px;color:var(--text-sec)">信号命中 ${sw.hit_count}/4,未达阈值</div>`;
+
+  const priceRowHTML = triggered ? `
+    <div class="price-row">
+      <div><span class="label">买入价</span><span class="val">${fmtNum(sw.suggested_entry)}</span></div>
+      <div><span class="label">目标价 (+${sw.expected_move_pct}%)</span><span class="val">${fmtNum(sw.suggested_target)}</span></div>
+    </div>
+    <div style="font-size:12px;color:var(--text-sec)">止损: ${fmtNum(sw.suggested_stop)}</div>
+  ` : '';
+
+  return `
+    <div class="${cls}">
+      <div class="title">
+        ⚡ 策略3 · 波段(独立候选)
+        <span class="tag ${triggered ? 'tag-swing' : 'tag-watch'}">${triggered ? '波段关注' : '未触发'}</span>
+        ${triggered ? `<span class="confidence ${confKey}">置信度 ${sw.confidence}</span>` : ''}
+      </div>
+      ${priceRowHTML}
+      ${signalsHTML}
+      ${triggered ? `<div style="font-size:11px;color:var(--text-sec);margin-top:6px;font-style:italic">${sw.note || ''}</div>` : ''}
+    </div>
+  `;
+}
+
+function renderStockCard(s) {
+  const q = s.quote || {};
+  const ctx = s.context || {};
+  const trend = ctx.trend_5d || {};
+  const rng = ctx.range_90d || {};
+  const pct = q.pct_change;
+  const pctStr = (pct !== null && pct !== undefined)
+    ? `<span class="change ${priceColor(pct)}">${pct >= 0 ? '+' : ''}${parseFloat(pct).toFixed(2)}%</span>`
+    : '';
+
+  const contextHTML = `
+    <div class="context-box">
+      <div><span class="k">5日累计</span><span class="v">${fmtPct(trend.cum_pct)}</span></div>
+      <div><span class="k">5日涨/跌</span><span class="v">${trend.days_up}涨/${trend.days_down}跌</span></div>
+      <div><span class="k">90日高</span><span class="v">${fmtNum(rng.high)}</span></div>
+      <div><span class="k">90日低</span><span class="v">${fmtNum(rng.low)}</span></div>
+      <div><span class="k">区间位置</span><span class="v">${rng.position_pct !== null && rng.position_pct !== undefined ? rng.position_pct.toFixed(0) + '%' : '-'}</span></div>
+      <div><span class="k">PE/PB</span><span class="v">${fmtNum(q.pe_ttm)} / ${fmtNum(q.pb)}</span></div>
+    </div>
+  `;
+
+  const tpHTML = renderStrategyTP(s.strategy_take_profit, s.position);
+  const dipHTML = renderStrategyDip(s.strategy_dip_buy);
+  const swHTML = renderStrategySwing(s.strategy_swing);
+
+  return `
+    <div class="stock-card" id="card-${s.code}">
+      <div class="stock-head">
+        <span class="code">${s.code}</span>
+        <span class="name">${s.name}</span>
+        <span class="tag ${s.decision_class}">${s.decision}</span>
+        <span class="price ${priceColor(pct)}">${fmtNum(q.price)}</span>
+        ${pctStr}
+      </div>
+      ${contextHTML}
+      <div class="chart" id="chart-${s.code}"></div>
+      ${tpHTML}
+      ${dipHTML}
+      ${swHTML}
+      ${(() => {
+        const ai = (window.AI_ANALYSIS || {})[s.code];
+        if (ai) {
+          return `<div class="ai-block filled" id="ai-${s.code}">
+            <strong>🤖 AI 综合分析</strong>
+            <div style="margin-top:8px">${ai}</div>
+          </div>`;
+        }
+        return `<div class="ai-block" id="ai-${s.code}">
+          <strong>🤖 AI 综合分析(消息面)</strong>
+          <div class="placeholder">待 Routine 补充:最近公告/业绩/行业/突发事件;确认信号有效性;生成最终决策建议。</div>
+        </div>`;
+      })()}
+    </div>
+  `;
+}
+
+function renderChart(stock) {
+  const el = document.getElementById(`chart-${stock.code}`);
+  if (!stock.chart || !el) return;
+  const c = stock.chart;
+  const chart = echarts.init(el);
+
+  const option = {
+    animation: false,
+    grid: [
+      { left: '8%', right: '4%', top: '6%', height: '62%' },
+      { left: '8%', right: '4%', top: '74%', height: '18%' }
+    ],
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'cross' },
+      backgroundColor: 'rgba(255,255,255,0.96)',
+      borderColor: '#e4e7eb',
+      textStyle: { color: '#1f2329', fontSize: 12 }
+    },
+    legend: {
+      data: ['K线', 'MA5', 'MA10', 'MA20', '布林上', '布林下'],
+      top: 0, textStyle: { fontSize: 11 },
+      selected: { '布林上': false, '布林下': false }
+    },
+    xAxis: [
+      { type: 'category', data: c.dates, boundaryGap: false, axisLine: { onZero: false },
+        splitLine: { show: false }, axisLabel: { fontSize: 10 } },
+      { type: 'category', gridIndex: 1, data: c.dates, boundaryGap: false,
+        axisLine: { onZero: false }, axisTick: { show: false }, axisLabel: { show: false } }
+    ],
+    yAxis: [
+      { scale: true, splitArea: { show: false }, axisLabel: { fontSize: 10 } },
+      { gridIndex: 1, splitNumber: 2, axisLine: { show: false },
+        axisTick: { show: false }, axisLabel: { show: false }, splitLine: { show: false } }
+    ],
+    axisPointer: { link: [{ xAxisIndex: 'all' }] },
+    dataZoom: [{ type: 'inside', xAxisIndex: [0, 1], start: 0, end: 100 }],
+    series: [
+      { name: 'K线', type: 'candlestick', data: c.ohlc,
+        itemStyle: {
+          color: '#d9322d', color0: '#0a9a5a',
+          borderColor: '#d9322d', borderColor0: '#0a9a5a'
+        }
+      },
+      { name: 'MA5', type: 'line', data: c.ma5, smooth: true,
+        lineStyle: { width: 1, color: '#f59e0b' }, symbol: 'none' },
+      { name: 'MA10', type: 'line', data: c.ma10, smooth: true,
+        lineStyle: { width: 1, color: '#4c6ef5' }, symbol: 'none' },
+      { name: 'MA20', type: 'line', data: c.ma20, smooth: true,
+        lineStyle: { width: 1, color: '#8b5cf6' }, symbol: 'none' },
+      { name: '布林上', type: 'line', data: c.bb_upper,
+        lineStyle: { width: 1, type: 'dashed', color: '#9ca3af', opacity: 0.6 }, symbol: 'none' },
+      { name: '布林下', type: 'line', data: c.bb_lower,
+        lineStyle: { width: 1, type: 'dashed', color: '#9ca3af', opacity: 0.6 }, symbol: 'none' },
+      { name: '成交量', type: 'bar',
+        xAxisIndex: 1, yAxisIndex: 1,
+        data: c.volumes.map((v, i) => ({
+          value: v,
+          itemStyle: { color: c.ohlc[i][1] >= c.ohlc[i][0] ? '#d9322d' : '#0a9a5a' }
+        }))
+      }
+    ]
+  };
+  chart.setOption(option);
+  window.addEventListener('resize', () => chart.resize());
+}
+
+function init() {
+  renderStats();
+  renderSummaryTable();
+  document.getElementById('stock-grid').innerHTML = DATA.stocks.map(renderStockCard).join('');
+  DATA.stocks.forEach(renderChart);
+}
+document.addEventListener('DOMContentLoaded', init);
+
+window.fillAIAnalysis = function(code, htmlContent) {
+  const el = document.getElementById(`ai-${code}`);
+  if (!el) return;
+  el.classList.add('filled');
+  el.innerHTML = `<strong>🤖 AI 综合分析</strong><div style="margin-top:8px">${htmlContent}</div>`;
+};
+</script>
+</body>
+</html>
