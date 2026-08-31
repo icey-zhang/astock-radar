@@ -1,0 +1,463 @@
+{
+  "date": "2026-08-31",
+  "results": [
+    {
+      "code": "002885",
+      "name": "京泉华",
+      "quote": {},
+      "context": {
+        "last_close": 28.64,
+        "trend_5d": {
+          "days_up": 2,
+          "days_down": 2,
+          "cum_pct": 0.67,
+          "min": 27.78,
+          "max": 28.7,
+          "is_5d_low": false,
+          "is_5d_high": false
+        },
+        "range_90d": {
+          "high": 53.71,
+          "low": 22.35,
+          "position_pct": 20.06
+        }
+      },
+      "money_flow_5d": [],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 28.64,
+        "suggested_entry_price_conservative": 22.57,
+        "suggested_stop_loss": 27.21,
+        "price_reference": {
+          "range_90d_low": 22.35,
+          "cum_pct_5d": 0.67
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 0,
+        "total": 4,
+        "signals": [],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": 0.146,
+          "kdj_cross": false,
+          "kdj_k": 34.24,
+          "kdj_d": 32.03,
+          "volume_ratio": 0.65
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    },
+    {
+      "code": "002574",
+      "name": "明牌珠宝",
+      "quote": {},
+      "context": {
+        "last_close": 5.1,
+        "trend_5d": {
+          "days_up": 3,
+          "days_down": 1,
+          "cum_pct": 2.2,
+          "min": 4.99,
+          "max": 5.25,
+          "is_5d_low": false,
+          "is_5d_high": false
+        },
+        "range_90d": {
+          "high": 5.85,
+          "low": 4.11,
+          "position_pct": 56.9
+        }
+      },
+      "money_flow_5d": [],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 5.1,
+        "suggested_entry_price_conservative": 4.15,
+        "suggested_stop_loss": 4.84,
+        "price_reference": {
+          "range_90d_low": 4.11,
+          "cum_pct_5d": 2.2
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 1,
+        "total": 4,
+        "signals": [
+          "量能放大:量比 1.73"
+        ],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": 0.107,
+          "kdj_cross": false,
+          "kdj_k": 73.12,
+          "kdj_d": 72.58,
+          "volume_ratio": 1.73
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    },
+    {
+      "code": "600690",
+      "name": "海尔智家",
+      "quote": {},
+      "context": {
+        "last_close": 21.18,
+        "trend_5d": {
+          "days_up": 1,
+          "days_down": 2,
+          "cum_pct": -0.24,
+          "min": 21.12,
+          "max": 21.23,
+          "is_5d_low": false,
+          "is_5d_high": false
+        },
+        "range_90d": {
+          "high": 23.27,
+          "low": 19.34,
+          "position_pct": 46.82
+        }
+      },
+      "money_flow_5d": [],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 21.18,
+        "suggested_entry_price_conservative": 19.53,
+        "suggested_stop_loss": 20.12,
+        "price_reference": {
+          "range_90d_low": 19.34,
+          "cum_pct_5d": -0.24
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 0,
+        "total": 4,
+        "signals": [],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": -0.187,
+          "kdj_cross": false,
+          "kdj_k": 34.63,
+          "kdj_d": 29.78,
+          "volume_ratio": 0.84
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    },
+    {
+      "code": "600303",
+      "name": "曙光股份",
+      "quote": {},
+      "context": {
+        "last_close": 3.03,
+        "trend_5d": {
+          "days_up": 1,
+          "days_down": 1,
+          "cum_pct": 2.36,
+          "min": 2.94,
+          "max": 3.03,
+          "is_5d_low": false,
+          "is_5d_high": true
+        },
+        "range_90d": {
+          "high": 3.83,
+          "low": 2.32,
+          "position_pct": 47.02
+        }
+      },
+      "money_flow_5d": [],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 3.03,
+        "suggested_entry_price_conservative": 2.34,
+        "suggested_stop_loss": 2.88,
+        "price_reference": {
+          "range_90d_low": 2.32,
+          "cum_pct_5d": 2.36
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 0,
+        "total": 4,
+        "signals": [],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": 0.022,
+          "kdj_cross": false,
+          "kdj_k": 84.86,
+          "kdj_d": 72.49,
+          "volume_ratio": 1.1
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    },
+    {
+      "code": "002607",
+      "name": "中公教育",
+      "quote": {},
+      "context": {
+        "last_close": 2.09,
+        "trend_5d": {
+          "days_up": 2,
+          "days_down": 1,
+          "cum_pct": 1.95,
+          "min": 2.05,
+          "max": 2.1,
+          "is_5d_low": false,
+          "is_5d_high": false
+        },
+        "range_90d": {
+          "high": 2.75,
+          "low": 1.74,
+          "position_pct": 34.65
+        }
+      },
+      "money_flow_5d": [],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 2.09,
+        "suggested_entry_price_conservative": 1.76,
+        "suggested_stop_loss": 1.99,
+        "price_reference": {
+          "range_90d_low": 1.74,
+          "cum_pct_5d": 1.95
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 0,
+        "total": 4,
+        "signals": [],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": -0.01,
+          "kdj_cross": false,
+          "kdj_k": 62.23,
+          "kdj_d": 47.07,
+          "volume_ratio": 0.52
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    },
+    {
+      "code": "601888",
+      "name": "中国中免",
+      "quote": {},
+      "context": {
+        "last_close": 52.48,
+        "trend_5d": {
+          "days_up": 3,
+          "days_down": 1,
+          "cum_pct": -0.25,
+          "min": 52.48,
+          "max": 53.35,
+          "is_5d_low": true,
+          "is_5d_high": false
+        },
+        "range_90d": {
+          "high": 66.63,
+          "low": 50.46,
+          "position_pct": 12.49
+        }
+      },
+      "money_flow_5d": [],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 52.48,
+        "suggested_entry_price_conservative": 50.96,
+        "suggested_stop_loss": 49.86,
+        "price_reference": {
+          "range_90d_low": 50.46,
+          "cum_pct_5d": -0.25
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 0,
+        "total": 4,
+        "signals": [],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": -0.278,
+          "kdj_cross": false,
+          "kdj_k": 37.68,
+          "kdj_d": 31.52,
+          "volume_ratio": 0.84
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    },
+    {
+      "code": "603352",
+      "name": "至信股份",
+      "quote": {},
+      "context": {
+        "last_close": 25.89,
+        "trend_5d": {
+          "days_up": 3,
+          "days_down": 1,
+          "cum_pct": 1.05,
+          "min": 25.62,
+          "max": 25.89,
+          "is_5d_low": false,
+          "is_5d_high": true
+        },
+        "range_90d": {
+          "high": 37.93,
+          "low": 23.81,
+          "position_pct": 14.73
+        }
+      },
+      "money_flow_5d": [],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 25.89,
+        "suggested_entry_price_conservative": 24.05,
+        "suggested_stop_loss": 24.6,
+        "price_reference": {
+          "range_90d_low": 23.81,
+          "cum_pct_5d": 1.05
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 0,
+        "total": 4,
+        "signals": [],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": -0.189,
+          "kdj_cross": false,
+          "kdj_k": 36.93,
+          "kdj_d": 26.99,
+          "volume_ratio": 0.36
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    },
+    {
+      "code": "600171",
+      "name": "上海贝岭",
+      "quote": {},
+      "context": {
+        "last_close": 23.23,
+        "trend_5d": {
+          "days_up": 3,
+          "days_down": 1,
+          "cum_pct": 3.52,
+          "min": 22.44,
+          "max": 23.23,
+          "is_5d_low": false,
+          "is_5d_high": true
+        },
+        "range_90d": {
+          "high": 31.95,
+          "low": 22.17,
+          "position_pct": 10.84
+        }
+      },
+      "money_flow_5d": [],
+      "strategy_dip_buy": {
+        "triggered": false,
+        "tier": "NONE",
+        "tier_cn": "观望",
+        "confidence": "未触发",
+        "conditions": {
+          "new_low_5d_with_drop": false,
+          "below_90d_low": false
+        },
+        "reasons": [],
+        "suggested_entry_price_aggressive": 23.23,
+        "suggested_entry_price_conservative": 22.39,
+        "suggested_stop_loss": 22.07,
+        "price_reference": {
+          "range_90d_low": 22.17,
+          "cum_pct_5d": 3.52
+        }
+      },
+      "strategy_swing": {
+        "triggered": false,
+        "hit_count": 0,
+        "total": 4,
+        "signals": [],
+        "signal_details": {
+          "macd_cross": false,
+          "macd_hist": 0.315,
+          "kdj_cross": false,
+          "kdj_k": 59.28,
+          "kdj_d": 45.44,
+          "volume_ratio": 0.82
+        },
+        "confidence": "未触发",
+        "note": "波段信号预测能力有限,仅用于候选筛选"
+      }
+    }
+  ]
+}
