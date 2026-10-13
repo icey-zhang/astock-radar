@@ -1,6 +1,6 @@
 {
   "code": "002574",
-  "updated_at": "2026-10-12T17:22:32.259907",
+  "updated_at": "2026-10-13T15:34:48.999300",
   "kline": [
     {
       "date": "2025-03-10",
@@ -3145,6 +3145,18 @@
       "turnover": 1.26,
       "pct_change": -2.93,
       "amplitude": 3.32
+    },
+    {
+      "date": "2026-10-13",
+      "open": 4.94,
+      "close": 5.04,
+      "high": 5.1,
+      "low": 4.8,
+      "volume": 75551,
+      "amount": 37630854.07,
+      "turnover": 1.43,
+      "pct_change": 1.41,
+      "amplitude": 6.04
     }
   ]
 }
